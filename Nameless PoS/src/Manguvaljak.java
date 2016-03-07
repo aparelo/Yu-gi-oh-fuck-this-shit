@@ -1,5 +1,5 @@
 import java.util.ArrayList;
-public class Manguvaljak {
+public class Manguvaljak { // Lol
 	 static Mangija hetkeMangija;
 	 static Mangija hetkeVastane;
 
