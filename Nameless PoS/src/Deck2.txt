@@ -1,0 +1,2 @@
+Hydra,Hero,5,3,4,-,Tank
+Dispel,Spell,"Dispel",6,Purge,
