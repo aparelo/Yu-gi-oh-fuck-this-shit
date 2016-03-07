@@ -114,6 +114,10 @@ public class Main {
                         boolean attackState = Manguvaljak.attack(Manguvaljak.hetkeMangija, Manguvaljak.hetkeVastane);
                         if (attackState) {
                             attackCount++;
+                            if (Manguvaljak.hetkeVastane.getElud() <= 0) {
+                            	gameOverError = "LivesZero";
+                            	break mainloop;
+                            }
                         }
                     }
                     else {
@@ -128,7 +132,10 @@ public class Main {
             Manguvaljak.hetkeVastane = tempChanger;
         }
         if (gameOverError.equals("DeckToZero")) {
-        	System.out.println("Congratulations, " + Manguvaljak.hetkeVastane.getNimi() + "!" + "Boohoo, " + Manguvaljak.hetkeMangija.getNimi() + " you suck.");
+        	System.out.println("Congratulations, " + Manguvaljak.hetkeVastane.getNimi() + "!" + " Boohoo, " + Manguvaljak.hetkeMangija.getNimi() + " you suck.");
+        }
+        else if (gameOverError.equals("LivesZero")) {
+        	System.out.println("Congratulations, " + Manguvaljak.hetkeMangija.getNimi() + "!" + " Boohoo, " + Manguvaljak.hetkeVastane.getNimi() + " you suck.");
         }
         
         
