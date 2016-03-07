@@ -61,9 +61,10 @@ public class Main {
             Manguvaljak.hetkeMangija = mangija2;
             Manguvaljak.hetkeVastane = mangija1;
         }
+        String gameOverError = "";
         //Alusta manguga
-        while (Manguvaljak.hetkeVastane.getElud() > 0 && Manguvaljak.hetkeVastane.getMangijaDeck().size() > 0 && Manguvaljak.hetkeMangija.getElud() > 0 && Manguvaljak.hetkeMangija.getMangijaDeck().size() > 0) {
-            //Tomba kaardid deckist
+       mainloop: while (Manguvaljak.hetkeVastane.getElud() > 0 && Manguvaljak.hetkeVastane.getMangijaDeck().size() > 0 && Manguvaljak.hetkeMangija.getElud() > 0 && Manguvaljak.hetkeMangija.getMangijaDeck().size() > 0) {
+        	//Tomba kaardid deckist
             int kaartideArv = Manguvaljak.hetkeMangija.getMangijaKasi().size();
             if(kaartideArv < 5) {
                 int uusiKaarte = 5 - kaartideArv;
@@ -72,7 +73,8 @@ public class Main {
                 for(int i=0;i<uusiKaarte;i++) {
                     Manguvaljak.kaartKatte(Manguvaljak.hetkeMangija,Manguvaljak.hetkeMangija.getMangijaDeck());
                     if(Manguvaljak.hetkeMangija.getMangijaDeck().size() == 0){
-                        break;
+                    	gameOverError = "DeckToZero";
+                        break mainloop;
                     }
                 }
                 Manguvaljak.hetkeMangija.setMangijaDeck(tempDeck);
@@ -81,6 +83,7 @@ public class Main {
             Manguvaljak.uusKaik();
             int attackCount = 0; //Nulli attackCount
             while(true) {
+            	innerloop:
                 System.out.println("Sisesta tegevuse number, mida soovid teha:\n 1) Aseta hero valjakule\n 2) Kasuta spelli \n 3) Pane spell lauale \n 4) Attack! \n 5) Lõpeta käik\n");
                 int tegevus = Integer.parseInt(scan.next());
                 if (tegevus == 1) {
@@ -124,5 +127,10 @@ public class Main {
             Manguvaljak.hetkeMangija = Manguvaljak.hetkeVastane;
             Manguvaljak.hetkeVastane = tempChanger;
         }
+        if (gameOverError.equals("DeckToZero")) {
+        	System.out.println("Congratulations, " + Manguvaljak.hetkeVastane.getNimi() + "!" + "Boohoo, " + Manguvaljak.hetkeMangija.getNimi() + " you suck.");
+        }
+        
+        
+        }
     }
-}
