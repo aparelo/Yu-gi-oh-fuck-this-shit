@@ -52,7 +52,7 @@ public class Main {
         Collections.shuffle(deck2);
         Mangija mangija2 = new Mangija(mangija2nimi, deck2);
         Random alustaja = new Random();
-        int number = alustaja.nextInt(1);
+        int number = alustaja.nextInt(2);
         if(number == 1) {
             Manguvaljak.hetkeMangija = mangija1;
             Manguvaljak.hetkeVastane = mangija2;
@@ -113,7 +113,7 @@ public class Main {
                             attackCount++;
                         }
                     }
-                    else{
+                    else {
                         System.out.println("You can only attack once during a turn.");
                     }
                 } else {
