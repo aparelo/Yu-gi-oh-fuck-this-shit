@@ -20,6 +20,7 @@ public class Kaart {
 	private int moveCount; //Kaikude counter
 	private ArrayList<Kaart> buffers;
 	private ArrayList<Kaart> vulnerabilities;
+	private boolean olek; // True - faceup, False, facedown
 
 	public Kaart(String nimi, int attack, int defence, int rank, String eriatribuut, String alamTyyp) {
 		this.nimi = nimi;
@@ -45,7 +46,6 @@ public class Kaart {
 		this.effekt = effekt;
 		this.tugevus = tugevus;
 		this.length = length;
-
 		this.moveCount = 0;
 	}
 
@@ -164,6 +164,14 @@ public class Kaart {
 	public void setVulnerabilities(ArrayList<Kaart> vulnerabilities) {
 		this.vulnerabilities = vulnerabilities;
 	}
+	public boolean isOlek() {
+		return olek;
+	}
+	public void setOlek(boolean olek) {
+		this.olek = olek;
+	}
+
+
 	public String toString() {
 		if (tyyp.equals("Hero")) {
 		return "Hero: " + nimi + " Attack: " + attack + " Defence: " + defence + " Rank: " + rank + " Special attribute: " + eriatribuut + " Sub type: " + alamTyyp;
