@@ -30,7 +30,7 @@ public class Main {
                 Kaart tempCard = new Kaart(kaartSplit[0],Integer.parseInt(kaartSplit[2]),Integer.parseInt(kaartSplit[3]),Integer.parseInt(kaartSplit[4]),kaartSplit[5],kaartSplit[6]);
                 deck1.add(tempCard);
             } else if (kaartSplit[1].equals("Spell")) {
-                Kaart tempCard = new Kaart(kaartSplit[0],kaartSplit[4],Integer.parseInt(kaartSplit[3]),kaartSplit[2],Integer.parseInt(kaartSplit[5]));
+                Kaart tempCard = new Kaart(kaartSplit[0],kaartSplit[4],Integer.parseInt(kaartSplit[3]),kaartSplit[2],Integer.parseInt(kaartSplit[5]), Integer.parseInt(kaartSplit[6]));
                 deck1.add(tempCard);
             }
         }
@@ -44,7 +44,7 @@ public class Main {
                 Kaart tempCard = new Kaart(kaartSplit[0],Integer.parseInt(kaartSplit[2]),Integer.parseInt(kaartSplit[3]),Integer.parseInt(kaartSplit[4]),kaartSplit[5],kaartSplit[6]);
                 deck2.add(tempCard);
             } else {
-                Kaart tempCard = new Kaart(kaartSplit[0],kaartSplit[2],Integer.parseInt(kaartSplit[3]),kaartSplit[4],Integer.parseInt(kaartSplit[5]));
+                Kaart tempCard = new Kaart(kaartSplit[0],kaartSplit[2],Integer.parseInt(kaartSplit[3]),kaartSplit[4],Integer.parseInt(kaartSplit[5]), Integer.parseInt(kaartSplit[6]));
                 deck2.add(tempCard);
             }
         }

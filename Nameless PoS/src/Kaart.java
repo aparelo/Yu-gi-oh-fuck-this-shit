@@ -16,6 +16,7 @@ public class Kaart {
 	private int manaPoints; //Spell
 	private String effekt; //Spell
 	private int tugevus; //Spell
+	private int length; // Spell
 	private int moveCount; //Kaikude counter
 	private ArrayList<Kaart> buffers;
 	private ArrayList<Kaart> vulnerabilities;
@@ -36,13 +37,14 @@ public class Kaart {
 	}
 
 
-	public Kaart(String nimi, String alamTyyp, int manaPoints, String effekt, int tugevus) {
+	public Kaart(String nimi, String alamTyyp, int manaPoints, String effekt, int tugevus, int length) {
 		this.nimi = nimi;
 		this.tyyp = "Spell";
 		this.alamTyyp = alamTyyp;
 		this.manaPoints = manaPoints;
 		this.effekt = effekt;
 		this.tugevus = tugevus;
+		this.length = length;
 
 		this.moveCount = 0;
 	}
@@ -143,6 +145,24 @@ public class Kaart {
 	}
 	public void setTugevus(int tugevus) {
 		this.tugevus = tugevus;
+	}
+	public int getLength() {
+		return length;
+	}
+	public void setLength(int length) {
+		this.length = length;
+	}
+	public ArrayList<Kaart> getBuffers() {
+		return buffers;
+	}
+	public void setBuffers(ArrayList<Kaart> buffers) {
+		this.buffers = buffers;
+	}
+	public ArrayList<Kaart> getVulnerabilities() {
+		return vulnerabilities;
+	}
+	public void setVulnerabilities(ArrayList<Kaart> vulnerabilities) {
+		this.vulnerabilities = vulnerabilities;
 	}
 	public String toString() {
 		if (tyyp.equals("Hero")) {
