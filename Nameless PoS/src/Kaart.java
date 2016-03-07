@@ -1,3 +1,5 @@
+import java.util.ArrayList;
+
 public class Kaart {
 
 	private String nimi; //Hero, Spell
@@ -15,6 +17,8 @@ public class Kaart {
 	private String effekt; //Spell
 	private int tugevus; //Spell
 	private int moveCount; //Kaikude counter
+	private ArrayList<Kaart> buffers;
+	private ArrayList<Kaart> vulnerabilities;
 
 	public Kaart(String nimi, int attack, int defence, int rank, String eriatribuut, String alamTyyp) {
 		this.nimi = nimi;
