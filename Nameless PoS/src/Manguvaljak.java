@@ -8,7 +8,7 @@ public class Manguvaljak {
 	        System.out.println("It's " + hetkeMangija.getNimi() + "'s turn.");
 	        for(int i=10;i>0;i--) {
 	                System.out.println("Displaying cards in " + i);
-	                Thread.sleep(1000);
+	                Thread.sleep(250); //Delay for new turn count
 	        }
 	        System.out.println("Your cards are: ");
 	        for(Kaart kaesKaart: hetkeMangija.getMangijaKasi()){
@@ -17,11 +17,60 @@ public class Manguvaljak {
 	        System.out.println("The field: ");
 	        System.out.println("your side: ");
 	        for(Kaart sinuValjak: hetkeMangija.getMangijaLaud()) {
-	            System.out.println(sinuValjak + "\n");
+	            if(sinuValjak.getTyyp().equals("Hero")) {
+					System.out.println(sinuValjak);
+					if(sinuValjak.getBuffers().size() != 0) {
+						for(Kaart buffer: sinuValjak.getBuffers()) {
+							if(buffer.getLength() == buffer.getMoveCount()) {
+								if(buffer.getEffekt().equals("Attack")) {
+									sinuValjak.setAttackBuff(sinuValjak.getAttackBuff()-buffer.getTugevus());
+									sinuValjak.setAttack(sinuValjak.getAttack()-buffer.getTugevus());
+								}
+								else {
+									sinuValjak.setDefenceBuff(sinuValjak.getDefenceBuff()-buffer.getTugevus());
+									sinuValjak.setDefence(sinuValjak.getDefence()-buffer.getTugevus());
+								}
+								hetkeMangija.getMangijaLaud().remove(hetkeMangija.getMangijaLaud().indexOf(buffer));
+								sinuValjak.getBuffers().remove(sinuValjak.getBuffers().indexOf(buffer));
+							}
+						}
+					}
+					if(sinuValjak.getVulnerabilities().size() != 0) {
+						for(Kaart vulners: sinuValjak.getVulnerabilities()) {
+							if(vulners.getLength() == vulners.getMoveCount()) {
+								if(vulners.getEffekt().equals("Attack")) {
+									sinuValjak.setAttackVulnerability(sinuValjak.getAttackVulnerability() + vulners.getTugevus());
+									sinuValjak.setAttack(sinuValjak.getAttack() + vulners.getTugevus());
+								}
+								else {
+									sinuValjak.setDefenceVulnerability(sinuValjak.getDefenceVulnerability() + vulners.getTugevus());
+									sinuValjak.setDefence(sinuValjak.getDefence() + vulners.getTugevus());
+								}
+								hetkeMangija.getMangijaLaud().remove(hetkeMangija.getMangijaLaud().indexOf(vulners));
+								sinuValjak.getVulnerabilities().remove(sinuValjak.getVulnerabilities().indexOf(vulners));
+							}
+						}
+					}
+				}
+				else if(sinuValjak.getTyyp().equals("Spell") && sinuValjak.olek()) {
+					System.out.println(sinuValjak);
+				}
+				else {
+					System.out.println("Face down card: " + sinuValjak);
+				}
+
 	        }
 	        System.out.println("Opponents side: ");
 	        for(Kaart vastaseValjak: hetkeVastane.getMangijaLaud()) {
-	            System.out.println(vastaseValjak + "\n");
+				if(vastaseValjak.getTyyp().equals("Hero")) {
+					System.out.println(vastaseValjak);
+				}
+				else if(vastaseValjak.getTyyp().equals("Spell") && vastaseValjak.olek()) {
+					System.out.println(vastaseValjak);
+				}
+				else {
+					System.out.println("Face down card");
+				}
 				vastaseValjak.setMoveCount(vastaseValjak.getMoveCount()+1);
 	        }
 	    }
@@ -77,6 +126,22 @@ public class Manguvaljak {
 				hero.setDefenceBuff(0);
 				hero.setAttackVulnerability(0);
 				hero.setDefenceVulnerability(0);
+				for(Kaart buffer: kaart.getBuffers()) {
+					for(Kaart kaart1: mangijaLaud) {
+						if(buffer.equals(kaart1)) {
+							mangijaLaud.remove(kaart1);
+						}
+					}
+				}
+				for(Kaart vulner: kaart.getVulnerabilities()) {
+					for(Kaart kaart2: mangijaLaud) {
+						if(vulner.equals(kaart2)) {
+							mangijaLaud.remove(kaart2);
+						}
+					}
+				}
+				hero.setBuffers(new ArrayList<Kaart>());
+				hero.setVulnerabilities(new ArrayList<Kaart>());
 			}
 		}
 	}
