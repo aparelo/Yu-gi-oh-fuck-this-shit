@@ -1,5 +1,6 @@
 import java.util.ArrayList;
-public class Manguvaljak { // Lol
+import java.util.Scanner;
+public class Manguvaljak {
 	 static Mangija hetkeMangija;
 	 static Mangija hetkeVastane;
 
@@ -100,38 +101,65 @@ public class Manguvaljak { // Lol
 			}
 		}
 	}
-	public boolean attack(Mangija hetkeMangija, Mangija hetkeVastane, Kaart mangijaHero, Kaart vastaseHero) {
+	public static boolean attack(Mangija hetkeMangija, Mangija hetkeVastane) {
 		boolean heroArvMangijal = false;
 		boolean heroArvVastasel = false;
-		for (Kaart kaart : hetkeMangija.getMangijaDeck()) {
+        Scanner scan = new Scanner(System.in);
+		for (Kaart kaart : hetkeMangija.getMangijaLaud()) {
 			if (kaart.getTyyp().equals("Hero")) {
 				heroArvMangijal = true;
 			}
 		}
-		for (Kaart kaart : hetkeVastane.getMangijaDeck()) {
+		for (Kaart kaart : hetkeVastane.getMangijaLaud()) {
 			if (kaart.getTyyp().equals("Hero")) {
 				heroArvVastasel = true;
 			}
 		}
 		if (hetkeMangija.getMangijaLaud().size() == 0) {
+			System.out.println("You don't have any heroes to attack with!");
 			return false;
-		}
-		else if (heroArvVastasel == false) {
-			hetkeVastane.setElud(hetkeVastane.getElud() - mangijaHero.getAttack());
-			System.out.println("R�nnak �nnestus! Vastase elud:" + hetkeVastane.getElud());
-			return true;
 		}
 		else {
-			return false;
+			System.out.println("Choose the hero to attack with:\n");
+			int i = 1;
+			ArrayList<Kaart> tempHerod = new ArrayList<Kaart>();
+			for (Kaart kaart : hetkeMangija.getMangijaLaud()) {
+				if (kaart.getTyyp().equals("Hero")) {
+					tempHerod.add(kaart);
+					System.out.println(i + " " + kaart.getNimi() + "\n");
+					i++;
+				}
+		}	String valik = scan.next();
+			Kaart ryndavHero = tempHerod.get(Integer.parseInt(valik)-1);
+			if (heroArvVastasel == false) {
+				hetkeVastane.setElud(hetkeVastane.getElud() - ryndavHero.getAttack());
+				System.out.println("Attack succeeded! Opponents lives:" + hetkeVastane.getElud());
+				return true;
+			}
+			System.out.println("Choose the opponents hero to attack:\n");
+			int j = 1;
+			ArrayList<Kaart> tempVastaseHerod = new ArrayList<Kaart>();
+			for (Kaart kaart : hetkeVastane.getMangijaLaud()) {
+				if (kaart.getTyyp().equals("Hero")) {
+					tempVastaseHerod.add(kaart);
+					System.out.println(j + " " + kaart.getNimi() + "\n");
+					j++;
+				}
+	}		String valik2 = scan.next();
+			Kaart vastaseHero = tempVastaseHerod.get(Integer.parseInt(valik2)-1);
+			if (vastaseHero.getDefence() < ryndavHero.getAttack()) {
+				System.out.println("Attack succeeded! The hero " + vastaseHero.getNimi() + " has been defeated." + " Opponents lives: " + (hetkeVastane.getElud() - (ryndavHero.getAttack() - vastaseHero.getDefence())));
+				Manguvaljak.kaartSurnuAeda(vastaseHero, hetkeVastane);
+				return true;
+			}
+			else {
+				System.out.println("Attack did not succeed! Your hero" + ryndavHero.getNimi() + " has been defeated");
+				Manguvaljak.kaartSurnuAeda(ryndavHero, hetkeMangija);
+				return true;
+			}
 		}
-		
-		
-		
+
 	}
-
-	
-	
 }
-
 
 
