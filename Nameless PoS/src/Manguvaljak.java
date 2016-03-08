@@ -16,48 +16,51 @@ public class Manguvaljak {
 	        }
 	        System.out.println("The field: ");
 	        System.out.println("your side: ");
-			ArrayList<Kaart> tempBuffBuffers = new ArrayList<Kaart>();
-			ArrayList<Kaart> tempVulnerabilityBuffers = new ArrayList<Kaart>();
+			ArrayList<Integer> tempBuffBuffers = new ArrayList<>();
+			ArrayList<Integer> tempVulnerabilityBuffers = new ArrayList<>();
 	        for(Kaart sinuValjak: currentPlayer.getMangijaLaud()) {
 	            if(sinuValjak.getTyyp().equals("Hero")) {
 					System.out.println(sinuValjak);
-					if(sinuValjak.getBuffers().size() != 0) {
-						for(Kaart buffer: sinuValjak.getBuffers()) {
-							if(buffer.getLength() == buffer.getMoveCount()) {
-								if(buffer.getEffekt().equals("Attack")) {
-									sinuValjak.setAttackBuff(sinuValjak.getAttackBuff()-buffer.getTugevus());
-									sinuValjak.setAttack(sinuValjak.getAttack()-buffer.getTugevus());
-									tempBuffBuffers.add(buffer);
+					if (sinuValjak.getBuffers().size() != 0) {
+						for (int i = 0; i < sinuValjak.getBuffers().size(); i++) {
+							if (sinuValjak.getBuffers().get(i).getLength() == sinuValjak.getBuffers().get(i).getMoveCount()) {
+								if (sinuValjak.getBuffers().get(i).getEffekt().equals("Attack")) {
+									sinuValjak.setAttackBuff(sinuValjak.getAttackBuff() - sinuValjak.getBuffers().get(i).getTugevus());
+									sinuValjak.setAttack(sinuValjak.getAttack() - sinuValjak.getBuffers().get(i).getTugevus());
+									tempBuffBuffers.add(i);
+								} else {
+									sinuValjak.setDefenceBuff(sinuValjak.getDefenceBuff() - sinuValjak.getBuffers().get(i).getTugevus());
+									sinuValjak.setDefence(sinuValjak.getDefence() - sinuValjak.getBuffers().get(i).getTugevus());
+									tempBuffBuffers.add(i);
 								}
-								else {
-									sinuValjak.setDefenceBuff(sinuValjak.getDefenceBuff()-buffer.getTugevus());
-									sinuValjak.setDefence(sinuValjak.getDefence()-buffer.getTugevus());
-									tempBuffBuffers.add(buffer);
-								}
-								sinuValjak.getBuffers().remove(sinuValjak.getBuffers().indexOf(buffer));
 							}
 						}
-					}
-					else {
+					} else {
 						continue;
 					}
-					if(sinuValjak.getVulnerabilities().size() != 0) {
-						for(Kaart vulners: sinuValjak.getVulnerabilities()) {
-							if(vulners.getLength() == vulners.getMoveCount()) {
-								if(vulners.getEffekt().equals("Attack")) {
-									sinuValjak.setAttackVulnerability(sinuValjak.getAttackVulnerability() + vulners.getTugevus());
-									sinuValjak.setAttack(sinuValjak.getAttack() + vulners.getTugevus());
-									tempVulnerabilityBuffers.add(vulners);
+					if (sinuValjak.getVulnerabilities().size() != 0) {
+						for (int j = 0; j < sinuValjak.getVulnerabilities().size(); j++) {
+							if (sinuValjak.getVulnerabilities().get(j).getLength() == sinuValjak.getVulnerabilities().get(j).getMoveCount()) {
+								if (sinuValjak.getVulnerabilities().get(j).getEffekt().equals("Attack")) {
+									sinuValjak.setAttackVulnerability(sinuValjak.getAttackVulnerability() + sinuValjak.getVulnerabilities().get(j).getTugevus());
+									sinuValjak.setAttack(sinuValjak.getAttack() + sinuValjak.getVulnerabilities().get(j).getTugevus());
+									tempVulnerabilityBuffers.add(j);
+								} else {
+									sinuValjak.setDefenceVulnerability(sinuValjak.getDefenceVulnerability() + sinuValjak.getVulnerabilities().get(j).getTugevus());
+									sinuValjak.setDefence(sinuValjak.getDefence() + sinuValjak.getVulnerabilities().get(j).getTugevus());
+									tempVulnerabilityBuffers.add(j);
 								}
-								else {
-									sinuValjak.setDefenceVulnerability(sinuValjak.getDefenceVulnerability() + vulners.getTugevus());
-									sinuValjak.setDefence(sinuValjak.getDefence() + vulners.getTugevus());
-									tempVulnerabilityBuffers.add(vulners);
-								}
-								sinuValjak.getVulnerabilities().remove(sinuValjak.getVulnerabilities().indexOf(vulners));
 							}
 						}
 					}
+					for (int indeks : tempBuffBuffers) {
+						sinuValjak.getBuffers().remove(indeks);
+					}
+					for (int indeks2 : tempVulnerabilityBuffers) {
+						sinuValjak.getVulnerabilities().remove(indeks2);
+					}
+					tempBuffBuffers = new ArrayList<>();
+					tempVulnerabilityBuffers = new ArrayList<>();
 				}
 				else if(sinuValjak.getTyyp().equals("Spell") && sinuValjak.isOlek()) {
 					System.out.println(sinuValjak);
@@ -67,13 +70,7 @@ public class Manguvaljak {
 				}
 
 	        }
-	        for (Kaart kaart : tempBuffBuffers) {
-	        	kaartSurnuAeda(kaart, currentPlayer);
-	        }
-	        for (Kaart kaart : tempVulnerabilityBuffers) {
-	        	kaartSurnuAeda(kaart, currentPlayer);
-	        }
-	        // Siin saab läbi
+	        // Siin saab lï¿½bi
 	        System.out.println("Opponents side: ");
 	        for(Kaart vastaseValjak: currentOpponent.getMangijaLaud()) {
 				if(vastaseValjak.getTyyp().equals("Hero")) {
