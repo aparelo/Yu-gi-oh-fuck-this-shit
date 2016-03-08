@@ -92,6 +92,7 @@ public class Manguvaljak {
 	    	else {
 	        mangija.getMangijaKasi().remove(nimi);
 	        mangija.getMangijaLaud().add(nimi);
+	        mangija.setMangijaLaud(mangija.getMangijaLaud());
 	        if (nimi.getTyyp().equals("Hero")) {
 	        	int tempHeroesOnField = mangija.getHeroesOnField() + 1;
 	        	mangija.setHeroesOnField(tempHeroesOnField);
@@ -443,11 +444,12 @@ public class Manguvaljak {
         Scanner scan = new Scanner(System.in);
         int i = 1;
         ArrayList<Kaart> tempSpells = new ArrayList<Kaart>();
+		System.out.println("Which spell do you want to place on the battlefield:\n");
 		for (Kaart kaart : currentPlayer.getMangijaKasi()) {
 			if (kaart.getTyyp().equals("Spell")) {
 				heroHasSpells = true;
 				tempSpells.add(kaart);
-				System.out.println("Which spell do you want to place on the battlefield:\n" + i + ")" + kaart + "\n");
+				System.out.println(i + ")" + kaart);
 				i++;
 			}
 		}
