@@ -20,7 +20,6 @@ public class Manguvaljak {
 			ArrayList<Integer> tempVulnerabilityBuffers = new ArrayList<>();
 	        for(Kaart sinuValjak: currentPlayer.getMangijaLaud()) {
 	            if(sinuValjak.getTyyp().equals("Hero")) {
-					System.out.println(sinuValjak);
 					if (sinuValjak.getBuffers().size() != 0) {
 						for (int i = 0; i < sinuValjak.getBuffers().size(); i++) {
 							if (sinuValjak.getBuffers().get(i).getLength() == sinuValjak.getBuffers().get(i).getMoveCount()) {
@@ -63,6 +62,7 @@ public class Manguvaljak {
 					}
 					tempBuffBuffers = new ArrayList<>();
 					tempVulnerabilityBuffers = new ArrayList<>();
+					System.out.println(sinuValjak);
 				}
 				else if(sinuValjak.getTyyp().equals("Spell") && sinuValjak.isOlek()) {
 					System.out.println(sinuValjak);
