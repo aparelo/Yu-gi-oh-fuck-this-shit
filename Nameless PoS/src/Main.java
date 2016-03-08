@@ -106,7 +106,7 @@ public class Main {
                         System.out.println("Kaardi asetamine ebaonnestus!");
                     }
                 } else if (tegevus == 2) {
-                    System.out.println("Not yet implemented");
+                    Manguvaljak.useSpell(Manguvaljak.hetkeMangija, Manguvaljak.hetkeVastane);
                 } else if (tegevus == 3) {
                     System.out.println("Not yet implemented");
                 } else if (tegevus == 4) {

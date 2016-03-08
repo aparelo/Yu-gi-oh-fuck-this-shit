@@ -35,6 +35,8 @@ public class Kaart {
 		this.attackVulnerability = 0;
 		this.defenceVulnerability = 0;
 		this.moveCount = 0;
+		this.buffers = new ArrayList<Kaart>();
+		this.vulnerabilities = new ArrayList<Kaart>();
 	}
 
 
