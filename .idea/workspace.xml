@@ -3,7 +3,6 @@
   <component name="ChangeListManager">
     <list default="true" id="b40be4eb-6f28-4129-960e-123c242ba595" name="Default" comment="">
       <change type="MODIFICATION" beforePath="$PROJECT_DIR$/.idea/workspace.xml" afterPath="$PROJECT_DIR$/.idea/workspace.xml" />
-      <change type="MODIFICATION" beforePath="$PROJECT_DIR$/Nameless PoS/src/Manguvaljak.java" afterPath="$PROJECT_DIR$/Nameless PoS/src/Manguvaljak.java" />
     </list>
     <ignored path="Nameless-Pos.iws" />
     <ignored path=".idea/workspace.xml" />
@@ -40,7 +39,7 @@
       <file leaf-file-name="Manguvaljak.java" pinned="false" current-in-tab="true">
         <entry file="file://$PROJECT_DIR$/Nameless PoS/src/Manguvaljak.java">
           <provider selected="true" editor-type-id="text-editor">
-            <state vertical-scroll-proportion="0.48770493">
+            <state vertical-scroll-proportion="1.3934426">
               <caret line="60" column="73" selection-start-line="60" selection-start-column="73" selection-end-line="60" selection-end-column="73" />
               <folding>
                 <element signature="imports" expanded="true" />
@@ -723,7 +722,13 @@
       <option name="project" value="LOCAL" />
       <updated>1457446372297</updated>
     </task>
-    <option name="localTasksCounter" value="8" />
+    <task id="LOCAL-00008" summary="All the spells can be removed.">
+      <created>1457447274508</created>
+      <option name="number" value="00008" />
+      <option name="project" value="LOCAL" />
+      <updated>1457447274508</updated>
+    </task>
+    <option name="localTasksCounter" value="9" />
     <servers />
   </component>
   <component name="ToolWindowManager">
@@ -1181,7 +1186,7 @@
     </entry>
     <entry file="file://$PROJECT_DIR$/Nameless PoS/src/Manguvaljak.java">
       <provider selected="true" editor-type-id="text-editor">
-        <state vertical-scroll-proportion="0.48770493">
+        <state vertical-scroll-proportion="1.3934426">
           <caret line="60" column="73" selection-start-line="60" selection-start-column="73" selection-end-line="60" selection-end-column="73" />
           <folding>
             <element signature="imports" expanded="true" />
