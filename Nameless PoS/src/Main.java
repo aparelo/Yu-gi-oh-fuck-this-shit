@@ -54,51 +54,52 @@ public class Main {
         Random alustaja = new Random();
         int number = alustaja.nextInt(2);
         if(number == 1) {
-            Manguvaljak.hetkeMangija = mangija1;
-            Manguvaljak.hetkeVastane = mangija2;
+            Manguvaljak.currentPlayer = mangija1;
+            Manguvaljak.currentOpponent = mangija2;
         }
         else {
-            Manguvaljak.hetkeMangija = mangija2;
-            Manguvaljak.hetkeVastane = mangija1;
+            Manguvaljak.currentPlayer = mangija2;
+            Manguvaljak.currentOpponent = mangija1;
         }
         String gameOverError = "";
         //Alusta manguga
-       mainloop: while (Manguvaljak.hetkeVastane.getElud() > 0 && Manguvaljak.hetkeVastane.getMangijaDeck().size() > 0 && Manguvaljak.hetkeMangija.getElud() > 0 && Manguvaljak.hetkeMangija.getMangijaDeck().size() > 0) {
+       mainloop: while (Manguvaljak.currentOpponent.getElud() > 0 && Manguvaljak.currentOpponent.getMangijaDeck().size() > 0 && Manguvaljak.currentPlayer.getElud() > 0 && Manguvaljak.currentPlayer.getMangijaDeck().size() > 0) {
         	//Tomba kaardid deckist
-            int kaartideArv = Manguvaljak.hetkeMangija.getMangijaKasi().size();
+            int kaartideArv = Manguvaljak.currentPlayer.getMangijaKasi().size();
             if(kaartideArv < 5) {
                 int uusiKaarte = 5 - kaartideArv;
-                ArrayList<Kaart> tempKasi = Manguvaljak.hetkeMangija.getMangijaKasi();
-                ArrayList<Kaart> tempDeck = Manguvaljak.hetkeMangija.getMangijaDeck();
+                ArrayList<Kaart> tempKasi = Manguvaljak.currentPlayer.getMangijaKasi();
+                ArrayList<Kaart> tempDeck = Manguvaljak.currentPlayer.getMangijaDeck();
                 for(int i=0;i<uusiKaarte;i++) {
-                    Manguvaljak.kaartKatte(Manguvaljak.hetkeMangija,Manguvaljak.hetkeMangija.getMangijaDeck());
-                    if(Manguvaljak.hetkeMangija.getMangijaDeck().size() == 0){
+                    Manguvaljak.kaartKatte(Manguvaljak.currentPlayer);
+                    if(Manguvaljak.currentPlayer.getMangijaDeck().size() == 0){
                     	gameOverError = "DeckToZero";
                         break mainloop;
                     }
                 }
-                Manguvaljak.hetkeMangija.setMangijaDeck(tempDeck);
-                Manguvaljak.hetkeMangija.setMangijaKasi(tempKasi);
+                Manguvaljak.currentPlayer.setMangijaDeck(tempDeck);
+                Manguvaljak.currentPlayer.setMangijaKasi(tempKasi);
             }
             Manguvaljak.uusKaik();
-            int attackCount = 0; //Nulli attackCount
-            while(true) {
-            	innerloop:
+            int attackCount = 0; // Nulli attackCount
+            int useSpellCount = 0; // Nulli useSpellCount
+            int placeSpellCount = 0;//Nulli placeSpellCount
+           	innerloop: while(true) {
                 System.out.println("Sisesta tegevuse number, mida soovid teha:\n 1) Aseta hero valjakule\n 2) Kasuta spelli \n 3) Pane spell lauale \n 4) Attack! \n 5) Lõpeta käik\n");
                 int tegevus = Integer.parseInt(scan.next());
                 if (tegevus == 1) {
                     System.out.println("Vali kaart, mida soovid lauale panna: ");
                     int indeks = 1;
-                    for(Kaart kaart: Manguvaljak.hetkeMangija.getMangijaKasi()){
+                    for(Kaart kaart: Manguvaljak.currentPlayer.getMangijaKasi()){
                         System.out.println(indeks +") "+  kaart +"\n");
                         indeks++;
                     }
                     int kaartToLaud = Integer.parseInt(scan.next())-1;
-                    boolean onnestus = Manguvaljak.kaartLauale(Manguvaljak.hetkeMangija.getMangijaKasi().get(kaartToLaud),Manguvaljak.hetkeMangija);
+                    boolean onnestus = Manguvaljak.kaartLauale(Manguvaljak.currentPlayer.getMangijaKasi().get(kaartToLaud),Manguvaljak.currentPlayer);
                     if(onnestus){
                         System.out.println("Kaart asetatud.");
                         System.out.println("Manguvali:");
-                        for(Kaart kaart: Manguvaljak.hetkeMangija.getMangijaLaud()) {
+                        for(Kaart kaart: Manguvaljak.currentPlayer.getMangijaLaud()) {
                             System.out.println(kaart);
                         }
                     }
@@ -106,15 +107,31 @@ public class Main {
                         System.out.println("Kaardi asetamine ebaonnestus!");
                     }
                 } else if (tegevus == 2) {
-                    Manguvaljak.useSpell(Manguvaljak.hetkeMangija, Manguvaljak.hetkeVastane);
+                    boolean useSpellState = Manguvaljak.useSpell(Manguvaljak.currentPlayer, Manguvaljak.currentOpponent);
+                    if (useSpellState) {
+                    	useSpellCount++;
+                    }
+                    if (useSpellState == false) {
+                    	continue innerloop;
+                    }
+                    if (useSpellCount == 5 || Manguvaljak.currentPlayer.getSpellsOnField() == 5) {
+                    	System.out.println("You cannot add any more spells to the battlefield!");
+                    	continue innerloop;                    	
+                    }
                 } else if (tegevus == 3) {
-                    System.out.println("Not yet implemented");
+                   boolean placeSpellState = Manguvaljak.placeSpell(Manguvaljak.currentPlayer, Manguvaljak.currentOpponent);
+                   if (placeSpellState) {
+                	   placeSpellCount++;
+                   }
+                   if (placeSpellState == false) {
+                	   continue innerloop;
+                   }
                 } else if (tegevus == 4) {
                     if(attackCount == 0) {
-                        boolean attackState = Manguvaljak.attack(Manguvaljak.hetkeMangija, Manguvaljak.hetkeVastane);
+                        boolean attackState = Manguvaljak.attack(Manguvaljak.currentPlayer, Manguvaljak.currentOpponent);
                         if (attackState) {
                             attackCount++;
-                            if (Manguvaljak.hetkeVastane.getElud() <= 0) {
+                            if (Manguvaljak.currentOpponent.getElud() <= 0) {
                             	gameOverError = "LivesZero";
                             	break mainloop;
                             }
@@ -127,15 +144,15 @@ public class Main {
                     break;
                 }
             }
-            Mangija tempChanger = Manguvaljak.hetkeMangija;
-            Manguvaljak.hetkeMangija = Manguvaljak.hetkeVastane;
-            Manguvaljak.hetkeVastane = tempChanger;
+            Mangija tempChanger = Manguvaljak.currentPlayer;
+            Manguvaljak.currentPlayer = Manguvaljak.currentOpponent;
+            Manguvaljak.currentOpponent = tempChanger;
         }
         if (gameOverError.equals("DeckToZero")) {
-        	System.out.println("Congratulations, " + Manguvaljak.hetkeVastane.getNimi() + "!" + " Boohoo, " + Manguvaljak.hetkeMangija.getNimi() + " you suck.");
+        	System.out.println("Congratulations, " + Manguvaljak.currentOpponent.getNimi() + "!" + " Boohoo, " + Manguvaljak.currentPlayer.getNimi() + " you suck.");
         }
         else if (gameOverError.equals("LivesZero")) {
-        	System.out.println("Congratulations, " + Manguvaljak.hetkeMangija.getNimi() + "!" + " Boohoo, " + Manguvaljak.hetkeVastane.getNimi() + " you suck.");
+        	System.out.println("Congratulations, " + Manguvaljak.currentPlayer.getNimi() + "!" + " Boohoo, " + Manguvaljak.currentOpponent.getNimi() + " you suck.");
         }
         
         

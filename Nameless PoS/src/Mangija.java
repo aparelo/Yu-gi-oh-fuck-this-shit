@@ -4,6 +4,8 @@ public class Mangija {
 	private String nimi;
 	private int elud;
 	private int mana;
+	private int spellsOnField;
+	private int heroesOnField;
 	private ArrayList<Kaart> mangijaLaud;
 	private ArrayList<Kaart> mangijaKasi;
 	private ArrayList<Kaart> mangijaDeck;
@@ -14,6 +16,8 @@ public class Mangija {
 		this.nimi = nimi;
 		this.elud = 20;
 		this.mana = 20;
+		this.spellsOnField = 0;
+		this.heroesOnField = 0;
 		this.mangijaDeck = deck;
 		this.mangijaLaud = new ArrayList<Kaart>();
 		this.mangijaKasi = new ArrayList<Kaart>();
@@ -40,6 +44,22 @@ public class Mangija {
 	public void setMana(int mana) {
 		this.mana = mana;
 	}
+	public int getSpellsOnField() {
+		return spellsOnField;
+	}
+
+	public void setSpellsOnField(int spellsOnField) {
+		this.spellsOnField = spellsOnField;
+	}
+
+	public int getHeroesOnField() {
+		return heroesOnField;
+	}
+
+	public void setHeroesOnField(int heroesOnField) {
+		this.heroesOnField = heroesOnField;
+	}
+
 	public ArrayList<Kaart> getMangijaLaud() {
 		return mangijaLaud;
 	}
