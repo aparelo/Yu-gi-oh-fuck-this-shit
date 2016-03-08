@@ -54,9 +54,11 @@ public class Manguvaljak {
 						}
 					}
 					for (int indeks : tempBuffBuffers) {
+						kaartSurnuAeda(sinuValjak.getBuffers().get(indeks),currentPlayer);
 						sinuValjak.getBuffers().remove(indeks);
 					}
 					for (int indeks2 : tempVulnerabilityBuffers) {
+						kaartSurnuAeda(sinuValjak.getVulnerabilities().get(indeks2),currentPlayer);
 						sinuValjak.getVulnerabilities().remove(indeks2);
 					}
 					tempBuffBuffers = new ArrayList<>();
