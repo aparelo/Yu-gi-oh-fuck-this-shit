@@ -251,7 +251,7 @@ public class Manguvaljak {
 		}
 	}
 
-	public static boolean useSpell(Mangija currentPlayer, Mangija currentOpponent) {
+	public static boolean useSpell(Mangija currentPlayer, Mangija currentOpponent) { // Mingi kala sees
 		boolean playerHasSpells = false;
 		boolean playerHasPurges = false;
 		boolean playerHasBuffs = false;
