@@ -25,11 +25,11 @@
   </component>
   <component name="FileEditorManager">
     <leaf SIDE_TABS_SIZE_LIMIT_KEY="300">
-      <file leaf-file-name="Main.java" pinned="false" current-in-tab="true">
+      <file leaf-file-name="Main.java" pinned="false" current-in-tab="false">
         <entry file="file://$PROJECT_DIR$/Nameless PoS/src/Main.java">
           <provider selected="true" editor-type-id="text-editor">
-            <state vertical-scroll-proportion="0.57650274">
-              <caret line="86" column="36" selection-start-line="86" selection-start-column="36" selection-end-line="86" selection-end-column="36" />
+            <state vertical-scroll-proportion="0.0">
+              <caret line="126" column="35" selection-start-line="126" selection-start-column="35" selection-end-line="126" selection-end-column="35" />
               <folding>
                 <element signature="imports" expanded="true" />
               </folding>
@@ -37,16 +37,16 @@
           </provider>
         </entry>
       </file>
-      <file leaf-file-name="Manguvaljak.java" pinned="false" current-in-tab="false">
+      <file leaf-file-name="Manguvaljak.java" pinned="false" current-in-tab="true">
         <entry file="file://$PROJECT_DIR$/Nameless PoS/src/Manguvaljak.java">
           <provider selected="true" editor-type-id="text-editor">
-            <state vertical-scroll-proportion="0.0">
-              <caret line="62" column="65" selection-start-line="62" selection-start-column="65" selection-end-line="62" selection-end-column="65" />
+            <state vertical-scroll-proportion="0.48770493">
+              <caret line="60" column="73" selection-start-line="60" selection-start-column="73" selection-end-line="60" selection-end-column="73" />
               <folding>
                 <element signature="imports" expanded="true" />
-                <element signature="e#8312#8319#0" expanded="true" />
-                <element signature="e#8978#8985#0" expanded="true" />
-                <element signature="e#16784#16791#0" expanded="true" />
+                <element signature="e#8467#8474#0" expanded="true" />
+                <element signature="e#9133#9140#0" expanded="true" />
+                <element signature="e#16939#16946#0" expanded="true" />
               </folding>
             </state>
           </provider>
@@ -717,7 +717,13 @@
       <option name="project" value="LOCAL" />
       <updated>1457393856259</updated>
     </task>
-    <option name="localTasksCounter" value="7" />
+    <task id="LOCAL-00007" summary="All the spells can be removed.">
+      <created>1457446372296</created>
+      <option name="number" value="00007" />
+      <option name="project" value="LOCAL" />
+      <updated>1457446372297</updated>
+    </task>
+    <option name="localTasksCounter" value="8" />
     <servers />
   </component>
   <component name="ToolWindowManager">
@@ -790,9 +796,9 @@
           <caret line="0" column="0" selection-start-line="0" selection-start-column="0" selection-end-line="0" selection-end-column="0" />
           <folding>
             <element signature="imports" expanded="true" />
-            <element signature="e#8312#8319#0" expanded="true" />
-            <element signature="e#8978#8985#0" expanded="true" />
-            <element signature="e#16784#16791#0" expanded="true" />
+            <element signature="e#8467#8474#0" expanded="true" />
+            <element signature="e#9133#9140#0" expanded="true" />
+            <element signature="e#16939#16946#0" expanded="true" />
           </folding>
         </state>
       </provider>
@@ -925,9 +931,9 @@
           <caret line="0" column="0" selection-start-line="0" selection-start-column="0" selection-end-line="0" selection-end-column="0" />
           <folding>
             <element signature="imports" expanded="true" />
-            <element signature="e#8312#8319#0" expanded="true" />
-            <element signature="e#8978#8985#0" expanded="true" />
-            <element signature="e#16784#16791#0" expanded="true" />
+            <element signature="e#8467#8474#0" expanded="true" />
+            <element signature="e#9133#9140#0" expanded="true" />
+            <element signature="e#16939#16946#0" expanded="true" />
           </folding>
         </state>
       </provider>
@@ -1163,25 +1169,25 @@
         </state>
       </provider>
     </entry>
-    <entry file="file://$PROJECT_DIR$/Nameless PoS/src/Manguvaljak.java">
+    <entry file="file://$PROJECT_DIR$/Nameless PoS/src/Main.java">
       <provider selected="true" editor-type-id="text-editor">
         <state vertical-scroll-proportion="0.0">
-          <caret line="62" column="65" selection-start-line="62" selection-start-column="65" selection-end-line="62" selection-end-column="65" />
+          <caret line="126" column="35" selection-start-line="126" selection-start-column="35" selection-end-line="126" selection-end-column="35" />
           <folding>
             <element signature="imports" expanded="true" />
-            <element signature="e#8312#8319#0" expanded="true" />
-            <element signature="e#8978#8985#0" expanded="true" />
-            <element signature="e#16784#16791#0" expanded="true" />
           </folding>
         </state>
       </provider>
     </entry>
-    <entry file="file://$PROJECT_DIR$/Nameless PoS/src/Main.java">
+    <entry file="file://$PROJECT_DIR$/Nameless PoS/src/Manguvaljak.java">
       <provider selected="true" editor-type-id="text-editor">
-        <state vertical-scroll-proportion="0.57650274">
-          <caret line="86" column="36" selection-start-line="86" selection-start-column="36" selection-end-line="86" selection-end-column="36" />
+        <state vertical-scroll-proportion="0.48770493">
+          <caret line="60" column="73" selection-start-line="60" selection-start-column="73" selection-end-line="60" selection-end-column="73" />
           <folding>
             <element signature="imports" expanded="true" />
+            <element signature="e#8467#8474#0" expanded="true" />
+            <element signature="e#9133#9140#0" expanded="true" />
+            <element signature="e#16939#16946#0" expanded="true" />
           </folding>
         </state>
       </provider>
