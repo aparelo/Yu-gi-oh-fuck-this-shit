@@ -16,8 +16,10 @@ public class Main {
         String mangija2nimi = scan.next();
         System.out.println("Player 2 deck faili asukoht: ");
         String player2Deck = scan.next();
-        File deckFile1 = new File(player1Deck);
-        File deckFile2 = new File(player2Deck);
+        String relativePath = new File("Nameless Pos\\src\\" + player1Deck).getAbsolutePath();
+        String relativePath2 = new File("Nameless Pos\\src\\" + player2Deck).getAbsolutePath();
+        File deckFile1 = new File(relativePath);
+        File deckFile2 = new File(relativePath2);
         Scanner sc1 = new Scanner(deckFile1, "UTF-8");
         Scanner sc2 = new Scanner(deckFile2, "UTF-8");
         ArrayList<Kaart> deck1 = new ArrayList<>();
