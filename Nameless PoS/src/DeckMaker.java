@@ -5,7 +5,7 @@ import java.util.List;
 import java.util.Scanner;
 
 public class DeckMaker {
-    private static String cardBank = new File("Nameless Pos\\src\\Deck1.csv").getAbsolutePath();
+    private static String cardBank = new File("Nameless Pos\\src\\Deck1.csv").getAbsolutePath(); //Siia peab tegeliku Card Banki nime panema
     private static ArrayList<String> cardBankList = new ArrayList<>();
 
 
