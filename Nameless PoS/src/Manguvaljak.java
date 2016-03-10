@@ -1,8 +1,8 @@
 import java.util.ArrayList;
 import java.util.Scanner;
 public class Manguvaljak {
-	 static Mangija currentPlayer;
-	 static Mangija currentOpponent;
+	  static Mangija currentPlayer;
+	  static Mangija currentOpponent;
 
 	    public static void uusKaik() throws InterruptedException {
 	        System.out.println("It's " + currentPlayer.getNimi() + "'s turn.");
@@ -93,8 +93,7 @@ public class Manguvaljak {
 	    	}
 	    	else {
 	        mangija.getMangijaKasi().remove(nimi);
-	        mangija.getMangijaLaud().add(nimi);
-	        mangija.setMangijaLaud(mangija.getMangijaLaud());
+	        mangija.getMangijaLaud().add(nimi); // removed getLaud.setLaud
 	        if (nimi.getTyyp().equals("Hero")) {
 	        	int tempHeroesOnField = mangija.getHeroesOnField() + 1;
 	        	mangija.setHeroesOnField(tempHeroesOnField);
@@ -141,6 +140,7 @@ public class Manguvaljak {
 		}
 		hero.getBuffers().add(spell);
 		spell.setOlek(true);
+		spell.setActivity(true);
 	}
 	public static void purge(Mangija mangija, Kaart hero, Kaart spell) {
 		ArrayList<Kaart> mangijaLaud = mangija.getMangijaLaud();
@@ -191,6 +191,7 @@ public class Manguvaljak {
 			
 		hero.getVulnerabilities().add(spell);
 		spell.setOlek(true);
+		spell.setActivity(true);
 	}
 	public static boolean attack(Mangija currentPlayer, Mangija currentOpponent) {
 		boolean heroArvMangijal = false;
@@ -251,18 +252,35 @@ public class Manguvaljak {
 		}
 	}
 
-	public static boolean useSpell(Mangija currentPlayer, Mangija currentOpponent) { // Mingi kala sees
+	public static boolean useSpell(Mangija currentPlayer, Mangija currentOpponent) { 
 		boolean playerHasSpells = false;
-		boolean playerHasPurges = false;
 		boolean playerHasBuffs = false;
 		boolean playerHasVulnerabilities = false;
+		boolean playerHasPurges = false;
 		boolean playerHasHeroes = false;
 		boolean opponentHasHeroes = false;
 		for (Kaart kaart : currentPlayer.getMangijaLaud()) {
 			if (kaart.getTyyp().equals("Hero")) {
 				playerHasHeroes = true;
-				break;
 			}
+			if (kaart.getTyyp().equals("Spell")) {
+				if (kaart.getAlamTyyp().equals("Buff") && kaart.isActivity() == false) {
+					playerHasSpells = true;
+					playerHasBuffs = true;
+				}
+				if (kaart.getAlamTyyp().equals("Purge")) {
+					playerHasSpells = true;
+					playerHasPurges = true;
+				}
+				if (kaart.getAlamTyyp().equals("Vulnerability") && kaart.isActivity() == false) {
+					playerHasSpells = true;
+					playerHasVulnerabilities = true;
+				}
+			}
+		}
+		if (playerHasSpells == false) {
+			System.out.println("You don't have any spells on the battlefield to use!");
+			return false;
 		}
 		for (Kaart kaart : currentOpponent.getMangijaLaud()) {
 			if (kaart.getTyyp().equals("Hero")) {
@@ -274,14 +292,9 @@ public class Manguvaljak {
 			System.out.println("You cannot add any more cards to the battlefield!");
 			return false;
 		}
-		if (currentPlayer.getSpellsOnField() == 0) {
-			System.out.println("You don't have any spells on the battlefield to use!");
-			return false;
-		}
         ArrayList <String> tempSpellType = new ArrayList<>();
 		for (Kaart kaart : currentPlayer.getMangijaLaud()) {
-			if (kaart.getTyyp().equals("Spell")) {
-				playerHasSpells = true;
+			if (kaart.getTyyp().equals("Spell") && kaart.isOlek() == false) {
 				if (kaart.getAlamTyyp().equals("Purge")) {
 					if (tempSpellType.contains("Purge")) {
 						continue;
@@ -348,7 +361,9 @@ public class Manguvaljak {
 							}
 						}
 						String heroChoice = scan.next();
-						purge(currentPlayer,tempHerod.get(Integer.parseInt(heroChoice) - 1), tempSpells.get(Integer.parseInt(spellChoice) - 1));
+						Kaart purgeHero = tempHerod.get(Integer.parseInt(heroChoice) - 1);
+						Kaart purgeSpell = tempSpells.get(Integer.parseInt(spellChoice) - 1);
+						purge(currentOpponent,purgeHero, purgeSpell);
 						System.out.println("Card purged!");
 						return true;
 					}
@@ -365,8 +380,10 @@ public class Manguvaljak {
 				}
 
 					String heroChoice = scan.next();
-					purge(currentOpponent,tempHerod.get(Integer.parseInt(heroChoice) - 1), tempSpells.get(Integer.parseInt(spellChoice) - 1));
-					System.out.println("Card purged!");
+					Kaart purgeHero = tempHerod.get(Integer.parseInt(heroChoice) - 1);
+					Kaart purgeSpell = tempSpells.get(Integer.parseInt(spellChoice) - 1);
+					purge(currentOpponent,purgeHero, purgeSpell);
+					System.out.println(purgeHero.getNimi() + " purged! Heroes stats now: \n" + "Attack: " + purgeHero.getAttack() + "\n" + "Defence: " + purgeHero.getDefence());
 					return true;
 		}
 				}
@@ -400,7 +417,7 @@ public class Manguvaljak {
 					Kaart buffHero = tempHerod.get(Integer.parseInt(heroChoice) - 1);
 					Kaart buffSpell = tempSpells.get(Integer.parseInt(spellChoice) - 1);
 					buffPlacement(currentPlayer,buffHero,buffSpell);
-					System.out.println("Buff placed on " + buffHero.getNimi());
+					System.out.println("Buff placed on " + buffHero.getNimi() + "." + "Heroes stats now:\n" + "Attack: " + buffHero.getAttack() + "\n" + "Defence: " + buffHero.getDefence());
 					buffSpell.setOlek(true);
 					return true;
 				}
@@ -434,14 +451,14 @@ public class Manguvaljak {
 					Kaart vulnerableHero = tempHerod.get(Integer.parseInt(heroChoice) - 1);
 					Kaart vulnerableSpell = tempSpells.get(Integer.parseInt(spellChoice) - 1);
 					vulnerabilityPlacement(currentPlayer, currentOpponent, vulnerableHero, vulnerableSpell);
-					System.out.println("Vulnerability placed on " + vulnerableHero.getNimi());
+					System.out.println("Vulnerability placed on " + vulnerableHero.getNimi() + "." + " Heroes stats now:\n " + "Attack: " + vulnerableHero.getAttack() + "\n" + "Defence: " + vulnerableHero.getDefence());
 					vulnerableSpell.setOlek(true);
 					return true;
 			}
-} //MethodBody
+} 
 			return false;
-} //ClassBody
-	public static boolean placeSpell(Mangija currentPlayer, Mangija currentOpponent) {
+} 
+	public static boolean placeSpell(Mangija currentPlayer) {
 		boolean heroHasSpells = false;
         Scanner scan = new Scanner(System.in);
         int i = 1;

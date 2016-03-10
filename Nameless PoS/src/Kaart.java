@@ -21,6 +21,7 @@ public class Kaart {
 	private ArrayList<Kaart> buffers;
 	private ArrayList<Kaart> vulnerabilities;
 	private boolean olek; // True - faceup, False, facedown
+	private boolean activity;
 
 	public Kaart(String nimi, int attack, int defence, int rank, String eriatribuut, String alamTyyp) {
 		this.nimi = nimi;
@@ -49,6 +50,7 @@ public class Kaart {
 		this.tugevus = tugevus;
 		this.length = length;
 		this.moveCount = 0;
+		this.activity = false;
 	}
 
 	public String getNimi() {
@@ -171,6 +173,12 @@ public class Kaart {
 	}
 	public void setOlek(boolean olek) {
 		this.olek = olek;
+	}
+	public boolean isActivity() {
+		return activity;
+	}
+	public void setActivity(boolean activity) {
+		this.activity = activity;
 	}
 
 

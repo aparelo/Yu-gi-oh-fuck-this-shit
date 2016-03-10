@@ -4,9 +4,6 @@ import java.util.ArrayList;
 import java.util.List;
 import java.util.Scanner;
 
-/**
- * Created by aleksander on 10-Mar-16.
- */
 public class DeckMaker {
     private static String cardBank = new File("Nameless Pos\\src\\Deck1.csv").getAbsolutePath();
     private static ArrayList<String> cardBankList = new ArrayList<>();

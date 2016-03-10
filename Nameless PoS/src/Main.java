@@ -5,19 +5,19 @@ import java.io.File;
 import java.util.ArrayList;
 public class Main {
     public static void main(String[] args) throws Exception {
-        System.out.println("Tere tulemast kaardimangu Not quite Yu-Gi-Oh! Alustamiseks sisestage oma nimi ja Deckid");
+        System.out.println("Welcome to Not Quite Yu-Gi-Oh! To start, enter your names and your decks.");
         Scanner scan = new Scanner(System.in);
         //Kusi kasutajalt deckide asukohti ja mängijate nimi.
-        System.out.println("Mängija 1 nimi:");
+        System.out.println("Player 1 name:");
         String mangija1nimi = scan.next();
-        System.out.println("Player 1 deck faili asukoht: ");
+        System.out.println("Player 1 deck file location: ");
         String player1Deck = scan.next();
-        System.out.println("Mängija 2 nimi:");
+        System.out.println("Player 2 name:");
         String mangija2nimi = scan.next();
-        System.out.println("Player 2 deck faili asukoht: ");
+        System.out.println("Player 2 deck file location: ");
         String player2Deck = scan.next();
-        String relativePath = new File("Nameless Pos\\src\\" + player1Deck).getAbsolutePath();
-        String relativePath2 = new File("Nameless Pos\\src\\" + player2Deck).getAbsolutePath();
+        String relativePath = new File("src\\" + player1Deck).getAbsolutePath();
+        String relativePath2 = new File("src\\" + player2Deck).getAbsolutePath();
         File deckFile1 = new File(relativePath);
         File deckFile2 = new File(relativePath2);
         Scanner sc1 = new Scanner(deckFile1, "UTF-8");
@@ -46,7 +46,7 @@ public class Main {
                 Kaart tempCard = new Kaart(kaartSplit[0],Integer.parseInt(kaartSplit[2]),Integer.parseInt(kaartSplit[3]),Integer.parseInt(kaartSplit[4]),kaartSplit[5],kaartSplit[6]);
                 deck2.add(tempCard);
             } else {
-                Kaart tempCard = new Kaart(kaartSplit[0],kaartSplit[2],Integer.parseInt(kaartSplit[3]),kaartSplit[4],Integer.parseInt(kaartSplit[5]), Integer.parseInt(kaartSplit[6]));
+                Kaart tempCard = new Kaart(kaartSplit[0],kaartSplit[4],Integer.parseInt(kaartSplit[3]),kaartSplit[2],Integer.parseInt(kaartSplit[5]), Integer.parseInt(kaartSplit[6]));
                 deck2.add(tempCard);
             }
         }
@@ -87,26 +87,38 @@ public class Main {
             int useSpellCount = 0; // Nulli useSpellCount
             int placeSpellCount = 0;//Nulli placeSpellCount
            	innerloop: while(true) {
-                System.out.println("Sisesta tegevuse number, mida soovid teha:\n 1) Aseta hero valjakule\n 2) Kasuta spelli \n 3) Pane spell lauale \n 4) Attack! \n 5) Lõpeta käik\n");
+                System.out.println("Enter the number of action you wish to do:\n 1) Place a hero on the battlefield\n 2) Use a spell \n 3) Place a spell on the battlefield\n 4) Attack! \n 5) End your turn\n");
                 int tegevus = Integer.parseInt(scan.next());
                 if (tegevus == 1) {
-                    System.out.println("Vali kaart, mida soovid lauale panna: ");
-                    int indeks = 1;
+                    ArrayList<Kaart> tempHerod = new ArrayList<>();
                     for(Kaart kaart: Manguvaljak.currentPlayer.getMangijaKasi()){
-                        System.out.println(indeks +") "+  kaart +"\n");
-                        indeks++;
+                    	if (kaart.getTyyp().equals("Hero")) {
+                    		tempHerod.add(kaart);
+                    }
+                    }
+                    if (tempHerod.size() == 0) {
+                    	System.out.println("You don't have any heroes to add to the battlefield!");
+                    	continue innerloop;
+                    }
+                    if (Manguvaljak.currentPlayer.getHeroesOnField() == 5) {
+                    	System.out.println("You cannot add any more heroes to the battlefield!");
+                    	continue innerloop;
+                    }
+                    System.out.println("Choose the hero you want to place on the battlefield:\n");
+                    int indeks = 1;
+                    for (Kaart kaart : tempHerod) {
+                		System.out.println(indeks +") "+  kaart +"\n");
+                		indeks++;
                     }
                     int kaartToLaud = Integer.parseInt(scan.next())-1;
-                    boolean onnestus = Manguvaljak.kaartLauale(Manguvaljak.currentPlayer.getMangijaKasi().get(kaartToLaud),Manguvaljak.currentPlayer);
+                    Kaart heroChoice = tempHerod.get(kaartToLaud);
+                    boolean onnestus = Manguvaljak.kaartLauale(heroChoice,Manguvaljak.currentPlayer);
                     if(onnestus){
-                        System.out.println("Kaart asetatud.");
-                        System.out.println("Manguvali:");
+                        System.out.println(heroChoice.getNimi() + " added to the battlefield!");
+                        System.out.println("Battlefield: ");
                         for(Kaart kaart: Manguvaljak.currentPlayer.getMangijaLaud()) {
                             System.out.println(kaart);
                         }
-                    }
-                    else {
-                        System.out.println("Kaardi asetamine ebaonnestus!");
                     }
                 } else if (tegevus == 2) {
                     boolean useSpellState = Manguvaljak.useSpell(Manguvaljak.currentPlayer, Manguvaljak.currentOpponent);
@@ -121,6 +133,10 @@ public class Main {
                     	continue innerloop;                    	
                     }
                 } else if (tegevus == 3) {
+                    if (Manguvaljak.currentPlayer.getSpellsOnField() == 5) {
+                    	System.out.println("You cannot add any more spells to the battlefield!");
+                    	continue innerloop;
+                    }
                    boolean placeSpellState = Manguvaljak.placeSpell(Manguvaljak.currentPlayer);
                    if (placeSpellState) {
                 	   placeSpellCount++;
