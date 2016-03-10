@@ -119,7 +119,7 @@ public class Main {
                     	continue innerloop;                    	
                     }
                 } else if (tegevus == 3) {
-                   boolean placeSpellState = Manguvaljak.placeSpell(Manguvaljak.currentPlayer, Manguvaljak.currentOpponent);
+                   boolean placeSpellState = Manguvaljak.placeSpell(Manguvaljak.currentPlayer);
                    if (placeSpellState) {
                 	   placeSpellCount++;
                    }
