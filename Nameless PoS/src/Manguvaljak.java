@@ -127,28 +127,7 @@ public class Manguvaljak {
 	        mangija.getMangijaDeck().remove(0);
 	    }
 
-	public static void buffPlacement(Mangija mangija, Kaart hero, Kaart spell) {
-		ArrayList<Kaart> mangijaLaud = mangija.getMangijaLaud();
-		for (Kaart kaart : mangijaLaud) {
-			if (kaart.equals(hero)) {
-				if (spell.getEffekt().equals("Attack")) {
-					int attackBuff = hero.getAttackBuff() + spell.getTugevus();
-					hero.setAttackBuff(attackBuff);
-					int attack = hero.getAttack() + spell.getTugevus();
-					hero.setAttack(attack);
-				}
-				else {
-					int defenceBuff = hero.getDefenceBuff() + spell.getTugevus();
-					hero.setDefenceBuff(defenceBuff);
-					int defence = hero.getDefence() + spell.getTugevus();
-					hero.setDefence(defence);
-				}
-			}
-		}
-		hero.getBuffers().add(spell);
-		spell.setOlek(true);
-		spell.setActivity(true);
-	}
+
 	public static void purge(Mangija mangija, Kaart hero, Kaart spell) {
 		ArrayList<Kaart> mangijaLaud = mangija.getMangijaLaud();
 		for (Kaart kaart : mangijaLaud) {
@@ -180,25 +159,6 @@ public class Manguvaljak {
 		hero.setBuffers(new ArrayList<Kaart>());
 		hero.setVulnerabilities(new ArrayList<Kaart>());
 		kaartSurnuAeda(spell, mangija);
-	}
-	public static void vulnerabilityPlacement(Mangija currentPlayer, Mangija currentOpponent, Kaart hero, Kaart spell) {
-				if(spell.getEffekt().equals("Attack")) {
-					int attackVulnerability = hero.getAttackVulnerability() + spell.getTugevus();
-					hero.setAttackVulnerability(attackVulnerability);
-					int attack = hero.getAttack() - spell.getTugevus();
-					hero.setAttack(attack);
-				}
-				else {
-					int defenceVulnerability = hero.getDefenceVulnerability() + spell.getTugevus();
-					hero.setDefenceVulnerability(defenceVulnerability);
-					int defence = hero.getDefence() - spell.getTugevus();
-					hero.setDefence(defence);
-				}
-				
-			
-		hero.getVulnerabilities().add(spell);
-		spell.setOlek(true);
-		spell.setActivity(true);
 	}
 	public static boolean attack(Mangija currentPlayer, Mangija currentOpponent) {
 		boolean heroArvMangijal = false;
@@ -336,7 +296,6 @@ public class Manguvaljak {
 				i++;
 			}
 			String valik = scan.next();
-			for (int k = 0; k < 1;k++) {
 				String type = tempSpellType.get(Integer.parseInt(valik) - 1);
 				if (type.equals("Purge")) {
 					if (playerHasHeroes == false && opponentHasHeroes == false) {
@@ -462,9 +421,7 @@ public class Manguvaljak {
 					vulnerableSpell.setOlek(true);
 					return true;
 			}
-} 
-			return false;
-} 
+}
 	public static boolean placeSpell(Mangija currentPlayer) {
 		boolean heroHasSpells = false;
         Scanner scan = new Scanner(System.in);
