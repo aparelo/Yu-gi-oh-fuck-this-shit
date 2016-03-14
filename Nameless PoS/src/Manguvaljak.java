@@ -88,6 +88,13 @@ public class Manguvaljak {
 	        }
 	    }
 	    public static boolean kaartLauale(Kaart nimi, Mangija mangija) {
+	    	if (Mangija.getMana() < Kaart.getManaPoints()) {
+	    		System.out.println("You don't have enough mana to play this card!");
+	    		return false;
+	    	}
+	    	else {
+	    		Mangija.setMana(Mangija.getMana() - Kaart.getManaPoints());
+	    	}
 	    	if (mangija.getMangijaLaud().size() == 10) {
 	    		return false;
 	    	}

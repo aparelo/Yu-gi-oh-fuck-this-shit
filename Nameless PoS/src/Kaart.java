@@ -13,7 +13,7 @@ public class Kaart {
 	private int defenceBuff;//Hero
 	private int attackVulnerability; //Hero
 	private int defenceVulnerability; // Hero
-	private int manaPoints; //Spell
+	private static int manaPoints; //Spell
 	private String effekt; //Spell
 	private int tugevus; //Spell
 	private int length; // Spell
@@ -126,7 +126,7 @@ public class Kaart {
 	public void setDefenceVulnerability(int defenceVulnerability) {
 		this.defenceVulnerability = defenceVulnerability;
 	}
-	public int getManaPoints() {
+	public static int getManaPoints() {
 		return manaPoints;
 	}
 	public void setManaPoints(int manaPoints) {
