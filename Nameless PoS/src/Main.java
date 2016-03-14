@@ -16,8 +16,8 @@ public class Main {
         String mangija2nimi = scan.next();
         System.out.println("Player 2 deck file location: ");
         String player2Deck = scan.next();
-        String relativePath = new File("src\\" + player1Deck).getAbsolutePath();
-        String relativePath2 = new File("src\\" + player2Deck).getAbsolutePath();
+        String relativePath = new File("Nameless PoS\\src\\" + player1Deck).getAbsolutePath();
+        String relativePath2 = new File("Nameless PoS\\src\\" + player2Deck).getAbsolutePath();
         File deckFile1 = new File(relativePath);
         File deckFile2 = new File(relativePath2);
         Scanner sc1 = new Scanner(deckFile1, "UTF-8");
@@ -82,11 +82,10 @@ public class Main {
                 Manguvaljak.currentPlayer.setMangijaDeck(tempDeck);
                 Manguvaljak.currentPlayer.setMangijaKasi(tempKasi);
             }
-            Manguvaljak.uusKaik();
+            Kaik.uusKaik();
             int attackCount = 0; // Nulli attackCount
             int useSpellCount = 0; // Nulli useSpellCount
-            int placeSpellCount = 0;//Nulli placeSpellCount
-           	innerloop: while(true) {
+           	while(true) { //Main loop
                 System.out.println("Enter the number of action you wish to do:\n 1) Place a hero on the battlefield\n 2) Use a spell \n 3) Place a spell on the battlefield\n 4) Attack! \n 5) End your turn\n");
                 int tegevus = Integer.parseInt(scan.next());
                 if (tegevus == 1) {
@@ -98,11 +97,11 @@ public class Main {
                     }
                     if (tempHerod.size() == 0) {
                     	System.out.println("You don't have any heroes to add to the battlefield!");
-                    	continue innerloop;
+                    	continue;
                     }
                     if (Manguvaljak.currentPlayer.getHeroesOnField() == 5) {
                     	System.out.println("You cannot add any more heroes to the battlefield!");
-                    	continue innerloop;
+                    	continue;
                     }
                     System.out.println("Choose the hero you want to place on the battlefield:\n");
                     int indeks = 1;
@@ -125,24 +124,21 @@ public class Main {
                     if (useSpellState) {
                     	useSpellCount++;
                     }
-                    if (useSpellState == false) {
-                    	continue innerloop;
+                    else {
+                    	continue;
                     }
                     if (useSpellCount == 5 || Manguvaljak.currentPlayer.getSpellsOnField() == 5) {
                     	System.out.println("You cannot add any more spells to the battlefield!");
-                    	continue innerloop;                    	
                     }
                 } else if (tegevus == 3) {
                     if (Manguvaljak.currentPlayer.getSpellsOnField() == 5) {
                     	System.out.println("You cannot add any more spells to the battlefield!");
-                    	continue innerloop;
+                    	continue;
                     }
                    boolean placeSpellState = Manguvaljak.placeSpell(Manguvaljak.currentPlayer);
-                   if (placeSpellState) {
-                	   placeSpellCount++;
-                   }
-                   if (placeSpellState == false) {
-                	   continue innerloop;
+
+                   if(!placeSpellState){
+                       System.out.println("You don't have any spells to place on the battlefield!");
                    }
                 } else if (tegevus == 4) {
                     if(attackCount == 0) {
