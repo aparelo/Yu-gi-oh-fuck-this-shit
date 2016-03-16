@@ -1,16 +1,12 @@
-Dispel,Spell,"Dispel",6,Purge,0,3
+Dispel,Spell,Dispel,6,Purge,0,3
 Poison,Spell,Defence,5,Vulnerability,1,3
-Enchantress,Hero,3,6,4,-,Tank
+Enchantress,Hero,3,6,4,5,-,Tank
 Corrosive Touch,Spell,Defence,6,Vulnerability,3,3
 Minotaur's skin,Spell,Defence,5,Buff,4,3
-Sphinx,Hero,4,5,4,-,Tank
-Cyclops,Hero,5,6,6,-,Tank
+Sphinx,Hero,4,5,4,3,-,Tank
+Cyclops,Hero,5,6,6,6,-,Tank
 Chimera's Breath,Spell,Attack,7,Buff,2,4
-Chimera,Hero,6,2,4,-,Assassin
-Hydra,Hero,7,3,6,-,Tank
-Uranus,Spell,Attack",5,Vulnerability,4,3
-Cerberus,Hero,5,3,5,-,Assassin
-Chimera,Hero,6,2,4,-,Assassin
-Hydra,Hero,7,3,6,-,Tank
-Uranus,Spell,Attack",5,Vulnerability,4,3
-Cerberus,Hero,5,3,5,-,Assassin
+Chimera,Hero,6,2,4,4,-,Assassin
+Hydra,Hero,7,3,6,6,-,Tank
+Uranus,Spell,Attack,5,Vulnerability,4,3
+Cerberus,Hero,5,3,5,4,-,Assassin

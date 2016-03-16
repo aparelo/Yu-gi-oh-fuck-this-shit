@@ -12,7 +12,7 @@ public class Hero extends Kaart {
 	private int defenceBuff;//Hero
 	private int attackVulnerability; //Hero
 	private int defenceVulnerability; // Hero
-	private static int manaPoints; //Spell
+	private int manaPoints; //Spell
 	private int moveCount; //Kaikude counter
 	private ArrayList<Kaart> buffers;
 	private ArrayList<Kaart> vulnerabilities;
@@ -174,7 +174,7 @@ public class Hero extends Kaart {
 
 
 
-	public static int getManaPoints() {
+	public int getManaPoints() {
 		return manaPoints;
 	}
 
@@ -182,7 +182,7 @@ public class Hero extends Kaart {
 
 
 	public void setManaPoints(int manaPoints) {
-		Hero.manaPoints = manaPoints;
+		this.manaPoints = manaPoints;
 	}
 
 
@@ -236,7 +236,7 @@ public class Hero extends Kaart {
 		this.attack = attack;
 		this.defence = defence;
 		this.rank = rank;
-		Hero.manaPoints = manaPoints;
+		this.manaPoints = manaPoints;
 		this.eriatribuut = eriatribuut;
 		this.alamTyyp = alamTyyp;
 		this.attackBuff = 0;

@@ -13,7 +13,7 @@ public abstract class Kaart {
 	private  int defenceBuff;//Hero
 	private  int attackVulnerability; //Hero
 	private  int defenceVulnerability; // Hero
-	private static int manaPoints; //Spell
+	private  int manaPoints; //Spell
 	private  String effekt; //Spell
 	private  int tugevus; //Spell
 	private  int length; // Spell
@@ -40,13 +40,21 @@ public abstract class Kaart {
 		return attack;
 	}
 	public  void setAttack(int attack) {
-		this.attack = attack;
+		if (attack < 0) {
+			this.attack = 0;
+		} else {
+			this.attack = attack;
+		}
 	}
 	public int getDefence() {
 		return defence;
 	}
 	public  void setDefence(int defence) {
-		this.defence = defence;
+		if (defence < 0) {
+			this.defence = 0;
+		} else {
+			this.defence = defence;
+		}
 	}
 	public int getRank() {
 		return rank;
@@ -87,7 +95,14 @@ public abstract class Kaart {
 	}
 
 	public  void setAttackVulnerability(int attackVulnerability) {
-		this.attackVulnerability = attackVulnerability;
+		if(this.getAttack() - attackVulnerability < 0) {
+			int tempNeg = this.getAttack()-attackVulnerability;
+			this.attackVulnerability = attackVulnerability+tempNeg;
+		}
+		else {
+			this.attackVulnerability = attackVulnerability;
+		}
+
 	}
 
 	public int getDefenceVulnerability() {
@@ -95,14 +110,20 @@ public abstract class Kaart {
 	}
 
 	public  void setDefenceVulnerability(int defenceVulnerability) {
-		this.defenceVulnerability = defenceVulnerability;
+		if(this.getDefence() - defenceVulnerability < 0) {
+			int tempNeg = this.getDefence()-defenceVulnerability;
+			this.defenceVulnerability = defenceVulnerability+tempNeg;
+		}
+		else {
+			this.defenceVulnerability = defenceVulnerability;
+		}
 	}
-	public static int getManaPoints() {
+	public  int getManaPoints() {
 		return manaPoints;
 	}
 	
 	public void setManaPoints(int manaPoints) {
-		Kaart.manaPoints = manaPoints;
+		this.manaPoints = manaPoints;
 	}
 	public String getEffekt() {
 		return effekt;

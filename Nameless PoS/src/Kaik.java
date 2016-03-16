@@ -5,19 +5,25 @@ import java.util.ArrayList;
  */
 public class Kaik extends Manguvaljak {
     public static void uusKaik() throws InterruptedException {
+        currentPlayer.setMana(currentPlayer.getMana() + 1);
         System.out.println("It's " + currentPlayer.getNimi() + "'s turn.");
         for(int i=10;i>0;i--) {
-            System.out.println("Displaying cards in " + i);
-            Thread.sleep(250); //Delay for new turn count
+            System.out.println("Displaying cards in " + i + "\n");
+            Thread.sleep(50); //Delay for new turn count
         }
+        System.out.println("Lives: " + currentPlayer.getElud() + "\n Mana: " + currentPlayer.getMana() + "\n Cards in deck: " + currentPlayer.getMangijaDeck().size());
+        System.out.println("Opponents lives: " + currentOpponent.getElud());
+
         System.out.println("Your cards are: ");
         for(Kaart kaesKaart: currentPlayer.getMangijaKasi()){
             System.out.println(kaesKaart + "\n");
         }
         System.out.println("The field: ");
-        System.out.println("your side: ");
+        System.out.println("Your side: ");
         ArrayList<Integer> tempBuffBuffers = new ArrayList<>();
         ArrayList<Integer> tempVulnerabilityBuffers = new ArrayList<>();
+        ArrayList<Kaart> tempHeroes = new ArrayList<>();
+        ArrayList<Kaart> tempSpells = new ArrayList<>();
         for(Kaart sinuValjak: currentPlayer.getMangijaLaud()) {
             if(sinuValjak.getTyyp().equals("Hero")) {
                 if (sinuValjak.getBuffers().size() != 0) {
@@ -34,10 +40,8 @@ public class Kaik extends Manguvaljak {
                             }
                         }
                     }
-                } else {
-                    continue;
                 }
-                if (sinuValjak.getVulnerabilities().size() != 0) {
+                else if (sinuValjak.getVulnerabilities().size() != 0) {
                     for (int j = 0; j < sinuValjak.getVulnerabilities().size(); j++) {
                         if (sinuValjak.getVulnerabilities().get(j).getLength() == sinuValjak.getVulnerabilities().get(j).getMoveCount()) {
                             if (sinuValjak.getVulnerabilities().get(j).getEffekt().equals("Attack")) {
@@ -50,19 +54,20 @@ public class Kaik extends Manguvaljak {
                                 tempVulnerabilityBuffers.add(j);
                             }
                         }
+
                     }
                 }
-                for (int indeks : tempBuffBuffers) {
-                    kaartSurnuAeda(sinuValjak.getBuffers().get(indeks),currentPlayer);
-                    sinuValjak.getBuffers().remove(indeks);
+                for (int k=tempBuffBuffers.size()-1;k>=0;k--) {
+                    kaartSurnuAeda(sinuValjak.getBuffers().get(k),currentPlayer);
+                    sinuValjak.getBuffers().remove(k);
                 }
-                for (int indeks2 : tempVulnerabilityBuffers) {
-                    kaartSurnuAeda(sinuValjak.getVulnerabilities().get(indeks2),currentPlayer);
-                    sinuValjak.getVulnerabilities().remove(indeks2);
+                for (int l=tempVulnerabilityBuffers.size()-1; l>=0;l--) {
+                    kaartSurnuAeda(sinuValjak.getVulnerabilities().get(l),currentOpponent);
+                    sinuValjak.getVulnerabilities().remove(l);
                 }
+                System.out.println(sinuValjak);
                 tempBuffBuffers = new ArrayList<>();
                 tempVulnerabilityBuffers = new ArrayList<>();
-                System.out.println(sinuValjak);
             }
             else if(sinuValjak.getTyyp().equals("Spell") && sinuValjak.isOlek()) {
                 System.out.println(sinuValjak);

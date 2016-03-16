@@ -4,7 +4,7 @@ public class Buff extends Kaart {
 	private String nimi; //Hero, Spell
 	private String tyyp; //Hero, Spell
 	private String alamTyyp; //Hero, Spell
-	private static int manaPoints; //Spell
+	private int manaPoints; //Spell
 	private String effekt; //Spell
 	private int tugevus; //Spell
 	private int length; // Spell
@@ -17,7 +17,7 @@ public class Buff extends Kaart {
 		this.nimi = nimi;
 		this.tyyp = "Spell";
 		this.alamTyyp = alamTyyp;
-		Buff.manaPoints = manaPoints;
+		this.manaPoints = manaPoints;
 		this.effekt = effekt;
 		this.tugevus = tugevus;
 		this.length = length;
@@ -57,13 +57,13 @@ public class Buff extends Kaart {
 	}
 
 
-	public static int getManaPoints() {
+	public int getManaPoints() {
 		return manaPoints;
 	}
 
 
 	public void setManaPoints(int manaPoints) {
-		Buff.manaPoints = manaPoints;
+		this.manaPoints = manaPoints;
 	}
 
 

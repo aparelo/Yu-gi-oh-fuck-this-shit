@@ -3,7 +3,7 @@ public class Mangija {
 	
 	private String nimi;
 	private int elud;
-	private static int mana;
+	private int mana;
 	private int spellsOnField;
 	private int heroesOnField;
 	private ArrayList<Kaart> mangijaLaud;
@@ -15,7 +15,7 @@ public class Mangija {
 	public Mangija(String nimi, ArrayList <Kaart> deck) {
 		this.nimi = nimi;
 		this.elud = 20;
-		this.mana = 20;
+		this.mana = 19;
 		this.spellsOnField = 0;
 		this.heroesOnField = 0;
 		this.mangijaDeck = deck;
@@ -38,11 +38,11 @@ public class Mangija {
 		this.elud = elud;
 	}
 
-	public static int getMana() {
+	public int getMana() {
 		return mana;
 	}
-	public static void setMana(int mana) {
-		Mangija.mana = mana;
+	public void setMana(int mana) {
+		this.mana = mana;
 	}
 	public int getSpellsOnField() {
 		return spellsOnField;
@@ -86,7 +86,7 @@ public class Mangija {
 		this.mangijaSurnuAed = mangijaSurnuAed;
 	}
 	public String toString() {
-		return "Mängija nimi: " + nimi + " Elud: " + elud + " Mana: " + mana;
+		return "Mï¿½ngija nimi: " + nimi + " Elud: " + elud + " Mana: " + mana;
 	}
 
 	
