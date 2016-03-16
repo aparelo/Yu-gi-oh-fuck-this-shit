@@ -288,6 +288,59 @@ public class Manguvaljak{
 						System.out.println(j + ")" + kaart);
 						j++;
 					}
+
+		String type = tempSpellType.get(Integer.parseInt(valik) - 1);
+		if (type.equals("Purge")) {
+			if (!playerHasHeroes && !opponentHasHeroes) {
+				System.out.println("There are no heroes to purge!");
+				return false;
+			}
+			System.out.println("Choose the card, you want to use:\n"); // Kaardi valik, millega purgeitakse
+			int l = 1;
+			ArrayList<Kaart> tempSpells = new ArrayList<>();
+			for (Kaart kaart : currentPlayer.getMangijaLaud()) {
+				if (kaart.getAlamTyyp().equals("Purge")) {
+					tempSpells.add(kaart);
+					System.out.println(l + ")" + kaart);
+					l++;
+				}
+			}
+			String spellChoice = scan.next(); // Vali kaart millega Purge.
+			System.out.println("Do you want to purge your own hero or the enemies hero:\n 1) My own hero\n 2) The enemies hero");
+			String valik2 = scan.next();
+			if (valik2.equals("1") && playerHasHeroes) {
+				System.out.println("Choose the hero, you want to purge:\n");
+				int j = 1;
+				ArrayList<Kaart> tempHerod = new ArrayList<>();
+				for (Kaart kaart : currentPlayer.getMangijaLaud()) {
+					if (kaart.getTyyp().equals("Hero")) {
+						tempHerod.add(kaart);
+						System.out.println(j + ")" + kaart);
+						j++;
+					}
+				}
+				String heroChoice = scan.next();
+				Kaart purgeHero = tempHerod.get(Integer.parseInt(heroChoice) - 1);
+				Kaart purgeSpell = tempSpells.get(Integer.parseInt(spellChoice) - 1);
+				Purge.purge(currentOpponent, purgeHero, purgeSpell);
+				kaartSurnuAeda(purgeSpell,currentPlayer);
+				System.out.println("Card purged!");
+				return true;
+			}
+			else if (valik2.equals("1") && !playerHasHeroes) {
+				System.out.println("You don't have any heroes to purge.");
+				return false;
+			}
+			else if (valik2.equals("2") && opponentHasHeroes) {
+				System.out.println("Choose the hero, you want to purge:\n");
+				int j = 1;
+				ArrayList<Kaart> tempHerod = new ArrayList<>();
+				for (Kaart kaart : currentOpponent.getMangijaLaud()) {
+					if (kaart.getTyyp().equals("Hero")) {
+						tempHerod.add(kaart);
+						System.out.println(j + ")" + kaart);
+						j++;
+					}
 				}
 
 				String heroChoice = scan.next();
@@ -337,6 +390,53 @@ public class Manguvaljak{
 				buffSpell.setOlek(true);
 				return true;
 			}
+				String heroChoice = scan.next();
+				Kaart purgeHero = tempHerod.get(Integer.parseInt(heroChoice) - 1);
+				Kaart purgeSpell = tempSpells.get(Integer.parseInt(spellChoice) - 1);
+				Purge.purge(currentOpponent, purgeHero, purgeSpell);
+				kaartSurnuAeda(purgeSpell,currentPlayer);
+				System.out.println(purgeHero.getNimi() + " purged! Heroes stats now: \n" + "Attack: " + purgeHero.getAttack() + "\n" + "Defence: " + purgeHero.getDefence());
+				return true;
+			}
+			else if (valik2.equals("2") && !opponentHasHeroes) {
+				System.out.println("The opponent has no heroes to Purge");
+				return false;
+			}
+		}
+			else if (type.equals("Buff")) {
+				if (!playerHasHeroes) {
+					System.out.println("You don't have any heroes on the battlefield to buff!");
+					return false;
+				}
+				System.out.println("Choose the card you want to use:\n"); // Kaardi valik, millega buffitakse
+				int l = 1;
+				ArrayList<Kaart> tempSpells = new ArrayList<>();
+				for(Kaart kaart : currentPlayer.getMangijaLaud()) {
+					if (kaart.getAlamTyyp().equals("Buff")) {
+						tempSpells.add(kaart);
+						System.out.println(l + ")" + kaart);
+						l++;
+					}
+				}
+				String spellChoice = scan.next();
+				System.out.println("Choose the hero, you want to buff:\n");
+				int j = 1;
+				ArrayList<Kaart> tempHerod = new ArrayList<>();
+				for(Kaart kaart : currentPlayer.getMangijaLaud()) {
+					if (kaart.getTyyp().equals("Hero")) {
+						tempHerod.add(kaart);
+						System.out.println(j + ")" + kaart.getNimi());
+						j++;
+					}
+				}
+				String heroChoice = scan.next();
+				Kaart buffHero = tempHerod.get(Integer.parseInt(heroChoice) - 1);
+				Kaart buffSpell = tempSpells.get(Integer.parseInt(spellChoice) - 1);
+				Buff.buffPlacement(currentPlayer,buffHero,buffSpell);
+				System.out.println("Buff placed on " + buffHero.getNimi() + "." + "Heroes stats now:\n" + "Attack: " + buffHero.getAttack() + "\n" + "Defence: " + buffHero.getDefence());
+				buffSpell.setOlek(true);
+				return true;
+			}
 				else {
 					if (!opponentHasHeroes) {
 						System.out.println("The enemy doesn't have any heroes to make more vulnerable!");
@@ -366,7 +466,7 @@ public class Manguvaljak{
 					String heroChoice = scan.next();
 					Kaart vulnerableHero = tempHerod.get(Integer.parseInt(heroChoice) - 1);
 					Kaart vulnerableSpell = tempSpells.get(Integer.parseInt(spellChoice) - 1);
-					vulnerabilityPlacement(currentPlayer, currentOpponent, vulnerableHero, vulnerableSpell);
+					Vulnerability.vulnerabilityPlacement(currentPlayer, currentOpponent, vulnerableHero, vulnerableSpell);
 					System.out.println("Vulnerability placed on " + vulnerableHero.getNimi() + "." + " Heroes stats now:\n " + "Attack: " + vulnerableHero.getAttack() + "\n" + "Defence: " + vulnerableHero.getDefence());
 					vulnerableSpell.setOlek(true);
 					return true;
