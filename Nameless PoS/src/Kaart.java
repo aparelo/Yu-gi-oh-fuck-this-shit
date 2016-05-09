@@ -1,33 +1,62 @@
 import java.util.ArrayList;
 
-public abstract class Kaart {
+public class Kaart {
 
-	private  String nimi; //Hero, Spell
-	private  String tyyp; //Hero, Spell
-	private  int attack; //Hero
-	private  int defence; //Hero
-	private  int rank; // Hero
-	private  String eriatribuut; //Hero
-	private  String alamTyyp; //Hero, Spell
-	private  int attackBuff; //Hero
-	private  int defenceBuff;//Hero
-	private  int attackVulnerability; //Hero
-	private  int defenceVulnerability; // Hero
-	private  int manaPoints; //Spell
-	private  String effekt; //Spell
-	private  int tugevus; //Spell
-	private  int length; // Spell
-	private  int moveCount; //Kaikude counter
-	private  ArrayList<Kaart> buffers;
-	private  ArrayList<Kaart> vulnerabilities;
-	private  boolean olek; // True - faceup, False, facedown
-	private  boolean activity;
+	private String nimi; //Hero, Spell
+	private String tyyp; //Hero, Spell
+	private int attack; //Hero
+	private int defence; //Hero
+	private int rank; // Hero
+	private String eriatribuut; //Hero
+	private String alamTyyp; //Hero, Spell
+	private int attackBuff; //Hero
+	private int defenceBuff;//Hero
+	private int attackVulnerability; //Hero
+	private int defenceVulnerability; // Hero
+	private int manaPoints; //Spell
+	private String effekt; //Spell
+	private int tugevus; //Spell
+	private int length; // Spell
+	private int moveCount; //Kaikude counter
+	private ArrayList<Kaart> buffers;
+	private ArrayList<Kaart> vulnerabilities;
+	private boolean olek; // True - faceup, False, facedown
+	private boolean activity;
 
+	public Kaart(String nimi, int attack, int defence, int rank, String eriatribuut, String alamTyyp) {
+		this.nimi = nimi;
+		this.tyyp = "Hero";
+		this.attack = attack;
+		this.defence = defence;
+		this.rank = rank;
+		this.eriatribuut = eriatribuut;
+		this.alamTyyp = alamTyyp;
+		this.attackBuff = 0;
+		this.defenceBuff = 0;
+		this.attackVulnerability = 0;
+		this.defenceVulnerability = 0;
+		this.moveCount = 0;
+		this.buffers = new ArrayList<Kaart>();
+		this.vulnerabilities = new ArrayList<Kaart>();
+	}
+
+
+	public Kaart(String nimi, String alamTyyp, int manaPoints, String effekt, int tugevus, int length) {
+		this.nimi = nimi;
+		this.tyyp = "Spell";
+		this.alamTyyp = alamTyyp;
+		this.manaPoints = manaPoints;
+		this.effekt = effekt;
+		this.tugevus = tugevus;
+		this.length = length;
+		this.moveCount = 0;
+		this.activity = false;
+	}
 
 	public String getNimi() {
 		return nimi;
 	}
-	public  void setNimi(String nimi) {
+	public void setNimi(String nimi) {
 		this.nimi = nimi;
 	}
 	public String getTyyp() {
@@ -39,46 +68,38 @@ public abstract class Kaart {
 	public int getAttack() {
 		return attack;
 	}
-	public  void setAttack(int attack) {
-		if (attack < 0) {
-			this.attack = 0;
-		} else {
-			this.attack = attack;
-		}
+	public void setAttack(int attack) {
+		this.attack = attack;
 	}
 	public int getDefence() {
 		return defence;
 	}
-	public  void setDefence(int defence) {
-		if (defence < 0) {
-			this.defence = 0;
-		} else {
-			this.defence = defence;
-		}
+	public void setDefence(int defence) {
+		this.defence = defence;
 	}
 	public int getRank() {
 		return rank;
 	}
-	public  void setRank(int rank) {
+	public void setRank(int rank) {
 		this.rank = rank;
 	}
 	public String getEriatribuut() {
 		return eriatribuut;
 	}
-	public  void setEriatribuut(String eriatribuut) {
+	public void setEriatribuut(String eriatribuut) {
 		this.eriatribuut = eriatribuut;
 	}
 	public String getAlamTyyp() {
 		return alamTyyp;
 	}
-	public  void setAlamTyyp(String alamTyyp) {
+	public void setAlamTyyp(String alamTyyp) {
 		this.alamTyyp = alamTyyp;
 	}
 	public int getAttackBuff() {
 		return attackBuff;
 	}
 
-	public  void setAttackBuff(int attackBuff) {
+	public void setAttackBuff(int attackBuff) {
 		this.attackBuff = attackBuff;
 	}
 
@@ -94,41 +115,27 @@ public abstract class Kaart {
 		return attackVulnerability;
 	}
 
-	public  void setAttackVulnerability(int attackVulnerability) {
-		if(this.getAttack() - attackVulnerability < 0) {
-			int tempNeg = this.getAttack()-attackVulnerability;
-			this.attackVulnerability = attackVulnerability+tempNeg;
-		}
-		else {
-			this.attackVulnerability = attackVulnerability;
-		}
-
+	public void setAttackVulnerability(int attackVulnerability) {
+		this.attackVulnerability = attackVulnerability;
 	}
 
 	public int getDefenceVulnerability() {
 		return defenceVulnerability;
 	}
 
-	public  void setDefenceVulnerability(int defenceVulnerability) {
-		if(this.getDefence() - defenceVulnerability < 0) {
-			int tempNeg = this.getDefence()-defenceVulnerability;
-			this.defenceVulnerability = defenceVulnerability+tempNeg;
-		}
-		else {
-			this.defenceVulnerability = defenceVulnerability;
-		}
+	public void setDefenceVulnerability(int defenceVulnerability) {
+		this.defenceVulnerability = defenceVulnerability;
 	}
-	public  int getManaPoints() {
+	public int getManaPoints() {
 		return manaPoints;
 	}
-	
 	public void setManaPoints(int manaPoints) {
 		this.manaPoints = manaPoints;
 	}
 	public String getEffekt() {
 		return effekt;
 	}
-	public  void setEffekt(String effekt) {
+	public void setEffekt(String effekt) {
 		this.effekt = effekt;
 	}
 	public int getTugevus() {
@@ -137,43 +144,58 @@ public abstract class Kaart {
 	public int getMoveCount() {
 		return moveCount;
 	}
-	public  void setMoveCount(int moveCount) {
+	public void setMoveCount(int moveCount) {
 		this.moveCount = moveCount;
 	}
-	public  void setTugevus(int tugevus) {
+	public void setTugevus(int tugevus) {
 		this.tugevus = tugevus;
 	}
 	public int getLength() {
 		return length;
 	}
-	public  void setLength(int length) {
+	public void setLength(int length) {
 		this.length = length;
 	}
 	public ArrayList<Kaart> getBuffers() {
 		return buffers;
 	}
-	public  void setBuffers(ArrayList<Kaart> buffers) {
+	public void setBuffers(ArrayList<Kaart> buffers) {
 		this.buffers = buffers;
 	}
 	public ArrayList<Kaart> getVulnerabilities() {
 		return vulnerabilities;
 	}
-	public  void setVulnerabilities(ArrayList<Kaart> vulnerabilities) {
+	public void setVulnerabilities(ArrayList<Kaart> vulnerabilities) {
 		this.vulnerabilities = vulnerabilities;
 	}
 	public boolean isOlek() {
 		return olek;
 	}
-	public  void setOlek(boolean olek) {
+	public void setOlek(boolean olek) {
 		this.olek = olek;
 	}
 	public boolean isActivity() {
 		return activity;
 	}
-	public  void setActivity(boolean activity) {
+	public void setActivity(boolean activity) {
 		this.activity = activity;
 	}
 
-	public abstract String toString();	
+
+	public String toString() {
+		if (tyyp.equals("Hero")) {
+		return "Hero: " + nimi + " Attack: " + attack + " Defence: " + defence + " Rank: " + rank + " Special attribute: " + eriatribuut + " Sub type: " + alamTyyp;
+		}
+		else if(alamTyyp.equals("Buff") || alamTyyp.equals("Vulnerability")) {
+			return "Spell: " + nimi + " Type: " + tyyp + " Effect: " + effekt + " Mana to play: " + manaPoints + " Sub type: " + alamTyyp + " Strength: " + tugevus;
+			
+	}
+		else  {
+			return "Spell: " + nimi + " Type: " + tyyp + " Effect: " + effekt + " Mana to play: " + manaPoints + " Sub type: " + alamTyyp;
+		}
+}
+
+
+	
 	}
 

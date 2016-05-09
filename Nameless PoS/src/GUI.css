@@ -1,0 +1,9 @@
+.button {
+    -fx-text-fill: black;
+	-fx-padding: 10,10,10,100;
+	-fx-font-size: 14px;
+	-fx-MinWidth: 50px;
+}
+.root {
+	-fx-background-image: url("pudge.jpg");
+}
