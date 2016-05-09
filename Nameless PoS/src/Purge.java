@@ -11,7 +11,7 @@ public class Purge extends Kaart {
 	private boolean olek; // True - faceup, False, facedown
 	private boolean activity;
 	private Image pilt;
-	
+
 
 	
 	public Purge(String nimi, String alamTyyp, int manaPoints, String effekt) {
@@ -99,7 +99,9 @@ public class Purge extends Kaart {
 	public String toString() {
 		return "Name: " + nimi + " Sub Type: " + alamTyyp + " Mana points to play: " + manaPoints;
 	}
-
+	public String toCSV() {
+		return nimi+","+"Spell"+","+ effekt+","+manaPoints+","+alamTyyp;
+	}
 	public static void purge(Mangija mangija, Kaart hero, Kaart spell) {
 		ArrayList<Kaart> mangijaLaud = mangija.getMangijaLaud();
 		ArrayList<Kaart> tempList = new ArrayList<>();

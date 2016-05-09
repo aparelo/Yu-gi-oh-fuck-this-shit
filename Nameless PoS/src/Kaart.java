@@ -177,6 +177,7 @@ public abstract class Kaart {
 		this.activity = activity;
 	}
 
-	public abstract String toString();	
+	public abstract String toString();
+	public abstract String toCSV();
 	}
 

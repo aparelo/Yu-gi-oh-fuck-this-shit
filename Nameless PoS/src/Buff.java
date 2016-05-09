@@ -135,6 +135,10 @@ public class Buff extends Kaart {
 	public String toString() {
 		return "Name: " + nimi + ", Sub type: " + alamTyyp + " Mana points to play: " + manaPoints + " Spell effect: " + effekt + " Spell strength: " + tugevus + " Spell duration: " + length;
 	}
+	public String toCSV() {
+		return nimi+","+"Spell"+","+ effekt+","+manaPoints+","+alamTyyp+","+tugevus+","+length;
+	}
+
 	public static void buffPlacement(Mangija mangija, Kaart hero, Kaart spell) {
 		ArrayList<Kaart> mangijaLaud = mangija.getMangijaLaud();
 		for (Kaart kaart : mangijaLaud) {
