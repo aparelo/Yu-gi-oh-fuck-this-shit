@@ -231,6 +231,7 @@ public class Hero extends Kaart {
 
 
 	public Hero(String nimi, int attack, int defence, int rank, int manaPoints, String eriatribuut, String alamTyyp) {
+		//Tere Siim
 		this.nimi = nimi;
 		this.tyyp = "Hero";
 		this.attack = attack;
