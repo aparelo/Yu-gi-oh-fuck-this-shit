@@ -1,3 +1,5 @@
+import javafx.scene.image.Image;
+
 import java.util.ArrayList;
 
 public class Hero extends Kaart {
@@ -16,6 +18,7 @@ public class Hero extends Kaart {
 	private int moveCount; //Kaikude counter
 	private ArrayList<Kaart> buffers;
 	private ArrayList<Kaart> vulnerabilities;
+	private Image pilt;
 	
 
 	
@@ -247,6 +250,7 @@ public class Hero extends Kaart {
 		this.moveCount = 0;
 		this.buffers = new ArrayList<Kaart>();
 		this.vulnerabilities = new ArrayList<Kaart>();
+        this.pilt =  new Image("file:\\img\\HeroImg.jpg");
 	}
 
 

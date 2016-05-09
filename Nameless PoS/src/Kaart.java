@@ -1,3 +1,5 @@
+import javafx.scene.image.Image;
+
 import java.util.ArrayList;
 
 public abstract class Kaart {
@@ -22,6 +24,7 @@ public abstract class Kaart {
 	private  ArrayList<Kaart> vulnerabilities;
 	private  boolean olek; // True - faceup, False, facedown
 	private  boolean activity;
+	private Image pilt;
 
 
 	public String getNimi() {

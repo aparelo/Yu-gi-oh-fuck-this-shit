@@ -1,9 +1,46 @@
 .button {
     -fx-text-fill: black;
-	-fx-padding: 10,10,10,100;
-	-fx-font-size: 14px;
-	-fx-MinWidth: 50px;
+    -fx-padding: 10,10,10,100;
+    -fx-font-size:28px;
+    -fx-font-family: "Impact";
+    -fx-border-color: rgb(0, 0, 0);
+}
+.button:hover {
+    -fx-border-color: rgb(255, 157, 0);
+
 }
 .root {
-	-fx-background-image: url("pudge.jpg");
+	-fx-background-image: url("background.jpg");
+}
+.label{
+    -fx-font-size:28px;
+    -fx-font-family: "Impact";
+    -fx-text-fill: rgb(255, 157, 0);
+    -fx-font-weight: bold;
+    -fx-effect: dropshadow( gaussian , rgb(0,0,0) , 0,0,0,1 );
+}
+.text-field{
+-fx-font-size:28px;
+    -fx-font-family: "Impact";
+    -fx-text-fill: rgb(0, 0, 0);
+    -fx-font-weight: bold;
+    -fx-effect: dropshadow( gaussian , rgb(0,0,0) , 0,0,0,1 );
+    -fx-border-color: #000000;
+}
+.text-field:hover {
+    -fx-border-color: rgb(255, 157, 0);
+
+}
+.text-field:focused {
+    -fx-border-color: rgb(255, 157, 0);
+
+}
+.menu-button {
+    -fx-border-color: rgb(0, 0, 0);
+}
+.menu-button:hover {
+    -fx-border-color: rgb(255, 157, 0);
+}
+.menu-button:active {
+    -fx-border-color: rgb(255, 157, 0);
 }

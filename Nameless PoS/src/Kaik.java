@@ -6,20 +6,12 @@ import java.util.ArrayList;
 public class Kaik extends Manguvaljak {
     public static void uusKaik() throws InterruptedException {
         currentPlayer.setMana(currentPlayer.getMana() + 1);
-        System.out.println("It's " + currentPlayer.getNimi() + "'s turn.");
+        Gamescenes.setLabelText("It's " + currentPlayer.getNimi() + "'s turn.");
         for(int i=10;i>0;i--) {
-            System.out.println("Displaying cards in " + i + "\n");
+            Gamescenes.setLabelText("Displaying cards in " + i + "\n");
             Thread.sleep(50); //Delay for new turn count
         }
-        System.out.println("Lives: " + currentPlayer.getElud() + "\n Mana: " + currentPlayer.getMana() + "\n Cards in deck: " + currentPlayer.getMangijaDeck().size());
-        System.out.println("Opponents lives: " + currentOpponent.getElud());
 
-        System.out.println("Your cards are: ");
-        for(Kaart kaesKaart: currentPlayer.getMangijaKasi()){
-            System.out.println(kaesKaart + "\n");
-        }
-        System.out.println("The field: ");
-        System.out.println("Your side: ");
         ArrayList<Integer> tempBuffBuffers = new ArrayList<>();
         ArrayList<Integer> tempVulnerabilityBuffers = new ArrayList<>();
         ArrayList<Kaart> tempHeroes = new ArrayList<>();
@@ -69,26 +61,10 @@ public class Kaik extends Manguvaljak {
                 tempBuffBuffers = new ArrayList<>();
                 tempVulnerabilityBuffers = new ArrayList<>();
             }
-            else if(sinuValjak.getTyyp().equals("Spell") && sinuValjak.isOlek()) {
-                System.out.println(sinuValjak);
-            }
-            else {
-                System.out.println("Face down card: " + sinuValjak);
-            }
 
         }
         // Siin saab l�bi
-        System.out.println("Opponents side: ");
         for(Kaart vastaseValjak: currentOpponent.getMangijaLaud()) {
-            if(vastaseValjak.getTyyp().equals("Hero")) {
-                System.out.println(vastaseValjak);
-            }
-            else if(vastaseValjak.getTyyp().equals("Spell") && vastaseValjak.isOlek()) {
-                System.out.println(vastaseValjak);
-            }
-            else {
-                System.out.println("Face down card.");
-            }
             vastaseValjak.setMoveCount(vastaseValjak.getMoveCount()+1);
         }
     }

@@ -1,3 +1,5 @@
+import javafx.scene.image.Image;
+
 import java.util.ArrayList;
 
 public class Buff extends Kaart {
@@ -11,6 +13,7 @@ public class Buff extends Kaart {
 	private int moveCount; //Kaikude counter
 	private boolean olek; // True - faceup, False, facedown
 	private boolean activity;
+    private Image pilt;
 	
 
 	public Buff(String nimi, String alamTyyp, int manaPoints, String effekt, int tugevus, int length) {
@@ -24,6 +27,8 @@ public class Buff extends Kaart {
 		this.moveCount = 0;
 		this.olek = false;
 		this.activity = false;
+        this.pilt = new Image("file:\\img\\BuffImg.jpg");
+
 	}
 
 	

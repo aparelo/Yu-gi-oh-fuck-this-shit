@@ -1,3 +1,5 @@
+import javafx.scene.image.Image;
+
 import java.util.ArrayList;
 
 public class Purge extends Kaart {
@@ -8,11 +10,11 @@ public class Purge extends Kaart {
 	private String effekt; //Spell
 	private boolean olek; // True - faceup, False, facedown
 	private boolean activity;
+	private Image pilt;
 	
 
 	
 	public Purge(String nimi, String alamTyyp, int manaPoints, String effekt) {
-		super();
 		this.nimi = nimi;
 		this.tyyp = "Spell";
 		this.alamTyyp = alamTyyp;
@@ -20,6 +22,7 @@ public class Purge extends Kaart {
 		this.effekt = effekt;
 		this.olek = false;
 		this.activity = false;
+		this.pilt = new Image("file:\\img\\PurgeImg.jpg");
 	}
 
 	
@@ -96,6 +99,7 @@ public class Purge extends Kaart {
 	public String toString() {
 		return "Name: " + nimi + " Sub Type: " + alamTyyp + " Mana points to play: " + manaPoints;
 	}
+
 	public static void purge(Mangija mangija, Kaart hero, Kaart spell) {
 		ArrayList<Kaart> mangijaLaud = mangija.getMangijaLaud();
 		ArrayList<Kaart> tempList = new ArrayList<>();

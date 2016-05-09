@@ -3,10 +3,18 @@ import java.util.Scanner;
 public class Manguvaljak{
 	  static Mangija currentPlayer;
 	  static Mangija currentOpponent;
+	  static String currentPlayerDeck;
+	  static String currentOpponentDeck;
 
+	public static void setCurrentOpponentDeck(String currentOpponentDeck) {
+		Manguvaljak.currentOpponentDeck = currentOpponentDeck;
+	}
 
+	public static void setCurrentPlayerDeck(String currentPlayerDeck) {
+		Manguvaljak.currentPlayerDeck = currentPlayerDeck;
+	}
 
-	    public static boolean kaartLauale(Kaart nimi, Mangija mangija) {
+	public static boolean kaartLauale(Kaart nimi, Mangija mangija) {
 			if (mangija.getMana() < nimi.getManaPoints()) {
 	    		System.out.println("You don't have enough mana to play this card!\n");
 	    		return false;
