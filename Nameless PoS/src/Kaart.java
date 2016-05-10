@@ -176,6 +176,9 @@ public abstract class Kaart {
 	public  void setActivity(boolean activity) {
 		this.activity = activity;
 	}
+	public Image getPilt() {
+		return pilt;
+	}
 
 	public abstract String toString();
 	public abstract String toCSV();

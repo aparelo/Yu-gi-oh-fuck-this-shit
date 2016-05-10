@@ -1,16 +1,9 @@
 import java.util.ArrayList;
 
-/**
- * Created by aleksander on 14-Mar-16.
- */
+
 public class Kaik extends Manguvaljak {
     public static void uusKaik() throws InterruptedException {
         currentPlayer.setMana(currentPlayer.getMana() + 1);
-        Gamescenes.setLabelText("It's " + currentPlayer.getNimi() + "'s turn.");
-        for(int i=10;i>0;i--) {
-            Gamescenes.setLabelText("Displaying cards in " + i + "\n");
-            Thread.sleep(50); //Delay for new turn count
-        }
 
         ArrayList<Integer> tempBuffBuffers = new ArrayList<>();
         ArrayList<Integer> tempVulnerabilityBuffers = new ArrayList<>();

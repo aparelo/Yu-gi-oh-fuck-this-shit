@@ -1,16 +1,23 @@
 
 
+import com.sun.org.glassfish.gmbal.Impact;
+import javafx.beans.property.SimpleStringProperty;
+import javafx.beans.property.StringProperty;
 import javafx.event.ActionEvent;
 import javafx.event.EventHandler;
 import javafx.geometry.Insets;
 import javafx.geometry.Pos;
+import javafx.scene.Group;
 import javafx.scene.Scene;
 import javafx.scene.control.*;
 import javafx.scene.image.Image;
 import javafx.scene.image.ImageView;
 import javafx.scene.layout.GridPane;
 import javafx.scene.layout.HBox;
+import javafx.scene.layout.Pane;
 import javafx.scene.layout.VBox;
+import javafx.scene.text.Font;
+import javafx.scene.text.FontPosture;
 import javafx.scene.text.Text;
 import javafx.stage.*;
 
@@ -22,14 +29,15 @@ public class Gamescenes  {
     private static Scene mainMenuScene;
     private static Scene battleScene;
     private static Scene battleMenuScene;
-    public  static String labelText;
+    private static GridPane battleScenePane;
+    private static StringProperty labelText = new SimpleStringProperty();
 
-    public static String getLabelText() {
+    public static StringProperty getLabelText() {
         return labelText;
     }
 
     public static void setLabelText(String labelText) {
-        Gamescenes.labelText = labelText;
+        Gamescenes.labelText.setValue(labelText);
     }
 
     public static Scene getDeckMakerScene() {
@@ -50,6 +58,10 @@ public class Gamescenes  {
 
     public static Scene getBattleMenuScene() {
         return battleMenuScene;
+    }
+
+    public static GridPane getBattleScenePane() {
+        return battleScenePane;
     }
 
     public static void setDeckMakerMenuScene(int x, int y, Stage primaryStage) {
@@ -149,10 +161,11 @@ public class Gamescenes  {
                     } else {
                         GUI.setPlayer1Name(player1Name);
                         GUI.setPlayer2Name(player2Name);
-                        Main.main();
                         setBattleScene(x, y, primaryStage);
                         primaryStage.setScene(Gamescenes.getBattleScene());
+                        Main.main();
                         primaryStage.show();
+                        Animations.startShuffle();
                     }
                 }
                 catch (Exception ex) {
@@ -168,7 +181,9 @@ public class Gamescenes  {
 
 
     public static void setBattleScene(int x, int y, Stage primary) throws Exception {
+        Main.createPlayersAndDecks();
         GridPane grid = new GridPane();
+        Gamescenes.battleScenePane = grid;
         Scene battleScene = new Scene(grid, x, y);
         grid.setAlignment(Pos.CENTER);
         grid.setHgap(5);
@@ -178,38 +193,94 @@ public class Gamescenes  {
         VBox opponentStats = new VBox();
         opponentStats.setPadding(new Insets(10));
         opponentStats.setSpacing(8);
-        Text opName = new Text("Name: " + Manguvaljak.currentOpponent.getNimi());
+        Label opName = new Label("Name: " + Manguvaljak.currentOpponent.getNimi());
         opponentStats.getChildren().add(opName);
-        Text opHp = new Text("Hitpoints: " + Manguvaljak.currentOpponent.getElud());
+        Label opHp = new Label("Hitpoints: " + Manguvaljak.currentOpponent.getElud());
         opponentStats.getChildren().add(opHp);
-        Text opMana = new Text("Manapoints: " + Manguvaljak.currentOpponent.getMana());
+        Label opMana = new Label("Manapoints: " + Manguvaljak.currentOpponent.getMana());
         opponentStats.getChildren().add(opMana);
-      //  grid.add(opponentStats, 0, 0);
+        grid.add(opponentStats, 0, 6);
 
         VBox playerStats = new VBox();
         playerStats.setPadding(new Insets(10));
         playerStats.setSpacing(8);
-        Text name = new Text("Name: " + Manguvaljak.currentPlayer.getNimi());
+        Label name = new Label("Name: " + Manguvaljak.currentPlayer.getNimi());
         playerStats.getChildren().add(name);
-        Text hp = new Text("Hitpoints: " + Manguvaljak.currentPlayer.getElud());
+        Label hp = new Label("Hitpoints: " + Manguvaljak.currentPlayer.getElud());
         playerStats.getChildren().add(hp);
-        Text mana = new Text("Manapoints: " + Manguvaljak.currentPlayer.getMana());
+        Label mana = new Label("Manapoints: " + Manguvaljak.currentPlayer.getMana());
         playerStats.getChildren().add(mana);
-       // grid.add(playerStats, 0, 1);
-
-        Image cardSpot = new Image("file:\\img\\CardSpot.jpg");
-        ImageView iv2 = new ImageView();
-        iv2.setImage(cardSpot);
-        iv2.setFitWidth(100);
-        iv2.setPreserveRatio(true);
-        iv2.setSmooth(true);
-        iv2.setCache(true);
-        HBox hbCardSpot = new HBox();
-        hbCardSpot.getChildren().add(iv2);
-        grid.add(hbCardSpot, 0,0);
+        grid.add(playerStats, 0, 0);
 
 
-        Label info = new Label(labelText);
+        Image cardSpot = new Image("\\img\\CardSpot.jpg");
+
+        int hand1 = 4;
+        int spellAndHero1 = 3;
+        int hand2 = 1;
+        int spellAndHero2 = 2;
+
+        for (int i = 0; i <34; i++) {
+
+            ImageView iv = new ImageView();
+            iv.setId(Integer.toString(i));
+            iv.setImage(cardSpot);
+            iv.setPreserveRatio(true);
+            iv.setSmooth(true);
+            iv.setCache(true);
+            VBox vbCardSpot = new VBox();
+            vbCardSpot.getChildren().add(iv);
+
+            if (i < 5) {
+                grid.add(iv, hand1, 6);
+                hand1++;
+            }
+            if (i >= 5 && i < 10) {
+                grid.add(iv, spellAndHero1, 5);
+                spellAndHero1++;
+            }
+            if (i == 10) {
+                spellAndHero1 = 3;
+            }
+            if (i >= 10 && i < 15) {
+                grid.add(iv, spellAndHero1, 4);
+                spellAndHero1++;
+            }
+            if (i >= 15 && i < 20) {
+                grid.add(iv, hand2, 0);
+                hand2++;
+            }
+            if (i >= 20 && i < 25) {
+                grid.add(iv, spellAndHero2, 1);
+                spellAndHero2++;
+            }
+
+            if (i == 25) {
+                spellAndHero2 = 2;
+            }
+            if (i >= 25 && i < 30) {
+                grid.add(iv, spellAndHero2, 2);
+                spellAndHero2++;
+            }
+            if (i == 30) {
+                grid.add(iv, 0, 2);
+            }
+            if (i == 31) {
+                grid.add(iv, 9, 2);
+            }
+            if (i == 32) {
+                grid.add(iv, 0, 4);
+            }
+            if (i == 33) {
+                grid.add(iv, 9, 4);
+            }
+        }
+
+        Label info = new Label("");
+        setLabelText("");
+        System.out.println(labelText.toString());
+        info.textProperty().bind(labelText);
+        grid.add(info,1,3,9,1);
 
 
         battleScene.getStylesheets().add(Gamescenes.class.getResource("/GUI.css").toExternalForm());

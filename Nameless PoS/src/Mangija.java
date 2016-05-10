@@ -1,4 +1,6 @@
 import java.util.ArrayList;
+import java.util.HashMap;
+
 public class Mangija {
 	
 	private String nimi;
@@ -10,18 +12,65 @@ public class Mangija {
 	private ArrayList<Kaart> mangijaKasi;
 	private ArrayList<Kaart> mangijaDeck;
 	private ArrayList<Kaart> mangijaSurnuAed;
-	
-	
-	public Mangija(String nimi, ArrayList <Kaart> deck) {
+	private HashMap<String,Kaart> handMap;
+	private HashMap<String,Kaart> spellMap;
+	private HashMap<String,Kaart> heroMap;
+
+
+	public Mangija(String nimi, ArrayList <Kaart> deck, int location) {
 		this.nimi = nimi;
 		this.elud = 20;
-		this.mana = 19;
+		this.mana = 20;
 		this.spellsOnField = 0;
 		this.heroesOnField = 0;
 		this.mangijaDeck = deck;
-		this.mangijaLaud = new ArrayList<Kaart>();
-		this.mangijaKasi = new ArrayList<Kaart>();
 		this.mangijaSurnuAed = new ArrayList<Kaart>();
+		if (location == 1) {
+			HashMap<String,Kaart> handMap = new HashMap<String,Kaart>();
+			HashMap<String,Kaart> spellMap = new HashMap<String,Kaart>();
+			HashMap<String,Kaart> heroMap = new HashMap<String,Kaart>();
+			handMap.put("#0",null);
+			handMap.put("#1",null);
+			handMap.put("#2",null);
+			handMap.put("#3",null);
+			handMap.put("#4",null);
+			spellMap.put("#5",null);
+			spellMap.put("#6",null);
+			spellMap.put("#7",null);
+			spellMap.put("#8",null);
+			spellMap.put("#9",null);
+			heroMap.put("#10",null);
+			heroMap.put("#11",null);
+			heroMap.put("#12",null);
+			heroMap.put("#13",null);
+			heroMap.put("#14",null);
+            this.handMap = handMap;
+            this.spellMap = spellMap;
+            this.heroMap = heroMap;
+		}
+		else {
+			HashMap<String,Kaart> handMap = new HashMap<String,Kaart>();
+			HashMap<String,Kaart> spellMap = new HashMap<String,Kaart>();
+			HashMap<String,Kaart> heroMap = new HashMap<String,Kaart>();
+			handMap.put("#15",null);
+			handMap.put("#16",null);
+			handMap.put("#17",null);
+			handMap.put("#18",null);
+			handMap.put("#19",null);
+			spellMap.put("#20",null);
+			spellMap.put("#21",null);
+			spellMap.put("#22",null);
+			spellMap.put("#23",null);
+			spellMap.put("#24",null);
+			heroMap.put("#25",null);
+			heroMap.put("#26",null);
+			heroMap.put("#27",null);
+			heroMap.put("#28",null);
+			heroMap.put("#29",null);
+            this.handMap = handMap;
+            this.spellMap = spellMap;
+            this.heroMap = heroMap;
+		}
 	}
 	
 	public String getNimi() {

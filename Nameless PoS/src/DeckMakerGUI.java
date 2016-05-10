@@ -31,7 +31,7 @@ import java.util.Scanner;
 public class DeckMakerGUI extends Application {
     private TableView table1 = new TableView();
     private TableView table2 = new TableView();
-    private static File cardBank = new File("C:\\Users\\aleksander\\IdeaProjects\\Yu-gi-oh-fuck-this-shit\\Yu-gi-oh-fuck-this-shit\\Nameless PoS\\src\\Deck.txt"); //Siia peab tegeliku Card Banki nime panema
+    private static File cardBank = new File("C:\\Users\\Siim-Sander\\Documents\\GitHub\\Yu-gi-oh-fuck-this-shit\\Nameless PoS\\Decks\\Deck.txt"); //Siia peab tegeliku Card Banki nime panema
     private static ArrayList<String> cardBankList = new ArrayList<>();
     private static ObservableList<Kaart> oCardList;
     private static ObservableList<Kaart> oDeckList;
