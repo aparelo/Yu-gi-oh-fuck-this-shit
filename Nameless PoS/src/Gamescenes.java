@@ -163,9 +163,8 @@ public class Gamescenes  {
                         GUI.setPlayer2Name(player2Name);
                         setBattleScene(x, y, primaryStage);
                         primaryStage.setScene(Gamescenes.getBattleScene());
-                        Main.main();
                         primaryStage.show();
-                        Animations.startShuffle();
+                        Main.main();
                     }
                 }
                 catch (Exception ex) {
@@ -181,7 +180,6 @@ public class Gamescenes  {
 
 
     public static void setBattleScene(int x, int y, Stage primary) throws Exception {
-        Main.createPlayersAndDecks();
         GridPane grid = new GridPane();
         Gamescenes.battleScenePane = grid;
         Scene battleScene = new Scene(grid, x, y);
@@ -190,27 +188,6 @@ public class Gamescenes  {
         grid.setVgap(5);
         grid.setPadding(new Insets(15, 15, 15, 15));
 
-        VBox opponentStats = new VBox();
-        opponentStats.setPadding(new Insets(10));
-        opponentStats.setSpacing(8);
-        Label opName = new Label("Name: " + Manguvaljak.currentOpponent.getNimi());
-        opponentStats.getChildren().add(opName);
-        Label opHp = new Label("Hitpoints: " + Manguvaljak.currentOpponent.getElud());
-        opponentStats.getChildren().add(opHp);
-        Label opMana = new Label("Manapoints: " + Manguvaljak.currentOpponent.getMana());
-        opponentStats.getChildren().add(opMana);
-        grid.add(opponentStats, 0, 6);
-
-        VBox playerStats = new VBox();
-        playerStats.setPadding(new Insets(10));
-        playerStats.setSpacing(8);
-        Label name = new Label("Name: " + Manguvaljak.currentPlayer.getNimi());
-        playerStats.getChildren().add(name);
-        Label hp = new Label("Hitpoints: " + Manguvaljak.currentPlayer.getElud());
-        playerStats.getChildren().add(hp);
-        Label mana = new Label("Manapoints: " + Manguvaljak.currentPlayer.getMana());
-        playerStats.getChildren().add(mana);
-        grid.add(playerStats, 0, 0);
 
 
         Image cardSpot = new Image("\\img\\CardSpot.jpg");
@@ -275,6 +252,30 @@ public class Gamescenes  {
                 grid.add(iv, 9, 4);
             }
         }
+
+        Main.createPlayersAndDecks();
+
+        VBox opponentStats = new VBox();
+        opponentStats.setPadding(new Insets(10));
+        opponentStats.setSpacing(8);
+        Label opName = new Label("Name: " + Manguvaljak.currentOpponent.getNimi());
+        opponentStats.getChildren().add(opName);
+        Label opHp = new Label("Hitpoints: " + Manguvaljak.currentOpponent.getElud());
+        opponentStats.getChildren().add(opHp);
+        Label opMana = new Label("Manapoints: " + Manguvaljak.currentOpponent.getMana());
+        opponentStats.getChildren().add(opMana);
+        grid.add(opponentStats, 0, 6);
+
+        VBox playerStats = new VBox();
+        playerStats.setPadding(new Insets(10));
+        playerStats.setSpacing(8);
+        Label name = new Label("Name: " + Manguvaljak.currentPlayer.getNimi());
+        playerStats.getChildren().add(name);
+        Label hp = new Label("Hitpoints: " + Manguvaljak.currentPlayer.getElud());
+        playerStats.getChildren().add(hp);
+        Label mana = new Label("Manapoints: " + Manguvaljak.currentPlayer.getMana());
+        playerStats.getChildren().add(mana);
+        grid.add(playerStats, 0, 0);
 
         Label info = new Label("");
         setLabelText("");

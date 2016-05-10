@@ -81,17 +81,20 @@ public class Main {
     }
     public static void main() throws Exception {
         String gameOverError = "";
+        Animations.startShuffle();
+        Thread.sleep(1200);
         //Alusta manguga
         int test = 0;
        mainloop: while (test < 1 /*Manguvaljak.currentOpponent.getElud() > 0 && Manguvaljak.currentOpponent.getMangijaDeck().size() > 0 && Manguvaljak.currentPlayer.getElud() > 0 && Manguvaljak.currentPlayer.getMangijaDeck().size() > 0*/) {
         	//Tomba kaardid deckist
-           test++;
             int kaartideArv = Manguvaljak.currentPlayer.getMangijaKasi().size();
             if(kaartideArv < 5) {
                 int uusiKaarte = 5 - kaartideArv;
                 ArrayList<Kaart> tempKasi = Manguvaljak.currentPlayer.getMangijaKasi();
                 ArrayList<Kaart> tempDeck = Manguvaljak.currentPlayer.getMangijaDeck();
                 for (int i=0;i<uusiKaarte;i++) {
+                    System.out.println("Uus kaart");
+                    Thread.sleep(1200);
                     Manguvaljak.kaartKatte(Manguvaljak.currentPlayer);
                     if (Manguvaljak.currentPlayer.getMangijaDeck().size() == 0){
                     	gameOverError = "DeckToZero";
@@ -102,8 +105,6 @@ public class Main {
                 Manguvaljak.currentPlayer.setMangijaKasi(tempKasi);
             }
             Kaik.uusKaik();
-           Animations.startShuffle();
-           System.out.println("Animation start!");
 
             int attackCount = 0; // Nulli attackCount
             int useSpellCount = 0; // Nulli useSpellCount
@@ -193,4 +194,5 @@ public class Main {
         
         
         }*/
+           test++;
     }}}

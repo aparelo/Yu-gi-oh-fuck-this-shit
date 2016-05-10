@@ -16,7 +16,8 @@ import static javafx.animation.Animation.Status.STOPPED;
 
 public class Animations  {
 
-    public static void cardToHand(String indeks, Kaart card, Mangija mangija) {
+    public static void cardToHand(Mangija mangija) throws InterruptedException {
+        Kaart card = mangija.getMangijaDeck().get(0);
         Image cardImage = card.getPilt();
         ImageView iv = new ImageView();
         iv.setImage(cardImage);
@@ -25,21 +26,32 @@ public class Animations  {
         iv.setCache(true);
 
         TranslateTransition translateCard = new TranslateTransition(Duration.millis(1000), iv);
+        String indeks = "ss";
+        Kaart removableKaart = new EmptyCard();
+            for (Kaart kaart : mangija.getHandMap().keySet()) {
+                if (kaart.toString().equals("Empty")) {
+                    indeks = mangija.getHandMap().get(kaart);
+                    removableKaart = kaart;
+                }
+            }
+        mangija.getHandMap().put(card,indeks);
+        mangija.getHandMap().remove(removableKaart);
+        System.out.println(card);
+        System.out.println(indeks);
+        System.out.println(mangija.getHandMap());
 
         Node cardNode = Gamescenes.getBattleScenePane().lookup(indeks);
 
         Bounds cardBounds = cardNode.localToScene(cardNode.getBoundsInLocal());
-        Bounds deckBounds = cardNode.localToScene(cardNode.getBoundsInLocal());
 
-        translateCard.setFromX(300);
-        translateCard.setFromY(450);
-        translateDeck1.setToX();
-        translateDeck1.setToY(cardBounds1.getMinY() - 24);
+        translateCard.setFromX(mangija.getDeckX());
+        translateCard.setFromY(mangija.getDeckY());
+        translateCard.setToX(cardBounds.getMinX() - 110);
+        translateCard.setToY(cardBounds.getMinY() - 24);
 
+        Gamescenes.getBattleScenePane().getChildren().add(iv);
 
-
-
-
+        translateCard.play();
 
     }
 
@@ -95,9 +107,9 @@ public class Animations  {
 
         ParallelTransition parallelDeck = new ParallelTransition(translateDeck1,translateDeck2);
 
-        //Deck draw animation end
-        //Opponent and current player hand draw animation begins
+        parallelDeck.play();
 
+        //Deck draw animation end
 
     }
 }

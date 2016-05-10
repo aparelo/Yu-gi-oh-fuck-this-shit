@@ -25,6 +25,7 @@ public abstract class Kaart {
 	private  boolean olek; // True - faceup, False, facedown
 	private  boolean activity;
 	private Image pilt;
+    private boolean empty;
 
 
 	public String getNimi() {
@@ -179,6 +180,9 @@ public abstract class Kaart {
 	public Image getPilt() {
 		return pilt;
 	}
+    public boolean isEmpty() {
+        return true;
+    }
 
 	public abstract String toString();
 	public abstract String toCSV();
