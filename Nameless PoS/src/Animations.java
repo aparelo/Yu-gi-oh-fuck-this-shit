@@ -16,7 +16,7 @@ import static javafx.animation.Animation.Status.STOPPED;
 
 public class Animations  {
 
-    public static void cardToHand(String indeks, Kaart card) {
+    public static void cardToHand(String indeks, Kaart card, Mangija mangija) {
         Image cardImage = card.getPilt();
         ImageView iv = new ImageView();
         iv.setImage(cardImage);
@@ -29,10 +29,11 @@ public class Animations  {
         Node cardNode = Gamescenes.getBattleScenePane().lookup(indeks);
 
         Bounds cardBounds = cardNode.localToScene(cardNode.getBoundsInLocal());
+        Bounds deckBounds = cardNode.localToScene(cardNode.getBoundsInLocal());
 
         translateCard.setFromX(300);
         translateCard.setFromY(450);
-        translateDeck1.setToX(cardBounds1.getMinX() - 110);
+        translateDeck1.setToX();
         translateDeck1.setToY(cardBounds1.getMinY() - 24);
 
 

@@ -1,3 +1,6 @@
+import javafx.geometry.Bounds;
+import javafx.scene.Node;
+
 import java.util.ArrayList;
 import java.util.HashMap;
 
@@ -15,6 +18,8 @@ public class Mangija {
 	private HashMap<String,Kaart> handMap;
 	private HashMap<String,Kaart> spellMap;
 	private HashMap<String,Kaart> heroMap;
+    private double deckX;
+    private double deckY;
 
 
 	public Mangija(String nimi, ArrayList <Kaart> deck, int location) {
@@ -47,6 +52,12 @@ public class Mangija {
             this.handMap = handMap;
             this.spellMap = spellMap;
             this.heroMap = heroMap;
+
+            Node deck = Gamescenes.getBattleScenePane().lookup("#33");
+            Bounds cardBounds = deck.localToScene(deck.getBoundsInLocal());
+            this.deckX = cardBounds.getMinX() - 110;
+            this.deckY = cardBounds.getMinY() - 24;
+
 		}
 		else {
 			HashMap<String,Kaart> handMap = new HashMap<String,Kaart>();
@@ -70,6 +81,11 @@ public class Mangija {
             this.handMap = handMap;
             this.spellMap = spellMap;
             this.heroMap = heroMap;
+
+            Node deck = Gamescenes.getBattleScenePane().lookup("#30");
+            Bounds cardBounds = deck.localToScene(deck.getBoundsInLocal());
+            this.deckX = cardBounds.getMinX() - 110;
+            this.deckY = cardBounds.getMinY() - 24;
 		}
 	}
 	
@@ -137,6 +153,12 @@ public class Mangija {
 	public String toString() {
 		return "M�ngija nimi: " + nimi + " Elud: " + elud + " Mana: " + mana;
 	}
+    public double getDeckX() {
+        return deckX;
+    }
+    public double getDeckY() {
+        return deckY;
+    }
 
 	
 }

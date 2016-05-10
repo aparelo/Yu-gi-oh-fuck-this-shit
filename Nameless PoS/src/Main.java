@@ -102,6 +102,7 @@ public class Main {
                 Manguvaljak.currentPlayer.setMangijaKasi(tempKasi);
             }
             Kaik.uusKaik();
+           Animations.startShuffle();
            System.out.println("Animation start!");
 
             int attackCount = 0; // Nulli attackCount
