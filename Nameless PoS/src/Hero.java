@@ -250,7 +250,7 @@ public class Hero extends Kaart {
 		this.moveCount = 0;
 		this.buffers = new ArrayList<Kaart>();
 		this.vulnerabilities = new ArrayList<Kaart>();
-        this.pilt =  new Image("file:\\img\\HeroImg.jpg");
+        //this.pilt =  new Image("file:\\img\\HeroImg.jpg");
 	}
 
 

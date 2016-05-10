@@ -22,7 +22,7 @@ public class Purge extends Kaart {
 		this.effekt = effekt;
 		this.olek = false;
 		this.activity = false;
-		this.pilt = new Image("file:\\img\\PurgeImg.jpg");
+		//this.pilt = new Image("file:\\img\\PurgeImg.jpg");
 	}
 
 	

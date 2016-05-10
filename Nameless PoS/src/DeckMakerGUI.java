@@ -8,6 +8,7 @@ import javafx.beans.value.ObservableValue;
 import javafx.collections.FXCollections;
 import javafx.collections.ObservableList;
 import javafx.event.ActionEvent;
+import javafx.event.Event;
 import javafx.event.EventHandler;
 import javafx.geometry.Insets;
 import javafx.scene.Group;
@@ -17,15 +18,21 @@ import javafx.scene.control.Button;
 import javafx.scene.control.Label;
 import javafx.scene.control.TextField;
 import javafx.scene.control.cell.PropertyValueFactory;
+import javafx.scene.input.MouseEvent;
 import javafx.scene.layout.BorderPane;
 import javafx.scene.layout.HBox;
+import javafx.scene.layout.VBox;
+import javafx.scene.paint.*;
+import javafx.scene.shape.Rectangle;
 import javafx.stage.Stage;
 import javafx.util.Callback;
+import sun.font.TextLabel;
 
 import java.io.File;
 import java.io.PrintWriter;
 import java.util.ArrayList;
 import java.util.List;
+import java.util.Observable;
 import java.util.Scanner;
 
 public class DeckMakerGUI extends Application {
@@ -33,11 +40,13 @@ public class DeckMakerGUI extends Application {
     private TableView table2 = new TableView();
     private static File cardBank = new File("C:\\Users\\Siim-Sander\\Documents\\GitHub\\Yu-gi-oh-fuck-this-shit\\Nameless PoS\\Decks\\Deck.txt"); //Siia peab tegeliku Card Banki nime panema
     private static ArrayList<String> cardBankList = new ArrayList<>();
-    private static ObservableList<Kaart> oCardList;
+    //private static ObservableList<Kaart> oCardList;
     private static ObservableList<Kaart> oDeckList;
+    private ObservableList<Kaart> oCardList = FXCollections.observableArrayList(cards);
     private static ArrayList<Kaart> DeckList = new ArrayList<>();
     private static List<Kaart> cards = new ArrayList<>();
     private Label cardsInDeck = new Label();
+    private VBox hoverBox = new VBox();
 
     public static void setDeckList(ArrayList<Kaart> deckList) {
         DeckList = deckList;
@@ -48,13 +57,6 @@ public class DeckMakerGUI extends Application {
         launch(args);
     }
 
-    public static ObservableList<Kaart> getoCardList() {
-        return oCardList;
-    }
-
-    public static void setoCardList(ObservableList<Kaart> oCardList) {
-        DeckMakerGUI.oCardList = oCardList;
-    }
 
     @Override
     public void start(Stage primaryStage) throws Exception {
@@ -66,6 +68,17 @@ public class DeckMakerGUI extends Application {
         Group leftPane = new Group();
         Group rightPane = new Group();
         Group bottomPane = new Group();
+        VBox data = new VBox();
+        data.setPadding(new Insets(5));
+        BorderPane cardHover = new BorderPane();
+        Label name = new Label();
+        Label attack = new Label();
+        Label defence = new Label();
+        Label subType = new Label();
+        Label mana = new Label();
+        Label effekt = new Label();
+        Label tugevus = new Label();
+        Label pikkus = new Label();
         border.setLeft(leftPane);
         border.setRight(rightPane);
         border.setTop(topPane);
@@ -77,6 +90,60 @@ public class DeckMakerGUI extends Application {
         ObservableList<Kaart> oDeckList = FXCollections.observableArrayList(DeckList);
         cardName.setCellValueFactory(new PropertyValueFactory<Kaart, String>("nimi"));
         table1.setItems(oDeckList);
+        table1.setRowFactory(tableView -> {
+            final TableRow<Kaart> row = new TableRow<>();
+
+            row.hoverProperty().addListener((observable) -> {
+
+                        final Kaart kaart = row.getItem();
+                        if(!hoverBox.getChildren().contains(cardHover)) {
+                            hoverBox.getChildren().add(cardHover);
+                        }
+                System.out.println(row.isHover());
+                System.out.println(kaart);
+                        if (row.isHover() && kaart != null) {
+                            leftPane.getChildren().remove(hoverBox);
+                            name.setText(kaart.getNimi() + " - " + kaart.getTyyp());
+                            if (kaart.getTyyp().equals("Hero")) {
+                                data.getChildren().removeAll(attack, defence,subType, mana, effekt, tugevus, pikkus);
+                                attack.setText("Attack: " + Integer.toString(kaart.getAttack()));
+                                defence.setText("Defence: " + Integer.toString(kaart.getDefence()));
+                                mana.setText("Mana: " + kaart.getManaPoints());
+                                data.getChildren().addAll(attack, defence, mana);
+                            } else {
+                                if (kaart.getAlamTyyp().equals("Buff") || kaart.getAlamTyyp().equals("Vulnerability")) {
+                                    data.getChildren().removeAll(attack, defence,subType, mana, effekt, tugevus, pikkus);
+                                    subType.setText("Sub type: " + kaart.getAlamTyyp());
+                                    mana.setText("Mana: " + kaart.getManaPoints());
+                                    effekt.setText("Effekt: " + kaart.getEffekt());
+                                    tugevus.setText("Strenght: " + kaart.getTugevus());
+                                    pikkus.setText("Length: " + kaart.getLength());
+                                    data.getChildren().addAll(subType, mana, effekt, tugevus, pikkus);
+                                } else {
+                                    data.getChildren().removeAll(attack, defence,subType, mana, effekt, tugevus, pikkus);
+                                    mana.setText("Mana: " + kaart.getManaPoints());
+                                    data.getChildren().add(mana);
+
+                                }
+                            }
+                            hoverBox.setStyle("-fx-background-color: #FFFFFF;");
+                            cardHover.setTop(name);
+                            cardHover.setRight(data);
+                            cardHover.setLeft(new Rectangle(60,90,Color.GREEN));
+                            if(!leftPane.getChildren().contains(hoverBox)) {
+                                leftPane.getChildren().add(hoverBox);
+                            }
+                        }
+                else if(kaart != null) {
+                            leftPane.getChildren().remove(hoverBox);
+                            hoverBox.getChildren().remove(cardHover);
+                        }
+                else if (row.isHover() && kaart == null) {
+                            //leftPane.getChildren().remove(hoverBox);
+                        }
+            });
+            return row;
+        });
         TableColumn removeFromDeck = new TableColumn("Remove");
         removeFromDeck.setSortable(false);
         removeFromDeck.setCellValueFactory(
@@ -95,13 +162,10 @@ public class DeckMakerGUI extends Application {
                     }
                 }
         );
-        TableColumn nrInDeck = new TableColumn("Amount");
-        table1.getColumns().addAll(removeFromDeck, cardName, nrInDeck);
+        table1.getColumns().addAll(removeFromDeck, cardName);
         leftPane.getChildren().add(table1);
         TableColumn cardName2 = new TableColumn("Card Name");
         cardName2.setSortable(false);
-        TableColumn nrInBank = new TableColumn("Number in bank");
-        ObservableList<Kaart> oCardList = FXCollections.observableArrayList(cards);
         cardName2.setCellValueFactory(new PropertyValueFactory<Kaart, String>("nimi"));
         table2.setItems(oCardList);
         table2.getColumns().add(cardName2);
@@ -132,9 +196,6 @@ public class DeckMakerGUI extends Application {
         TextField deckName = new TextField();
         Button makeDeck = new Button("Save Deck");
         cardsInDeck.setText(Integer.toString(DeckList.size()));
-        if(DeckList.size()>=10) {
-            cardsInDeck.setTextFill(javafx.scene.paint.Paint.valueOf("Red"));
-        }
         HBox hbox = new HBox();
         hbox.setPadding(new Insets(5,10,10,5));
         hbox.getChildren().addAll(deckLabel,deckName,makeDeck,cardsInDeck);
