@@ -12,16 +12,16 @@ import javafx.scene.Scene;
 import javafx.scene.control.*;
 import javafx.scene.image.Image;
 import javafx.scene.image.ImageView;
-import javafx.scene.layout.GridPane;
-import javafx.scene.layout.HBox;
-import javafx.scene.layout.Pane;
-import javafx.scene.layout.VBox;
+import javafx.scene.input.MouseEvent;
+import javafx.scene.layout.*;
 import javafx.scene.text.Font;
 import javafx.scene.text.FontPosture;
 import javafx.scene.text.Text;
 import javafx.stage.*;
 
 import java.io.File;
+import java.io.FileNotFoundException;
+import java.util.ArrayList;
 
 public class Gamescenes  {
     private static Scene deckMakerScene;
@@ -40,9 +40,6 @@ public class Gamescenes  {
         Gamescenes.labelText.setValue(labelText);
     }
 
-    public static Scene getDeckMakerScene() {
-        return deckMakerScene;
-    }
 
     public static Scene getDeckMakerMenuScene() {
         return deckMakerMenuScene;
@@ -64,31 +61,60 @@ public class Gamescenes  {
         return battleScenePane;
     }
 
+
     public static void setDeckMakerMenuScene(int x, int y, Stage primaryStage) {
         primaryStage.setTitle("Deck Maker Menu");
         GridPane grid = new GridPane();
+        BorderPane border = new BorderPane();
         Scene deckMenuScene = new Scene(grid, x*0.5, y*0.5);
         grid.setAlignment(Pos.CENTER);
         grid.setHgap(10);
         grid.setVgap(10);
         grid.setPadding(new Insets(25, 25, 25, 25));
 
-        Button newDeck = new Button("Make a new deck");
+        TextField deckLocation = new TextField();
+        Button newDeck = new Button("Start");
+        Label intro = new Label("Enter current deck name to edit,\n or leave blank to start a new deck.");
+        intro.setAlignment(Pos.CENTER);
+        border.setTop(intro);
         HBox hbNewDeck = new HBox(10);
         hbNewDeck.setAlignment(Pos.CENTER);
         newDeck.setMinWidth(150);
         newDeck.setPrefWidth(200);
-        hbNewDeck.getChildren().add(newDeck);
-        grid.add(hbNewDeck, 0, 0);
+        hbNewDeck.getChildren().addAll(deckLocation,newDeck);
+        border.setCenter(hbNewDeck);
+        grid.add(border, 0, 0);
+        newDeck.setOnMouseClicked(new EventHandler<MouseEvent>() {
+            @Override
+            public void handle(MouseEvent event) {
+                try {
+                    if(deckLocation.getText().equals("")){
+                        ArrayList<Kaart> cards = new ArrayList<>();
+                        DeckMakerGUI deckMaker = new DeckMakerGUI(cards);
+                        primaryStage.setScene(deckMaker.deckMakerGUIRun());
+                    }
+                    else {
+                        try {
+                            File fail = new File(deckLocation.getText());
+                            ArrayList<Kaart> cards = DeckMakerGUI.makeCardBank(fail);
+                            DeckMakerGUI deckMaker = new DeckMakerGUI(cards);
+                            primaryStage.setScene(deckMaker.deckMakerGUIRun());
+                        }
+                        catch (FileNotFoundException e) {
+                            Alert alert = new Alert(Alert.AlertType.INFORMATION);
+                            alert.setTitle("File Not found!");
+                            alert.setHeaderText(null);
+                            alert.setContentText("Could not find a file with that name, please try again.");
+                            alert.showAndWait();
+                        }
 
-        Button manageDeck = new Button("Manage an existing deck");
-        HBox hbManageDeck = new HBox(10);
-        hbManageDeck.setAlignment(Pos.CENTER);
-        manageDeck.setMinWidth(150);
-        manageDeck.setPrefWidth(200);
-        hbManageDeck.getChildren().add(manageDeck);
-        grid.add(hbManageDeck, 0, 1);
-
+                    }
+                }
+                catch (Exception e) {
+                    throw new RuntimeException(e);
+                }
+            }
+        });
         deckMenuScene.getStylesheets().add(Gamescenes.class.getResource("/GUI.css").toExternalForm());
         Gamescenes.deckMakerMenuScene = deckMenuScene;
 
