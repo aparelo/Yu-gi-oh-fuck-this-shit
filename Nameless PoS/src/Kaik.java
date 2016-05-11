@@ -50,7 +50,6 @@ public class Kaik extends Manguvaljak {
                     kaartSurnuAeda(sinuValjak.getVulnerabilities().get(l),currentOpponent);
                     sinuValjak.getVulnerabilities().remove(l);
                 }
-                System.out.println(sinuValjak);
                 tempBuffBuffers = new ArrayList<>();
                 tempVulnerabilityBuffers = new ArrayList<>();
             }

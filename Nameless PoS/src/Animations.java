@@ -1,5 +1,6 @@
 import com.sun.javafx.geom.transform.Translate2D;
 import javafx.animation.*;
+import javafx.concurrent.Service;
 import javafx.event.ActionEvent;
 import javafx.event.EventHandler;
 import javafx.geometry.Bounds;
@@ -7,6 +8,7 @@ import javafx.scene.Node;
 import javafx.scene.image.Image;
 import javafx.scene.image.ImageView;
 import javafx.scene.input.MouseEvent;
+import javafx.scene.layout.HBox;
 import javafx.scene.layout.VBox;
 import javafx.scene.paint.Color;
 import javafx.scene.shape.*;
@@ -24,9 +26,10 @@ public class Animations  {
         iv.setPreserveRatio(true);
         iv.setSmooth(true);
         iv.setCache(true);
+        iv.setVisible(false);
 
-        TranslateTransition translateCard = new TranslateTransition(Duration.millis(1000), iv);
-        String indeks = "ss";
+        TranslateTransition translateCard = new TranslateTransition(Duration.millis(2000), iv);
+        String indeks = "";
         Kaart removableKaart = new EmptyCard();
             for (Kaart kaart : mangija.getHandMap().keySet()) {
                 if (kaart.toString().equals("Empty")) {
@@ -36,9 +39,9 @@ public class Animations  {
             }
         mangija.getHandMap().put(card,indeks);
         mangija.getHandMap().remove(removableKaart);
-        System.out.println(card);
-        System.out.println(indeks);
-        System.out.println(mangija.getHandMap());
+        //System.out.println(card);
+        //System.out.println(indeks);
+        //System.out.println(mangija.getHandMap());
 
         Node cardNode = Gamescenes.getBattleScenePane().lookup(indeks);
 
@@ -48,15 +51,21 @@ public class Animations  {
         translateCard.setFromY(mangija.getDeckY());
         translateCard.setToX(cardBounds.getMinX() - 110);
         translateCard.setToY(cardBounds.getMinY() - 24);
-
         Gamescenes.getBattleScenePane().getChildren().add(iv);
 
-        translateCard.play();
+        PauseTransition pause = new PauseTransition(Duration.millis(1200));
+        pause.setOnFinished(new EventHandler<ActionEvent>() {
+            public void handle(ActionEvent e)   {
+                iv.setVisible(true);
+                }
+            });
+        SequentialTransition seqTransition = new SequentialTransition (pause,translateCard);
+        seqTransition.play();
 
     }
 
 
-    public static void startShuffle() {
+    public static void startShuffle()  {
         Image deckImage1 = new Image("\\img\\CardBackground.jpg");
         ImageView iv1 = new ImageView();
         iv1.setImage(deckImage1);
@@ -82,6 +91,7 @@ public class Animations  {
 
         Bounds cardBounds1 = deck1.localToScene(deck1.getBoundsInLocal());
         Bounds cardBounds2 = deck2.localToScene(deck2.getBoundsInLocal());
+        System.out.println(cardBounds2);
 
         translateDeck1.setFromX(300);
         translateDeck1.setFromY(450);
@@ -110,6 +120,11 @@ public class Animations  {
         parallelDeck.play();
 
         //Deck draw animation end
+
+    }
+
+    public void flipHandAndSpell(Kaart kaart) {
+
 
     }
 }

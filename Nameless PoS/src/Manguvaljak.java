@@ -51,7 +51,6 @@ public class Manguvaljak{
 	    }
 	    public static void kaartKatte(Mangija mangija) throws InterruptedException {
 	        mangija.getMangijaKasi().add(mangija.getMangijaDeck().get(0));
-           // mangija.getHandMap().put(mangija.getMangijaDeck().get(0),)
 			Animations.cardToHand(mangija);
 	        mangija.getMangijaDeck().remove(0);
 	    }

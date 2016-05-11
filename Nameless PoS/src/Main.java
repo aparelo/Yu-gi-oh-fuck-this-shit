@@ -65,8 +65,6 @@ public class Main {
         }
         //Loo teise mangija isend
         Collections.shuffle(deck2);
-        System.out.println(deck2);
-        System.out.println(deck1);
         Mangija mangija2 = new Mangija(GUI.player2Name, deck2, 2);
         Random alustaja = new Random();
         int number = alustaja.nextInt(2);
@@ -79,10 +77,10 @@ public class Main {
             Manguvaljak.currentOpponent = mangija1;
         }
     }
-    public static void main() throws Exception {
+    public static void gameLogic() throws Exception {
         String gameOverError = "";
         Animations.startShuffle();
-        Thread.sleep(1200);
+       // Animations.startShuffle();
         //Alusta manguga
         int test = 0;
        mainloop: while (test < 1 /*Manguvaljak.currentOpponent.getElud() > 0 && Manguvaljak.currentOpponent.getMangijaDeck().size() > 0 && Manguvaljak.currentPlayer.getElud() > 0 && Manguvaljak.currentPlayer.getMangijaDeck().size() > 0*/) {
@@ -93,8 +91,6 @@ public class Main {
                 ArrayList<Kaart> tempKasi = Manguvaljak.currentPlayer.getMangijaKasi();
                 ArrayList<Kaart> tempDeck = Manguvaljak.currentPlayer.getMangijaDeck();
                 for (int i=0;i<uusiKaarte;i++) {
-                    System.out.println("Uus kaart");
-                    Thread.sleep(1200);
                     Manguvaljak.kaartKatte(Manguvaljak.currentPlayer);
                     if (Manguvaljak.currentPlayer.getMangijaDeck().size() == 0){
                     	gameOverError = "DeckToZero";
@@ -104,6 +100,7 @@ public class Main {
                 Manguvaljak.currentPlayer.setMangijaDeck(tempDeck);
                 Manguvaljak.currentPlayer.setMangijaKasi(tempKasi);
             }
+
             Kaik.uusKaik();
 
             int attackCount = 0; // Nulli attackCount

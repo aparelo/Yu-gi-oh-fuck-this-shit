@@ -13,8 +13,7 @@ public class Buff extends Kaart {
 	private int moveCount; //Kaikude counter
 	private boolean olek; // True - faceup, False, facedown
 	private boolean activity;
-    private Image pilt;
-	
+    private Image frontPicture;
 
 	public Buff(String nimi, String alamTyyp, int manaPoints, String effekt, int tugevus, int length) {
 		this.nimi = nimi;
@@ -27,7 +26,7 @@ public class Buff extends Kaart {
 		this.moveCount = 0;
 		this.olek = false;
 		this.activity = false;
-        this.pilt = new Image("file:\\img\\BuffImg.jpg");
+        this.frontPicture = new Image("\\img\\BuffImg.jpg");
 
 	}
 
@@ -129,6 +128,10 @@ public class Buff extends Kaart {
 
 	public void setActivity(boolean activity) {
 		this.activity = activity;
+	}
+
+	public Image getFrontPicture() {
+		return frontPicture;
 	}
 
 

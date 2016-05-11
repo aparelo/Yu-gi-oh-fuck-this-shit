@@ -164,7 +164,7 @@ public class Gamescenes  {
                         setBattleScene(x, y, primaryStage);
                         primaryStage.setScene(Gamescenes.getBattleScene());
                         primaryStage.show();
-                        Main.main();
+                        Main.gameLogic();
                     }
                 }
                 catch (Exception ex) {
@@ -205,8 +205,6 @@ public class Gamescenes  {
             iv.setPreserveRatio(true);
             iv.setSmooth(true);
             iv.setCache(true);
-            VBox vbCardSpot = new VBox();
-            vbCardSpot.getChildren().add(iv);
 
             if (i < 5) {
                 grid.add(iv, hand1, 6);
@@ -252,7 +250,7 @@ public class Gamescenes  {
                 grid.add(iv, 9, 4);
             }
         }
-
+        Gamescenes.battleScene = battleScene;
         Main.createPlayersAndDecks();
 
         VBox opponentStats = new VBox();
@@ -279,15 +277,12 @@ public class Gamescenes  {
 
         Label info = new Label("");
         setLabelText("");
-        System.out.println(labelText.toString());
         info.textProperty().bind(labelText);
         grid.add(info,1,3,9,1);
 
 
         battleScene.getStylesheets().add(Gamescenes.class.getResource("/GUI.css").toExternalForm());
         Gamescenes.battleScene = battleScene;
-
-
 
     }
     public static void main() throws Exception {

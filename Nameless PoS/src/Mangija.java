@@ -55,10 +55,9 @@ public class Mangija {
             this.spellMap = spellMap;
             this.heroMap = heroMap;
 
-            Node deck1 = Gamescenes.getBattleScenePane().lookup("#33");
-            Bounds cardBounds1 = deck1.localToScene(deck1.getBoundsInLocal());
-            this.deckX = cardBounds1.getMinX() - 110;
-            this.deckY = cardBounds1.getMinY() - 24;
+
+            this.deckX = 721.0;
+			this.deckY = 348.0;
 
 		}
 		else {
@@ -84,10 +83,9 @@ public class Mangija {
             this.handMap = handMap;
             this.spellMap = spellMap;
             this.heroMap = heroMap;
-            Node deck1 = Gamescenes.getBattleScenePane().lookup("#30");
-            Bounds cardBounds2 = deck1.localToScene(deck1.getBoundsInLocal());
-            this.deckX = cardBounds2.getMinX() - 110;
-            this.deckY = cardBounds2.getMinY() - 24;
+
+            this.deckX = 0;
+            this.deckY = 214.0;
 		}
 	}
 	

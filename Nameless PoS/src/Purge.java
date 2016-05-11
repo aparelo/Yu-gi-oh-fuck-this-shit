@@ -10,10 +10,8 @@ public class Purge extends Kaart {
 	private String effekt; //Spell
 	private boolean olek; // True - faceup, False, facedown
 	private boolean activity;
-	private Image pilt;
+	private Image frontPicture;
 
-
-	
 	public Purge(String nimi, String alamTyyp, int manaPoints, String effekt) {
 		this.nimi = nimi;
 		this.tyyp = "Spell";
@@ -22,7 +20,7 @@ public class Purge extends Kaart {
 		this.effekt = effekt;
 		this.olek = false;
 		this.activity = false;
-		this.pilt = new Image("file:\\img\\PurgeImg.jpg");
+		this.frontPicture = new Image("\\img\\PurgeImg.jpg");
 	}
 
 	
@@ -93,6 +91,10 @@ public class Purge extends Kaart {
 
 	public void setActivity(boolean activity) {
 		this.activity = activity;
+	}
+
+	public Image getFrontPicture() {
+		return frontPicture;
 	}
 
 

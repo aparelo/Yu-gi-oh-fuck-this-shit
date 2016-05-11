@@ -24,7 +24,8 @@ public abstract class Kaart {
 	private  ArrayList<Kaart> vulnerabilities;
 	private  boolean olek; // True - faceup, False, facedown
 	private  boolean activity;
-	private Image pilt;
+	private Image frontPicture;
+	private Image backPicture;
     private boolean empty;
 
 
@@ -177,9 +178,10 @@ public abstract class Kaart {
 	public  void setActivity(boolean activity) {
 		this.activity = activity;
 	}
-	public Image getPilt() {
-		return pilt;
-	}
+	public abstract Image getFrontPicture();
+    public Image getBackPicture() {
+        return new Image("\\img\\CardBackground.jpg");
+    }
     public boolean isEmpty() {
         return true;
     }
