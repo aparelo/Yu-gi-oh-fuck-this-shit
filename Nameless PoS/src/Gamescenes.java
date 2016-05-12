@@ -22,6 +22,7 @@ import javafx.stage.*;
 import java.io.File;
 import java.io.FileNotFoundException;
 import java.util.ArrayList;
+import java.util.Optional;
 
 public class Gamescenes  {
     private static Scene deckMakerScene;
@@ -72,9 +73,31 @@ public class Gamescenes  {
         grid.setVgap(10);
         grid.setPadding(new Insets(25, 25, 25, 25));
 
-        TextField deckLocation = new TextField();
+        //TextField deckLocation = new TextField();
+        MenuButton deckLocation = new MenuButton("Choose your deck");
+        File folder = new File("Nameless Pos\\Decks\\");  // Lisatakse MenuButtoni menüüvalikusse "Decks" folderis olevad deckide nimed, menüünupu vajutamisel seatakse vastava Decki nimi Manguvaljaku isendivalja väärtuseks
+        File[] listOfFiles = folder.listFiles();
+        //Esimene Deck
+        MenuItem empty = new MenuItem("New Deck");
+        deckLocation.getItems().add(empty);
+        empty.setOnAction(new EventHandler<ActionEvent>() {
+            @Override
+            public void handle(ActionEvent event) {
+                deckLocation.setText("New Deck");
+            }
+        });
+        for (File fail : listOfFiles) {
+            String nimi = fail.getName().replaceAll(".csv", "");
+            MenuItem nimi1 = new MenuItem(nimi);
+            nimi1.setOnAction(new EventHandler<ActionEvent>() {
+                public void handle(ActionEvent e) {
+                    deckLocation.setText(nimi);
+                }
+            });
+            deckLocation.getItems().add(nimi1);
+        }
         Button newDeck = new Button("Start");
-        Label intro = new Label("Enter current deck name to edit,\n or leave blank to start a new deck.");
+        Label intro = new Label("Pick a current deck to edit,\n or start a new deck.");
         intro.setAlignment(Pos.CENTER);
         border.setTop(intro);
         HBox hbNewDeck = new HBox(10);
@@ -88,16 +111,16 @@ public class Gamescenes  {
             @Override
             public void handle(MouseEvent event) {
                 try {
-                    if(deckLocation.getText().equals("")){
+                    if(deckLocation.getText().equals("New Deck")){
                         ArrayList<Kaart> cards = new ArrayList<>();
-                        DeckMakerGUI deckMaker = new DeckMakerGUI(cards);
+                        DeckMakerGUI deckMaker = new DeckMakerGUI(cards,"");
                         primaryStage.setScene(deckMaker.deckMakerGUIRun());
                     }
                     else {
                         try {
-                            File fail = new File(deckLocation.getText());
+                            File fail = new File("Nameless Pos\\Decks\\"+deckLocation.getText()+".csv");
                             ArrayList<Kaart> cards = DeckMakerGUI.makeCardBank(fail);
-                            DeckMakerGUI deckMaker = new DeckMakerGUI(cards);
+                            DeckMakerGUI deckMaker = new DeckMakerGUI(cards,deckLocation.getText());
                             primaryStage.setScene(deckMaker.deckMakerGUIRun());
                         }
                         catch (FileNotFoundException e) {
@@ -140,14 +163,16 @@ public class Gamescenes  {
 
         File folder = new File("Nameless Pos\\Decks\\");  // Lisatakse MenuButtoni menüüvalikusse "Decks" folderis olevad deckide nimed, menüünupu vajutamisel seatakse vastava Decki nimi Manguvaljaku isendivalja väärtuseks
         File[] listOfFiles = folder.listFiles();
+        //Esimene Deck
         for (File fail : listOfFiles) {
-            String nimi = fail.getName().replaceAll(".txt","");
+            String nimi = fail.getName().replaceAll(".csv","");
             MenuItem nimi1 = new MenuItem(nimi);
             nimi1.setOnAction(new EventHandler<ActionEvent>() {
                 public void handle(ActionEvent e)   {
-                  Manguvaljak.setCurrentPlayerDeck(nimi);
+                    Manguvaljak.setCurrentPlayerDeck(nimi);
                     deck1.setText(nimi);
             }});
+            //Teine deck
             MenuItem nimi2 = new MenuItem(nimi);
             nimi2.setOnAction(new EventHandler<ActionEvent>() {
                 public void handle(ActionEvent e)   {
@@ -329,12 +354,74 @@ public class Gamescenes  {
         Gamescenes.battleScene = battleScene;
 
     }
+
+    public static void setMainMenuScene(int x, int y, Stage primaryStage) {
+        GridPane grid = new GridPane();
+        Scene scene = new Scene(grid, x, y);
+        grid.setAlignment(Pos.CENTER);
+        grid.setHgap(10);
+        grid.setVgap(10);
+        grid.setPadding(new Insets(25, 25, 25, 25));
+
+        Button play = new Button("Play Yu-Gi-Oh (not quite)");
+        HBox hbPlay = new HBox(10);
+        hbPlay.setAlignment(Pos.CENTER);
+        play.setPrefWidth(200);
+        hbPlay.getChildren().add(play);
+        grid.add(hbPlay, 0, 0);
+        play.setOnAction(new EventHandler<ActionEvent>() {
+            public void handle(ActionEvent e) {
+                primaryStage.setScene(Gamescenes.getBattleMenuScene());
+                primaryStage.show();
+            }
+        });
+
+        Button deckMaker = new Button("Make a deck");
+        HBox hbDeckMaker = new HBox(10);
+        hbDeckMaker.setAlignment(Pos.CENTER);
+        deckMaker.setPrefWidth(200);
+        hbDeckMaker.getChildren().add(deckMaker);
+        grid.add(hbDeckMaker, 0, 1);
+        deckMaker.setOnAction(new EventHandler<ActionEvent>() {
+            public void handle(ActionEvent e) {
+                primaryStage.setScene(Gamescenes.getDeckMakerMenuScene());
+                primaryStage.show();
+            }
+        });
+
+        Button exit = new Button("Exit the game");
+        HBox hbExit = new HBox(10);
+        hbExit.setAlignment(Pos.CENTER);
+        exit.setPrefWidth(200);
+        hbExit.getChildren().add(exit);
+        grid.add(hbExit, 0, 2);
+        mainMenuScene = scene;
+        exit.setOnAction(new EventHandler<ActionEvent>() {
+            @Override
+            public void handle(ActionEvent event) {
+                Alert alert = new Alert(Alert.AlertType.CONFIRMATION);
+                alert.setTitle("Return to main menu");
+                alert.setContentText("Are you sure you want to exit the game?");
+                Optional<ButtonType> result = alert.showAndWait();
+                if(result.get() == ButtonType.OK) {
+                    primaryStage.hide();
+                }
+            }
+        });
+
+
+        mainMenuScene.getStylesheets().add(Gamescenes.class.getResource("/GUI.css").toExternalForm());
+    }
+
     public static void main() throws Exception {
         int x = GUI.getX();
         int y = GUI.getY();
         Stage primary = GUI.getPrimary();
         setDeckMakerMenuScene(x, y, primary);
         setBattleMenuScene(x, y, primary);
+        setMainMenuScene(x, y,primary);
+
+
     }
 
 

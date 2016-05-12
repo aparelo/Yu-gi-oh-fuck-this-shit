@@ -8,9 +8,9 @@ public class Main {
 
 
     public static void createPlayersAndDecks() throws Exception {
-        String player1Deck = "Nameless Pos\\Decks\\" + Manguvaljak.currentPlayerDeck + ".txt";
+        String player1Deck = "Nameless Pos\\Decks\\" + Manguvaljak.currentPlayerDeck + ".csv";
         File deckFile1 = new File(player1Deck);
-        String player2Deck = "Nameless Pos\\Decks\\" + Manguvaljak.currentOpponentDeck + ".txt";
+        String player2Deck = "Nameless Pos\\Decks\\" + Manguvaljak.currentOpponentDeck + ".csv";
         File deckFile2 = new File(player2Deck);
         Scanner sc1 = new Scanner(deckFile1, "UTF-8");
         Scanner sc2 = new Scanner(deckFile2, "UTF-8");
