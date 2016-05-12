@@ -10,8 +10,27 @@
 
 }
 .root {
-	-fx-background-image: url("background.jpg");
+	-fx-background-color: #aa2009;
 }
+
+#root {
+    -fx-background-color: #aa2009;
+}
+
+#border {
+    -fx-fill: #aa2009;
+    -fx-background-color: #aa2009;
+}
+
+#cardHover {
+    -fx-fill: #aa2009;
+    -fx-background-color: #aa2009;
+}
+
+#placeHolder {
+    -fx-fill: #aa2009;
+}
+
 .label{
     -fx-font-size:28px;
     -fx-font-family: "Impact";
@@ -27,6 +46,59 @@
     -fx-effect: dropshadow( gaussian , rgb(0,0,0) , 0,0,0,1 );
     -fx-border-color: #000000;
 }
+
+.table-cell {
+    -fx-font-size:28px;
+    -fx-font-family: "Impact";
+    -fx-text-fill: rgb(0, 0, 0);
+    -fx-font-weight: bold;
+    -fx-effect: dropshadow( gaussian , rgb(0,0,0) , 0,0,0,1 );
+    -fx-border-color: #000000;
+    -fx-text-alignment: center;
+}
+
+
+.table-view .column-header {
+    -fx-background-color: #444444;
+}
+
+.table-view .filler {
+    -fx-background-color: #444444;
+}
+
+#addToDeck {
+    -fx-pref-width: 80;
+}
+
+#remove {
+    -fx-pref-width: 130;
+}
+
+#cardName {
+    -fx-pref-width: 460;
+}
+
+#cardName2 {
+    -fx-pref-width: 500;
+}
+
+.table-view .table-cell:even {
+    -fx-background-color: #7a7a7a;
+}
+
+.table-view .table-cell:odd {
+    -fx-background-color: #aaaaaa;
+}
+
+.table-view {
+    -fx-min-width: 600;
+}
+
+.table-view {
+    -fx-width: 200px;
+}
+
+
 .text-field:hover {
     -fx-border-color: rgb(255, 157, 0);
 

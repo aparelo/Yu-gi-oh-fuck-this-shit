@@ -58,48 +58,7 @@ public class GUI extends Application {
 		this.primary = primaryStage;
 		Gamescenes.main(); // Luuakse Gamescenes klassi jaoks kõik mänguks vajalikud stseenid
 		primaryStage.setTitle("Not Quite Yu-Gi-Oh");
-		GridPane grid = new GridPane();
-
-		Scene scene = new Scene(grid, 1000, 700);
-		grid.setAlignment(Pos.CENTER);
-		grid.setHgap(10);
-		grid.setVgap(10);
-		grid.setPadding(new Insets(25, 25, 25, 25));
-
-		Button play = new Button("Play Yu-Gi-Oh (not quite)");
-		HBox hbPlay = new HBox(10);
-		hbPlay.setAlignment(Pos.CENTER);
-		play.setPrefWidth(200);
-		hbPlay.getChildren().add(play);
-		grid.add(hbPlay, 0, 0);
-		play.setOnAction(new EventHandler<ActionEvent>() {
-			public void handle(ActionEvent e) {
-				primaryStage.setScene(Gamescenes.getBattleMenuScene());
-				primaryStage.show();
-			}
-		});
-
-		Button deckMaker = new Button("Make a deck");
-		HBox hbDeckMaker = new HBox(10);
-		hbDeckMaker.setAlignment(Pos.CENTER);
-		deckMaker.setPrefWidth(200);
-		hbDeckMaker.getChildren().add(deckMaker);
-		grid.add(hbDeckMaker, 0, 1);
-		deckMaker.setOnAction(new EventHandler<ActionEvent>() {
-			public void handle(ActionEvent e) {
-				primaryStage.setScene(Gamescenes.getDeckMakerMenuScene());
-				primaryStage.show();
-			}
-		});
-
-		Button exit = new Button("Exit the game");
-		HBox hbExit = new HBox(10);
-		hbExit.setAlignment(Pos.CENTER);
-		exit.setPrefWidth(200);
-		hbExit.getChildren().add(exit);
-		grid.add(hbExit, 0, 2);
-		primaryStage.setScene(scene);
-		scene.getStylesheets().add(getClass().getResource("/GUI.css").toExternalForm());
+		primaryStage.setScene(Gamescenes.getMainMenuScene());
 		primaryStage.show();
 	}
 	
