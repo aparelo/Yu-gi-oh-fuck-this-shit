@@ -120,17 +120,22 @@ public class Purge extends Kaart {
 				hero.setDefenceBuff(0);
 				hero.setAttackVulnerability(0);
 				hero.setDefenceVulnerability(0);
-				for(Kaart buffer: kaart.getBuffers()) {
-					for(Kaart kaart1: mangijaLaud) {
-						if(buffer.equals(kaart1)) {
-							tempList.add(kaart1);
+				System.out.println(kaart.getBuffers());
+				if(kaart.getBuffers().size() != 0) {
+					for (Kaart buffer : kaart.getBuffers()) {
+						for (Kaart kaart1 : mangijaLaud) {
+							if (buffer.equals(kaart1)) {
+								tempList.add(kaart1);
+							}
 						}
 					}
 				}
-				for(Kaart vulner: kaart.getVulnerabilities()) {
-					for(Kaart kaart2: mangijaLaud) {
-						if(vulner.equals(kaart2)) {
-							tempList.add(kaart2);
+				if(kaart.getVulnerabilities().size() != 0) {
+					for (Kaart vulner : kaart.getVulnerabilities()) {
+						for (Kaart kaart2 : mangijaLaud) {
+							if (vulner.equals(kaart2)) {
+								tempList.add(kaart2);
+							}
 						}
 					}
 				}

@@ -190,8 +190,8 @@ public class Manguvaljak {
                                     System.out.println("Jõudis siia!");
                                     Kaart  purgeHero = hero;
                                     Kaart purgeSpell = card;
-                                    Purge.purge(currentPlayer, purgeSpell, purgeSpell);
-                                    Animations.cardToGraveyard(purgeHero,currentPlayer);
+                                    Purge.purge(currentPlayer, purgeHero, purgeSpell);
+                                    Animations.cardToGraveyard(purgeSpell,currentPlayer);
                                     kaartSurnuAeda(purgeSpell,currentPlayer);
                                     Gamescenes.setLabelText(purgeHero.getNimi() + " purged! Heroes stats now: \n" + "Attack: " + purgeHero.getAttack() + "\n" + "Defence: " + purgeHero.getDefence());
                                 }
