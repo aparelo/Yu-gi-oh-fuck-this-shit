@@ -188,5 +188,6 @@ public abstract class Kaart {
 
 	public abstract String toString();
 	public abstract String toCSV();
+    public abstract String toInfo();
 	}
 

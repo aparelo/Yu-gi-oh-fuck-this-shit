@@ -59,6 +59,7 @@ public class GUI extends Application {
 		Gamescenes.main(); // Luuakse Gamescenes klassi jaoks kõik mänguks vajalikud stseenid
 		primaryStage.setTitle("Not Quite Yu-Gi-Oh");
 		GridPane grid = new GridPane();
+
 		Scene scene = new Scene(grid, 1000, 700);
 		grid.setAlignment(Pos.CENTER);
 		grid.setHgap(10);

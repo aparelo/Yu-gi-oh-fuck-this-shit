@@ -3,6 +3,7 @@ import java.util.ArrayList;
 
 public class Kaik extends Manguvaljak {
     public static void uusKaik() throws InterruptedException {
+        currentOpponent.setAttackCount(0);
         currentPlayer.setMana(currentPlayer.getMana() + 1);
 
         ArrayList<Integer> tempBuffBuffers = new ArrayList<>();
@@ -59,5 +60,6 @@ public class Kaik extends Manguvaljak {
         for(Kaart vastaseValjak: currentOpponent.getMangijaLaud()) {
             vastaseValjak.setMoveCount(vastaseValjak.getMoveCount()+1);
         }
+
     }
 }

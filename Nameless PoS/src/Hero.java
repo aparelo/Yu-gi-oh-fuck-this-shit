@@ -266,5 +266,8 @@ public class Hero extends Kaart {
 	public String toCSV() {
 		return nimi+","+"Hero"+","+ attack+","+defence+","+rank+","+manaPoints+","+eriatribuut+","+alamTyyp;
 	}
+	public String toInfo() {
+		return "Name: " + nimi + " Attack: " + attack + " Defence: " + defence + " Mana points to play: " + manaPoints;
+	}
 
 }

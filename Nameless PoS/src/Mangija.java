@@ -20,6 +20,9 @@ public class Mangija {
 	private HashMap<Kaart, String> heroMap;
     private double deckX;
     private double deckY;
+    private double graveYardX;
+    private double graveYardY;
+    private int attackCount;
 
 
 	public Mangija(String nimi, ArrayList <Kaart> deck, int location) {
@@ -36,21 +39,21 @@ public class Mangija {
 			HashMap<Kaart,String> handMap = new HashMap<Kaart,String>();
             HashMap<Kaart,String> spellMap = new HashMap<Kaart,String>();
             HashMap<Kaart,String> heroMap = new HashMap<Kaart,String>();
-			handMap.put(new EmptyCard(),"#0");
-            handMap.put(new EmptyCard(),"#1");
-            handMap.put(new EmptyCard(),"#2");
-            handMap.put(new EmptyCard(),"#3");
-            handMap.put(new EmptyCard(),"#4");
-			spellMap.put(new EmptyCard(),"#5");
-            spellMap.put(new EmptyCard(),"#6");
-            spellMap.put(new EmptyCard(),"#7");
-            spellMap.put(new EmptyCard(),"#8");
-            spellMap.put(new EmptyCard(),"#9");
-			heroMap.put(new EmptyCard(),"#10");
-            heroMap.put(new EmptyCard(),"#11");
-            heroMap.put(new EmptyCard(),"#12");
-            heroMap.put(new EmptyCard(),"#13");
-            heroMap.put(new EmptyCard(),"#14");
+			handMap.put(new EmptyCard(),"0");
+            handMap.put(new EmptyCard(),"1");
+            handMap.put(new EmptyCard(),"2");
+            handMap.put(new EmptyCard(),"3");
+            handMap.put(new EmptyCard(),"4");
+			spellMap.put(new EmptyCard(),"5");
+            spellMap.put(new EmptyCard(),"6");
+            spellMap.put(new EmptyCard(),"7");
+            spellMap.put(new EmptyCard(),"8");
+            spellMap.put(new EmptyCard(),"9");
+			heroMap.put(new EmptyCard(),"10");
+            heroMap.put(new EmptyCard(),"11");
+            heroMap.put(new EmptyCard(),"12");
+            heroMap.put(new EmptyCard(),"13");
+            heroMap.put(new EmptyCard(),"14");
             this.handMap = handMap;
             this.spellMap = spellMap;
             this.heroMap = heroMap;
@@ -58,34 +61,38 @@ public class Mangija {
 
             this.deckX = 721.0;
 			this.deckY = 348.0;
+            this.graveYardX = 721.0;
+            this.graveYardY = 214.0;
+            this.attackCount = 0;
 
 		}
 		else {
             HashMap<Kaart,String> handMap = new HashMap<Kaart,String>();
             HashMap<Kaart,String> spellMap = new HashMap<Kaart,String>();
             HashMap<Kaart,String> heroMap = new HashMap<Kaart,String>();
-            handMap.put(new EmptyCard(),"#15");
-            handMap.put(new EmptyCard(),"#16");
-            handMap.put(new EmptyCard(),"#17");
-            handMap.put(new EmptyCard(),"#18");
-            handMap.put(new EmptyCard(),"#19");
-            spellMap.put(new EmptyCard(),"#20");
-            spellMap.put(new EmptyCard(),"#21");
-            spellMap.put(new EmptyCard(),"#22");
-            spellMap.put(new EmptyCard(),"#23");
-            spellMap.put(new EmptyCard(),"#24");
-            heroMap.put(new EmptyCard(),"#25");
-            heroMap.put(new EmptyCard(),"#26");
-            heroMap.put(new EmptyCard(),"#27");
-            heroMap.put(new EmptyCard(),"#28");
-            heroMap.put(new EmptyCard(),"#29");
-            System.out.println(handMap);
+            handMap.put(new EmptyCard(),"15");
+            handMap.put(new EmptyCard(),"16");
+            handMap.put(new EmptyCard(),"17");
+            handMap.put(new EmptyCard(),"18");
+            handMap.put(new EmptyCard(),"19");
+            spellMap.put(new EmptyCard(),"20");
+            spellMap.put(new EmptyCard(),"21");
+            spellMap.put(new EmptyCard(),"22");
+            spellMap.put(new EmptyCard(),"23");
+            spellMap.put(new EmptyCard(),"24");
+            heroMap.put(new EmptyCard(),"25");
+            heroMap.put(new EmptyCard(),"26");
+            heroMap.put(new EmptyCard(),"27");
+            heroMap.put(new EmptyCard(),"28");
+            heroMap.put(new EmptyCard(),"29");
             this.handMap = handMap;
             this.spellMap = spellMap;
             this.heroMap = heroMap;
 
             this.deckX = 0;
             this.deckY = 214.0;
+            this.graveYardX = 0.0;
+            this.graveYardY = 349.0;
 		}
 	}
 	
@@ -182,6 +189,18 @@ public class Mangija {
     }
     public double getDeckY() {
         return deckY;
+    }
+    public double getGraveYardX() {
+        return graveYardX;
+    }
+    public double getGraveYardY() {
+        return graveYardY;
+    }
+    public int getAttackCount() {
+        return attackCount;
+    }
+    public void setAttackCount(int attackCount) {
+        this.attackCount = attackCount;
     }
 
 	

@@ -7,7 +7,7 @@ public class EmptyCard extends Kaart {
         this.empty = true;
     }
 
-    public Image getPilt() {
+    public Image getFrontPicture() {
         return null;
     }
 
@@ -15,6 +15,9 @@ public class EmptyCard extends Kaart {
         return "Empty";
     }
     public String toString() {
+        return "Empty";
+    }
+    public String toInfo() {
         return "Empty";
     }
 

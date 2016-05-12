@@ -104,6 +104,9 @@ public class Purge extends Kaart {
 	public String toCSV() {
 		return nimi+","+"Spell"+","+ effekt+","+manaPoints+","+alamTyyp;
 	}
+	public String toInfo() {
+		return "Name: " + nimi + " Mana points to play: " + manaPoints + " Effect: " + effekt;
+	}
 	public static void purge(Mangija mangija, Kaart hero, Kaart spell) {
 		ArrayList<Kaart> mangijaLaud = mangija.getMangijaLaud();
 		ArrayList<Kaart> tempList = new ArrayList<>();
