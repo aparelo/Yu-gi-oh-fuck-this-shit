@@ -200,24 +200,28 @@ public class Animations  {
 
     public static void cardToField(Kaart card, Mangija mangija) {
         String cardIndeks = getPositionIndex(card, mangija);
-        System.out.println(cardIndeks);
+        System.out.println("Card Index: " + cardIndeks);
         String fieldIndeks;
 
         Node cardNode = Gamescenes.getBattleScenePane().lookup("#" + cardIndeks);
+        System.out.println("Card Node: " + cardNode);
         if (card.getTyyp().equals("Hero")) {
             fieldIndeks = getHeroFieldIndex(mangija);
+            System.out.println("Field Index: " + fieldIndeks);
             mangija.getHandMap().values().remove(cardIndeks);
+            mangija.getHeroMap().values().remove(fieldIndeks);
+            System.out.println("Handmap " + mangija.getHandMap());
             mangija.getHeroMap().put(card,fieldIndeks);
             cardNode.setOnMouseClicked(new EventHandler<MouseEvent>() {
                 public void handle(MouseEvent e)   {
                     Manguvaljak.attack(card);
                 }
             });
-
         }
         else {
             fieldIndeks = getSpellFieldIndex(mangija);
             mangija.getHandMap().values().remove(cardIndeks);
+            mangija.getSpellMap().values().remove(fieldIndeks);
             mangija.getSpellMap().put(card,fieldIndeks);
             cardNode.setOnMouseClicked(new EventHandler<MouseEvent>() {
                 public void handle(MouseEvent e)   {
@@ -226,6 +230,7 @@ public class Animations  {
             });
         }
         Node fieldNode = Gamescenes.getBattleScenePane().lookup("#" +fieldIndeks);
+        System.out.println("Field Node: " + fieldNode);
 
 
 
