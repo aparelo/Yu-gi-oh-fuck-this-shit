@@ -173,6 +173,8 @@ public class Manguvaljak {
                                     Animations.cardToGraveyard(purgeSpell,currentPlayer);
                                     kaartSurnuAeda(purgeSpell,currentPlayer);
                                     Gamescenes.setLabelText(purgeHero.getNimi() + " purged! Heroes stats now: " + "Attack: " + purgeHero.getAttack() + "Defence: " + purgeHero.getDefence());
+                                    System.out.println("Consumed");
+                                    Gamescenes.getBattleScenePane().setOnMouseClicked(null);
                                 }
 
                             }
@@ -193,7 +195,9 @@ public class Manguvaljak {
                                     Purge.purge(currentPlayer, purgeHero, purgeSpell);
                                     Animations.cardToGraveyard(purgeSpell,currentPlayer);
                                     kaartSurnuAeda(purgeSpell,currentPlayer);
-                                    Gamescenes.setLabelText(purgeHero.getNimi() + " purged! Heroes stats now: \n" + "Attack: " + purgeHero.getAttack() + "\n" + "Defence: " + purgeHero.getDefence());
+                                    Gamescenes.setLabelText(purgeHero.getNimi() + " purged! Heroes stats now: " + "Attack: " + purgeHero.getAttack() + "Defence: " + purgeHero.getDefence());
+                                    System.out.println("Consumed");
+                                    Gamescenes.getBattleScenePane().setOnMouseClicked(null);
                                 }
 
                             }

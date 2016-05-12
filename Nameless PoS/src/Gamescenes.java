@@ -12,6 +12,8 @@ import javafx.scene.Scene;
 import javafx.scene.control.*;
 import javafx.scene.image.Image;
 import javafx.scene.image.ImageView;
+import javafx.scene.input.KeyCode;
+import javafx.scene.input.KeyEvent;
 import javafx.scene.input.MouseEvent;
 import javafx.scene.layout.*;
 import javafx.scene.text.Font;
@@ -240,7 +242,6 @@ public class Gamescenes  {
         grid.setPadding(new Insets(15, 15, 15, 15));
 
 
-
         Image cardSpot = new Image("\\img\\CardSpot.jpg");
         Image cardBackgroundImage = new Image("\\img\\CardBackground.jpg");
 
@@ -249,7 +250,7 @@ public class Gamescenes  {
         int hand2 = 1;
         int spellAndHero2 = 2;
 
-        for (int i = 0; i <34; i++) {
+        for (int i = 0; i < 34; i++) {
 
             ImageView iv = new ImageView();
             iv.setId(Integer.toString(i));
@@ -317,6 +318,7 @@ public class Gamescenes  {
         Gamescenes.battleScene = battleScene;
         Main.createPlayersAndDecks();
 
+
         VBox opponentStats = new VBox();
         opponentStats.setPadding(new Insets(10));
         opponentStats.setSpacing(8);
@@ -350,7 +352,22 @@ public class Gamescenes  {
         grid.add(infoContainer,0,3,9,1);
 
 
+
+
         battleScene.getStylesheets().add(Gamescenes.class.getResource("/GUI.css").toExternalForm());
+
+        battleScene.setOnKeyPressed(new EventHandler<KeyEvent>() {
+            @Override
+            public void handle(KeyEvent key)
+            {try {
+                if (key.getCode().equals(KeyCode.ENTER)) {
+                    Kaik.endTurn();
+                }
+            }
+            catch (InterruptedException e) {
+                throw new RuntimeException(e);
+            }
+        }});
         Gamescenes.battleScene = battleScene;
 
     }

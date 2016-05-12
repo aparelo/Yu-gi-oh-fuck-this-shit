@@ -1,3 +1,4 @@
+import com.sun.awt.SecurityWarning;
 import com.sun.javafx.geom.transform.Translate2D;
 import javafx.animation.*;
 import javafx.concurrent.Service;
@@ -18,6 +19,8 @@ import javafx.util.Duration;
 
 import java.util.HashMap;
 
+
+// Osad ID'd ilma tärnita (15,16 jne), sellepärast kaovad ära; sellepärast flippimisel mingi nuss
 import static javafx.animation.Animation.Status.STOPPED;
 
 public class Animations  {
@@ -37,6 +40,7 @@ public class Animations  {
 
             TranslateTransition translateCard = new TranslateTransition(Duration.millis(2000), iv);
 
+
             String indeks = "";
             Kaart removableKaart = new EmptyCard();
             for (Kaart kaart : mangija.getHandMap().keySet()) {
@@ -52,13 +56,13 @@ public class Animations  {
 
             Bounds cardBounds = cardNode.localToScene(cardNode.getBoundsInLocal());
 
-            Gamescenes.getBattleScenePane().lookup("#" + indeks).setId("NA" + indeks);
+            Gamescenes.getBattleScenePane().lookup("#" + indeks).setId("#" + indeks);
+            System.out.println("Background 1" + Gamescenes.getBattleScenePane().lookup("##" + indeks));
 
             translateCard.setFromX(mangija.getDeckX());
             translateCard.setFromY(mangija.getDeckY());
             translateCard.setToX(cardBounds.getMinX() - 110);
             translateCard.setToY(cardBounds.getMinY() - 24);
-
 
             iv.setId(indeks);
                 iv.setOnMouseEntered(new EventHandler<MouseEvent>() {
@@ -119,7 +123,7 @@ public class Animations  {
 
             Bounds cardBounds = cardNode.localToScene(cardNode.getBoundsInLocal());
 
-            Gamescenes.getBattleScenePane().lookup("#" + indeks).setId("NA" + indeks);
+            Gamescenes.getBattleScenePane().lookup("#" + indeks).setId("#" + indeks);
 
             translateCard.setFromX(mangija.getDeckX());
             translateCard.setFromY(mangija.getDeckY());
@@ -136,6 +140,11 @@ public class Animations  {
             iv.setOnMouseExited(new EventHandler<MouseEvent>() {
                 public void handle(MouseEvent e)   {
                     Gamescenes.setLabelText("");
+                }
+            });
+            iv.setOnMouseClicked(new EventHandler<MouseEvent>() {
+                public void handle(MouseEvent e)   {
+                    Manguvaljak.kaartLauale(card, mangija);
                 }
             });
 
@@ -157,7 +166,7 @@ public class Animations  {
                     iv.setImage(card.getFrontPicture());
                     iv.setVisible(false);
                     Node cardBackground = Gamescenes.getBattleScenePane().lookup("##" + finalIndeks);
-                    System.out.println(cardBackground);
+                    System.out.println("BackGround 2 :" + cardBackground);
                     cardBackground.setVisible(true);
                 }
 
@@ -209,6 +218,7 @@ public class Animations  {
             fieldIndeks = getHeroFieldIndex(mangija);
             System.out.println("Field Index: " + fieldIndeks);
             mangija.getHandMap().values().remove(cardIndeks);
+            mangija.getHandMap().put(new EmptyCard(),"#" +cardIndeks);
             mangija.getHeroMap().values().remove(fieldIndeks);
             System.out.println("Handmap " + mangija.getHandMap());
             mangija.getHeroMap().put(card,fieldIndeks);
@@ -221,6 +231,7 @@ public class Animations  {
         else {
             fieldIndeks = getSpellFieldIndex(mangija);
             mangija.getHandMap().values().remove(cardIndeks);
+            mangija.getHandMap().put(new EmptyCard(),"#" +cardIndeks);
             mangija.getSpellMap().values().remove(fieldIndeks);
             mangija.getSpellMap().put(card,fieldIndeks);
             cardNode.setOnMouseClicked(new EventHandler<MouseEvent>() {
@@ -246,7 +257,7 @@ public class Animations  {
 
         cardNode.setId(fieldIndeks);
         System.out.println("CardOnField - Card node Index:" + fieldIndeks);
-        fieldNode.setId("NA" + fieldIndeks);
+        fieldNode.setId("#" + fieldIndeks);
         System.out.println("CardOnField - Field Node: " + fieldNode);
 
         translateCard.play();
@@ -260,7 +271,7 @@ public class Animations  {
         Node cardNode = Gamescenes.getBattleScenePane().lookup("#" + cardIndeks);
         System.out.println("Graveyard card index: " + cardIndeks);
 
-        Node fieldNode = Gamescenes.getBattleScenePane().lookup("#NA" + cardIndeks);
+        Node fieldNode = Gamescenes.getBattleScenePane().lookup("#" + cardIndeks);
 
         Bounds cardBounds = cardNode.localToScene(cardNode.getBoundsInLocal());
 
@@ -272,13 +283,13 @@ public class Animations  {
         translateCard.setToY(mangija.getGraveYardY());
 
         cardNode.setId("Dead");
+        cardNode.setMouseTransparent(true);
         System.out.println("Field node: " + fieldNode);
         fieldNode.setId("#" + cardIndeks);
 
         translateCard.play();
 
     }
-
 
     public static void startShuffle() {
         Image deckImage1 = new Image("\\img\\CardBackground.jpg");
@@ -294,8 +305,6 @@ public class Animations  {
         iv2.setPreserveRatio(true);
         iv2.setSmooth(true);
         iv2.setCache(true);
-
-
 
 
         TranslateTransition translateDeck1 = new TranslateTransition(Duration.millis(1000), iv1);
@@ -344,15 +353,16 @@ public class Animations  {
     }
 
     public static void flipDown(Mangija mangija) {
-       // PauseTransition pause = new PauseTransition(Duration.millis(5000));
+        PauseTransition pause = new PauseTransition(Duration.millis(5000));
+
 
         for (String indeks : mangija.getHandMap().values()) {
             System.out.println(indeks);
 
             Node card = Gamescenes.getBattleScenePane().lookup("#" + indeks);
 
-            Node cardBackGround = Gamescenes.getBattleScenePane().lookup("##" + indeks);
-            System.out.println(cardBackGround);
+            Node cardBackGround = Gamescenes.getBattleScenePane().lookup("#" + indeks);
+            System.out.println("Background: " +cardBackGround);
 
 
             ScaleTransition stHideFront = new ScaleTransition(Duration.millis(1000), card);
@@ -371,20 +381,22 @@ public class Animations  {
                     stShowBack.play();
                 }
             });
-
-            stHideFront.play();
+            SequentialTransition seqT = new SequentialTransition(pause,stHideFront);
+            seqT.play();
 
         }
     }
 
     public static void flipUp(Mangija mangija) {
+        PauseTransition pause = new PauseTransition(Duration.millis(5000));
+
 
         for (String indeks : mangija.getHandMap().values()) {
 
             Node card = Gamescenes.getBattleScenePane().lookup("#" + indeks);
 
             Node cardBackGround = Gamescenes.getBattleScenePane().lookup("##" + indeks);
-
+            System.out.println("Background: " +cardBackGround);
             ScaleTransition stHideBack = new ScaleTransition(Duration.millis(1000), cardBackGround);
             stHideBack.setFromX(1);
             stHideBack.setToX(0);
@@ -401,8 +413,9 @@ public class Animations  {
                     stShowFront.play();
                 }
             });
-            System.out.println(Gamescenes.getBattleScenePane().getChildren());
-            stHideBack.play();
+            SequentialTransition seqT = new SequentialTransition(pause,stHideBack);
+            seqT.play();
+
 
     }
 }}
