@@ -34,6 +34,60 @@ public class Gamescenes  {
     private static Scene battleMenuScene;
     private static GridPane battleScenePane;
     private static StringProperty labelText = new SimpleStringProperty();
+    private static Label name = new Label();
+    private static Label hp = new Label();
+    private static Label mana = new Label();
+    private static Label oName = new Label();
+    private static Label oHp = new Label();
+    private static Label oMana = new Label();
+
+    public static Label getName() {
+        return name;
+    }
+
+    public static void setName(Label Name) {
+        name = Name;
+    }
+
+    public static Label getHp() {
+        return hp;
+    }
+
+    public static void setHp(Label Hp) {
+        hp = Hp;
+    }
+
+    public static Label getMana() {
+        return mana;
+    }
+
+    public static void setMana(Label Mana) {
+        mana = Mana;
+    }
+
+    public static Label getoName() {
+        return oName;
+    }
+
+    public static void setoName(Label oName) {
+        Gamescenes.oName = oName;
+    }
+
+    public static Label getoHp() {
+        return oHp;
+    }
+
+    public static void setoHp(Label oHp) {
+        Gamescenes.oHp = oHp;
+    }
+
+    public static Label getoMana() {
+        return oMana;
+    }
+
+    public static void setoMana(Label oMana) {
+        Gamescenes.oMana = oMana;
+    }
 
     public static StringProperty getLabelText() {
         return labelText;
@@ -322,22 +376,22 @@ public class Gamescenes  {
         VBox opponentStats = new VBox();
         opponentStats.setPadding(new Insets(10));
         opponentStats.setSpacing(8);
-        Label opName = new Label("Name: " + Manguvaljak.currentOpponent.getNimi());
-        opponentStats.getChildren().add(opName);
-        Label opHp = new Label("Hitpoints: " + Manguvaljak.currentOpponent.getElud());
-        opponentStats.getChildren().add(opHp);
-        Label opMana = new Label("Manapoints: " + Manguvaljak.currentOpponent.getMana());
-        opponentStats.getChildren().add(opMana);
+        getoName().setText("Name: " + Manguvaljak.currentOpponent.getNimi());
+        opponentStats.getChildren().add(oName);
+        getoHp().setText("Hitpoints: " + Manguvaljak.currentOpponent.getElud());
+        opponentStats.getChildren().add(oHp);
+        getoMana().setText("Manapoints: " + Manguvaljak.currentOpponent.getMana());
+        opponentStats.getChildren().add(oMana);
         grid.add(opponentStats, 0, 6);
 
         VBox playerStats = new VBox();
         playerStats.setPadding(new Insets(10));
         playerStats.setSpacing(8);
-        Label name = new Label("Name: " + Manguvaljak.currentPlayer.getNimi());
+        getName().setText("Name: " + Manguvaljak.currentPlayer.getNimi());
         playerStats.getChildren().add(name);
-        Label hp = new Label("Hitpoints: " + Manguvaljak.currentPlayer.getElud());
+        getHp().setText("Hitpoints: " + Manguvaljak.currentPlayer.getElud());
         playerStats.getChildren().add(hp);
-        Label mana = new Label("Manapoints: " + Manguvaljak.currentPlayer.getMana());
+        getMana().setText("Manapoints: " + Manguvaljak.currentPlayer.getMana());
         playerStats.getChildren().add(mana);
         grid.add(playerStats, 0, 0);
 

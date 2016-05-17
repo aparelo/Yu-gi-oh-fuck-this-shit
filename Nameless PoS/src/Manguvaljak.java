@@ -2,6 +2,7 @@ import javafx.event.EventHandler;
 import javafx.geometry.Bounds;
 import javafx.scene.Node;
 import javafx.scene.control.Alert;
+import javafx.scene.control.Label;
 import javafx.scene.input.MouseEvent;
 
 import java.util.ArrayList;
@@ -26,6 +27,7 @@ public class Manguvaljak {
             return false;
         } else {
             mangija.setMana(mangija.getMana() - card.getManaPoints());
+            Gamescenes.getMana().setText("Mana: " + currentPlayer.getMana());
         }
         if (mangija.getMangijaLaud().size() == 10) {
             return false;
@@ -86,6 +88,7 @@ public class Manguvaljak {
             if (!heroArvVastasel) {
                 currentOpponent.setElud(currentOpponent.getElud() - attackingCard.getAttack());
                 Gamescenes.setLabelText("Attack succeeded! Opponents lives:" + currentOpponent.getElud());
+                Gamescenes.getoHp().setText("Hitpoints: " + currentOpponent.getElud());
                 return true;
             }
 
