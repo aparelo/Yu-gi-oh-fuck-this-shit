@@ -13,6 +13,8 @@ public class Manguvaljak {
     static String currentPlayerDeck;
     static String currentOpponentDeck;
 
+    public static Node attackedCard;
+
     public static void setCurrentOpponentDeck(String currentOpponentDeck) {
         Manguvaljak.currentOpponentDeck = currentOpponentDeck;
     }
@@ -55,6 +57,7 @@ public class Manguvaljak {
         } else {
             mangija.setSpellsOnField(mangija.getSpellsOnField() - 1);
         }
+        Animations.cardToGraveyard(nimi, mangija);
     }
 
     public static void kaartKatte(Mangija mangija) throws InterruptedException {
@@ -64,44 +67,78 @@ public class Manguvaljak {
     }
 
     public static boolean attack(Kaart attackingCard) {
-        boolean heroArvMangijal = false;
         boolean heroArvVastasel = false;
-        if (Manguvaljak.currentPlayer.getAttackCount() > 1) {
+        System.out.println(Kaik.turnCount);
+        System.out.println(Manguvaljak.currentPlayer.getAttackCount());
+
+        if (Manguvaljak.currentPlayer.getAttackCount() == 1) {
             Gamescenes.setLabelText("You can only attack once during a turn!");
+            return false;
+        }
+        if (Kaik.turnCount < 1) {
+            Gamescenes.setLabelText("You cannot attack on the first turn!");
+            return false;
         }
 
-        for (Kaart kaart : currentPlayer.getMangijaLaud()) {
-            if (kaart.getTyyp().equals("Hero")) {
-                heroArvMangijal = true;
-            }
-        }
         for (Kaart kaart : currentOpponent.getMangijaLaud()) {
             if (kaart.getTyyp().equals("Hero")) {
                 heroArvVastasel = true;
             }
         }
-        if (!heroArvMangijal) {
-            Gamescenes.setLabelText("The enemy has no heroes to attack!");
-            return false;
-        } else {
-            Gamescenes.setLabelText("Choose the hero to attack");
-            if (!heroArvVastasel) {
-                currentOpponent.setElud(currentOpponent.getElud() - attackingCard.getAttack());
-                Gamescenes.setLabelText("Attack succeeded! Opponents lives:" + currentOpponent.getElud());
-                Gamescenes.getoHp().setText("Hitpoints: " + currentOpponent.getElud());
-                return true;
+        if (!(heroArvVastasel) && Kaik.turnCount > 0) {
+            currentOpponent.setElud(currentOpponent.getElud() - attackingCard.getAttack());
+            Gamescenes.setLabelText("Attack succeeded! Opponents lives:" + currentOpponent.getElud());
+            return true;
+        }
+        else {
+            if (Kaik.turnCount < 0) {
+                Gamescenes.setLabelText("You cannot attack on the first turn!");
             }
-
-			/*Kaart vastaseHero =   // Need to add the chosen opponents hero
-				Gamescenes.setLabelText("Attack succeeded! The hero " + vastaseHero.getNimi() + " has been defeated." + " Opponents lives: " + (currentOpponent.getElud() - (attackingCard.getAttack() - vastaseHero.getDefence())));
-				Manguvaljak.kaartSurnuAeda(vastaseHero, currentOpponent);
-				return true;*/
             else {
-                System.out.println("Attack did not succeed! Your hero " + attackingCard.getNimi() + " has been defeated");
-                Manguvaljak.kaartSurnuAeda(attackingCard, currentPlayer);
+                Gamescenes.setLabelText("Choose the hero to attack");
+                Gamescenes.getBattleScenePane().setOnMouseClicked(new EventHandler<MouseEvent>() {
+                    public void handle(MouseEvent e)   {
+                        double mouseX = e.getSceneX();
+                        double mouseY = e.getSceneY();
+                        for (Kaart hero : currentOpponent.getHeroMap().keySet()) {
+                            if (!hero.toString().equals("Empty")) {
+                                String indeks = Animations.getPositionIndex(hero,currentOpponent);
+
+                                Node heroNode = Gamescenes.getBattleScenePane().lookup("#" + indeks);
+
+                                Bounds heroBounds = heroNode.localToScene(heroNode.getBoundsInLocal());
+
+                                if (heroBounds.contains(mouseX,mouseY)) {
+                                    Kaart  vastaseHero = hero;
+                                    if (vastaseHero.getDefence() > attackingCard.getAttack()) {
+                                        Gamescenes.setLabelText("Attack did not succeed! Your hero " + attackingCard.getNimi() + " has been defeated");
+                                        Manguvaljak.kaartSurnuAeda(attackingCard, currentPlayer);
+                                        Gamescenes.getBattleScenePane().setOnMouseClicked(null);
+                                        Manguvaljak.currentPlayer.setAttackCount(1);
+                                        break;
+                                    }
+                                    else {
+                                        Gamescenes.setLabelText("Attack succeeded! The hero " + vastaseHero.getNimi() + " has been defeated." + " Opponents lives: " + (currentOpponent.getElud() - (attackingCard.getAttack() - vastaseHero.getDefence())));
+                                        Manguvaljak.kaartSurnuAeda(vastaseHero, currentOpponent);
+                                        heroNode.setOnMouseExited(null);
+                                        Gamescenes.getBattleScenePane().setOnMouseClicked(null);
+                                        Manguvaljak.currentPlayer.setAttackCount(1);
+                                        break;
+                                    }
+
+
+                                }
+
+                            }
+                        }
+                    }
+                });
+
                 return true;
+
             }
         }
+        return false;
     }
 
 

@@ -1,4 +1,3 @@
-import com.sun.awt.SecurityWarning;
 import com.sun.javafx.geom.transform.Translate2D;
 import javafx.animation.*;
 import javafx.concurrent.Service;
@@ -11,37 +10,39 @@ import javafx.scene.image.Image;
 import javafx.scene.image.ImageView;
 import javafx.scene.image.WritableImage;
 import javafx.scene.input.MouseEvent;
+import javafx.scene.input.PickResult;
 import javafx.scene.layout.HBox;
 import javafx.scene.layout.VBox;
 import javafx.scene.paint.Color;
 import javafx.scene.shape.*;
+import javafx.scene.transform.Rotate;
 import javafx.util.Duration;
 
 import java.util.HashMap;
 
-
-// Osad ID'd ilma tärnita (15,16 jne), sellepärast kaovad ära; sellepärast flippimisel mingi nuss
 import static javafx.animation.Animation.Status.STOPPED;
 
 public class Animations  {
 
     public static void cardToHand(Mangija mangija) throws InterruptedException {
 
-        if (mangija.equals(Manguvaljak.currentPlayer)) {
             Kaart card = mangija.getMangijaDeck().get(0);
             Image cardImage = card.getFrontPicture();
             ImageView iv = new ImageView();
+        if (mangija.equals(Manguvaljak.currentPlayer)) {
             iv.setImage(cardImage);
-            iv.setPreserveRatio(true);
+        }
+        else {
+            iv.setImage(Gamescenes.cardBackgroundImage);
+        }
+           // iv.setPreserveRatio(true);
             iv.setSmooth(true);
             iv.setCache(true);
             iv.setVisible(false);
 
-
             TranslateTransition translateCard = new TranslateTransition(Duration.millis(2000), iv);
 
-
-            String indeks = "";
+            String indeks = ""; // If any card in a player's hand is empty, the index for it is chosen, the first card of the deck added to the hand and the EmptyCard removed.
             Kaart removableKaart = new EmptyCard();
             for (Kaart kaart : mangija.getHandMap().keySet()) {
                 if (kaart.toString().equals("Empty")) {
@@ -49,23 +50,30 @@ public class Animations  {
                     removableKaart = kaart;
                 }
             }
-            mangija.getHandMap().put(card,indeks);
+
             mangija.getHandMap().remove(removableKaart);
+            mangija.getHandMap().put(card,indeks);
 
-            Node cardNode = Gamescenes.getBattleScenePane().lookup("#" + indeks);
 
-            Bounds cardBounds = cardNode.localToScene(cardNode.getBoundsInLocal());
+            Node cardNode = Gamescenes.getBattleScenePane().lookup("#" + indeks);  // The original node in the grid, where the card is supposed to go
 
-            Gamescenes.getBattleScenePane().lookup("#" + indeks).setId("#" + indeks);
-            System.out.println("Background 1" + Gamescenes.getBattleScenePane().lookup("##" + indeks));
+            Bounds cardBounds = cardNode.localToScene(cardNode.getBoundsInLocal()); // The position of the card on the field
+
+            Gamescenes.getBattleScenePane().lookup("#" + indeks).setId("Back" + indeks);  // The node, which is now behind the card node, is given the index "Back" + the number corresponding to the grid system
+            iv.setId(indeks); // The card now has the original index
+
+
 
             translateCard.setFromX(mangija.getDeckX());
             translateCard.setFromY(mangija.getDeckY());
             translateCard.setToX(cardBounds.getMinX() - 110);
+            System.out.println(cardBounds.getMinX() - 110);
             translateCard.setToY(cardBounds.getMinY() - 24);
+            System.out.println(cardBounds.getMinY() - 24);
 
-            iv.setId(indeks);
-                iv.setOnMouseEntered(new EventHandler<MouseEvent>() {
+
+
+                iv.setOnMouseEntered(new EventHandler<MouseEvent>() { // On mouse entered, the info of the card is displayed on the label in the middle of the battlefield
                     public void handle(MouseEvent e)   {
                         Gamescenes.setLabelText(card.toInfo());
                     }
@@ -75,27 +83,43 @@ public class Animations  {
                         Gamescenes.setLabelText("");
                     }
                 });
-                iv.setOnMouseClicked(new EventHandler<MouseEvent>() {
-                    public void handle(MouseEvent e)   {
-                        Manguvaljak.kaartLauale(card, mangija);
-                    }
-                });
 
+            iv.setOnMouseClicked(new EventHandler<MouseEvent>() { // On the current player, if the mouse is clicked, a method is called for adding a card to the field
+                public void handle(MouseEvent e) {
+                    Manguvaljak.kaartLauale(card, mangija);
+                }
+            });
 
 
 
             Gamescenes.getBattleScenePane().getChildren().add(iv);
 
+            final String finalIndeks = indeks;
+
             PauseTransition pause = new PauseTransition(Duration.millis(1200));
-            pause.setOnFinished(new EventHandler<ActionEvent>() {
+
+            pause.setOnFinished(new EventHandler<ActionEvent>() {  // The pause is needed for the original Deck shuffle to complete first
                 public void handle(ActionEvent e)   {
-                    iv.setVisible(true);
+                    iv.setVisible(true);  // After the pause, the cards become visible and first appear on the deck
+
                 }
             });
+
             SequentialTransition seqTransition = new SequentialTransition (pause,translateCard);
-            seqTransition.play();
+        if (mangija.equals(Manguvaljak.currentOpponent)) {
+            seqTransition.setOnFinished(new EventHandler<ActionEvent>() {
+                public void handle(ActionEvent e)   {
+                    iv.setImage(card.getFrontPicture());
+                    iv.setVisible(false);
+                    Node cardBackgroundNode = Gamescenes.getBattleScenePane().lookup("#Back" + finalIndeks);
+                    cardBackgroundNode.setVisible(true);
+                }
+
+            });
         }
-        else {
+            seqTransition.play();
+
+       /* else {
             Kaart card = mangija.getMangijaDeck().get(0);
             Image cardImage = card.getBackPicture();
             ImageView iv = new ImageView();
@@ -123,7 +147,7 @@ public class Animations  {
 
             Bounds cardBounds = cardNode.localToScene(cardNode.getBoundsInLocal());
 
-            Gamescenes.getBattleScenePane().lookup("#" + indeks).setId("#" + indeks);
+            Gamescenes.getBattleScenePane().lookup("#" + indeks).setId("Back" + indeks);
 
             translateCard.setFromX(mangija.getDeckX());
             translateCard.setFromY(mangija.getDeckY());
@@ -140,11 +164,6 @@ public class Animations  {
             iv.setOnMouseExited(new EventHandler<MouseEvent>() {
                 public void handle(MouseEvent e)   {
                     Gamescenes.setLabelText("");
-                }
-            });
-            iv.setOnMouseClicked(new EventHandler<MouseEvent>() {
-                public void handle(MouseEvent e)   {
-                    Manguvaljak.kaartLauale(card, mangija);
                 }
             });
 
@@ -165,19 +184,19 @@ public class Animations  {
                 public void handle(ActionEvent e)   {
                     iv.setImage(card.getFrontPicture());
                     iv.setVisible(false);
-                    Node cardBackground = Gamescenes.getBattleScenePane().lookup("##" + finalIndeks);
-                    System.out.println("BackGround 2 :" + cardBackground);
+                    Node cardBackgroundNode = Gamescenes.getBattleScenePane().lookup("#Back" + finalIndeks);
+                    ImageView cardBackground = (ImageView) cardBackgroundNode;
+                    cardBackground.setImage(Gamescenes.cardBackgroundImage);
                     cardBackground.setVisible(true);
                 }
 
         });
-
-    }}
+*/
+    }
 
     public static String getHeroFieldIndex(Mangija mangija) {
         HashMap<Kaart, String> cardMap = mangija.getHeroMap();
         for (Kaart kaart : cardMap.keySet()) {
-            System.out.println(cardMap.keySet());
             if (kaart.toString().equals("Empty")) {
                 return cardMap.get(kaart);
             }
@@ -209,29 +228,28 @@ public class Animations  {
 
     public static void cardToField(Kaart card, Mangija mangija) {
         String cardIndeks = getPositionIndex(card, mangija);
-        System.out.println("Card Index: " + cardIndeks);
+
         String fieldIndeks;
 
         Node cardNode = Gamescenes.getBattleScenePane().lookup("#" + cardIndeks);
-        System.out.println("Card Node: " + cardNode);
+
         if (card.getTyyp().equals("Hero")) {
             fieldIndeks = getHeroFieldIndex(mangija);
-            System.out.println("Field Index: " + fieldIndeks);
             mangija.getHandMap().values().remove(cardIndeks);
-            mangija.getHandMap().put(new EmptyCard(),"#" +cardIndeks);
+            mangija.getHandMap().put(new EmptyCard(),cardIndeks);
             mangija.getHeroMap().values().remove(fieldIndeks);
-            System.out.println("Handmap " + mangija.getHandMap());
             mangija.getHeroMap().put(card,fieldIndeks);
             cardNode.setOnMouseClicked(new EventHandler<MouseEvent>() {
                 public void handle(MouseEvent e)   {
                     Manguvaljak.attack(card);
                 }
             });
+
         }
         else {
             fieldIndeks = getSpellFieldIndex(mangija);
             mangija.getHandMap().values().remove(cardIndeks);
-            mangija.getHandMap().put(new EmptyCard(),"#" +cardIndeks);
+            mangija.getHandMap().put(new EmptyCard(),cardIndeks);
             mangija.getSpellMap().values().remove(fieldIndeks);
             mangija.getSpellMap().put(card,fieldIndeks);
             cardNode.setOnMouseClicked(new EventHandler<MouseEvent>() {
@@ -240,10 +258,10 @@ public class Animations  {
                 }
             });
         }
+
+        Node cardBackgroundNode = Gamescenes.getBattleScenePane().lookup("#Back" + cardIndeks);
+
         Node fieldNode = Gamescenes.getBattleScenePane().lookup("#" +fieldIndeks);
-        System.out.println("Field Node: " + fieldNode);
-
-
 
         Bounds cardBounds = cardNode.localToScene(cardNode.getBoundsInLocal());
         Bounds fieldBounds = fieldNode.localToScene(fieldNode.getBoundsInLocal());
@@ -256,9 +274,9 @@ public class Animations  {
         translateCard.setToY(fieldBounds.getMinY() - 24);
 
         cardNode.setId(fieldIndeks);
-        System.out.println("CardOnField - Card node Index:" + fieldIndeks);
-        fieldNode.setId("#" + fieldIndeks);
-        System.out.println("CardOnField - Field Node: " + fieldNode);
+        fieldNode.setId("Back" + fieldIndeks);
+        cardBackgroundNode.setId(cardIndeks);
+
 
         translateCard.play();
 
@@ -266,12 +284,18 @@ public class Animations  {
 
     public static void cardToGraveyard(Kaart card, Mangija mangija) {
         String cardIndeks = getPositionIndex(card, mangija);
-        System.out.println(cardIndeks);
 
         Node cardNode = Gamescenes.getBattleScenePane().lookup("#" + cardIndeks);
-        System.out.println("Graveyard card index: " + cardIndeks);
 
-        Node fieldNode = Gamescenes.getBattleScenePane().lookup("#" + cardIndeks);
+        if (card.getTyyp().equals("Hero")) {
+            mangija.getHeroMap().values().remove(cardIndeks);
+            mangija.getHeroMap().put(new EmptyCard(),cardIndeks);
+        }
+
+        else {
+            mangija.getSpellMap().values().remove(cardIndeks);
+            mangija.getSpellMap().put(new EmptyCard(),cardIndeks);
+        }
 
         Bounds cardBounds = cardNode.localToScene(cardNode.getBoundsInLocal());
 
@@ -283,15 +307,17 @@ public class Animations  {
         translateCard.setToY(mangija.getGraveYardY());
 
         cardNode.setId("Dead");
-        cardNode.setMouseTransparent(true);
-        System.out.println("Field node: " + fieldNode);
-        fieldNode.setId("#" + cardIndeks);
+        cardNode.setOnMouseClicked(null); // When a card, which is in the graveyard, is clicked, nothing will happen. Information is still visible by MouseOnEntered
 
         translateCard.play();
 
     }
 
-    public static void startShuffle() {
+
+    public static void startShuffle() throws InterruptedException {
+
+        Kaik.handShuffle();
+
         Image deckImage1 = new Image("\\img\\CardBackground.jpg");
         ImageView iv1 = new ImageView();
         iv1.setImage(deckImage1);
@@ -305,6 +331,8 @@ public class Animations  {
         iv2.setPreserveRatio(true);
         iv2.setSmooth(true);
         iv2.setCache(true);
+
+
 
 
         TranslateTransition translateDeck1 = new TranslateTransition(Duration.millis(1000), iv1);
@@ -326,18 +354,19 @@ public class Animations  {
         translateDeck1.setOnFinished(new EventHandler<ActionEvent>() {
             public void handle(ActionEvent e)   {
                 iv1.setMouseTransparent(true);
-                Gamescenes.getBattleScenePane().lookup("#33").setOnMouseClicked(new EventHandler<MouseEvent>() {
+                iv2.setMouseTransparent(true);
+                Gamescenes.getBattleScenePane().lookup("#33").setOnMouseEntered(new EventHandler<MouseEvent>() {
                     public void handle(MouseEvent me) {
-                        try {
-                            Kaik.uusKaik();
                             Gamescenes.setLabelText("Cards in deck: " + Integer.toString(Manguvaljak.currentPlayer.getMangijaDeck().size()));
                         }
-                        catch (InterruptedException e) {
-                            throw new RuntimeException(e);
-                        }
+                });
+                Gamescenes.getBattleScenePane().lookup("#30").setOnMouseEntered(new EventHandler<MouseEvent>() {
+                    public void handle(MouseEvent me) {
+                        Gamescenes.setLabelText("Cards in deck: " + Integer.toString(Manguvaljak.currentOpponent.getMangijaDeck().size()));
+                        Gamescenes.getBattleScenePane().lookup("#30").setVisible(false);
                     }
                 });
-            }      });
+            }});
 
         translateDeck2.setToX(cardBounds2.getMinX() - 110);
         translateDeck2.setToY(cardBounds2.getMinY() - 24);
@@ -353,34 +382,58 @@ public class Animations  {
     }
 
     public static void flipDown(Mangija mangija) {
-        PauseTransition pause = new PauseTransition(Duration.millis(5000));
+
+        PauseTransition pause;
+        if (Kaik.needCards) {
+            pause = new PauseTransition(Duration.millis(3500));
+        }
+        else {
+            pause = new PauseTransition(Duration.millis(100));
+        }
 
 
         for (String indeks : mangija.getHandMap().values()) {
-            System.out.println(indeks);
 
             Node card = Gamescenes.getBattleScenePane().lookup("#" + indeks);
 
-            Node cardBackGround = Gamescenes.getBattleScenePane().lookup("#" + indeks);
-            System.out.println("Background: " +cardBackGround);
+            Node cardBackGround = Gamescenes.getBattleScenePane().lookup("#Back" + indeks);
 
-
-            ScaleTransition stHideFront = new ScaleTransition(Duration.millis(1000), card);
+            ScaleTransition stHideFront = new ScaleTransition(Duration.millis(1500), card);
             stHideFront.setFromX(1);
             stHideFront.setToX(0);
 
-            ScaleTransition stShowBack = new ScaleTransition(Duration.millis(1000), cardBackGround);
+            cardBackGround.setScaleX(0);
+
+            ScaleTransition stShowBack = new ScaleTransition(Duration.millis(1500), cardBackGround);
             stShowBack.setFromX(0);
             stShowBack.setToX(1);
 
             stHideFront.setOnFinished(new EventHandler<ActionEvent>() {
                 @Override
                 public void handle(ActionEvent t) {
-                    cardBackGround.setScaleX(0);
-                    cardBackGround.setVisible(true);
                     stShowBack.play();
+                    cardBackGround.setVisible(true);
                 }
             });
+
+
+           /* RotateTransition rt = new RotateTransition(Duration.millis(1200), card);
+            rt.setAxis(Rotate.Y_AXIS);
+            rt.setFromAngle(0);
+            rt.setToAngle(90);
+
+            RotateTransition backgroundUp = new RotateTransition(Duration.millis(1200), cardBackGround);
+            backgroundUp.setAxis(Rotate.Y_AXIS);
+            backgroundUp.setFromAngle(90);
+            backgroundUp.setToAngle(0);
+
+
+            rt.setOnFinished((ActionEvent event) -> {
+                backgroundUp.play();
+                cardBackGround.setVisible(true);
+            });*/
+
+
             SequentialTransition seqT = new SequentialTransition(pause,stHideFront);
             seqT.play();
 
@@ -388,34 +441,114 @@ public class Animations  {
     }
 
     public static void flipUp(Mangija mangija) {
-        PauseTransition pause = new PauseTransition(Duration.millis(5000));
+        PauseTransition pause;
 
+        if (Kaik.needCards) {  // If cards need to be dealt to the player's hand, the pause time is increased to let the draw animation finish
+            pause = new PauseTransition(Duration.millis(3500));
+        } else {
+            pause = new PauseTransition(Duration.millis(100));
+        }
 
         for (String indeks : mangija.getHandMap().values()) {
 
             Node card = Gamescenes.getBattleScenePane().lookup("#" + indeks);
 
-            Node cardBackGround = Gamescenes.getBattleScenePane().lookup("##" + indeks);
-            System.out.println("Background: " +cardBackGround);
-            ScaleTransition stHideBack = new ScaleTransition(Duration.millis(1000), cardBackGround);
+            Node cardBackGround = Gamescenes.getBattleScenePane().lookup("#Back" + indeks);
+
+            ScaleTransition stHideBack = new ScaleTransition(Duration.millis(1500), cardBackGround);
             stHideBack.setFromX(1);
             stHideBack.setToX(0);
 
-            ScaleTransition stShowFront = new ScaleTransition(Duration.millis(1000), card);
+            cardBackGround.setScaleX(0);
+
+            ScaleTransition stShowFront = new ScaleTransition(Duration.millis(1500), card);
             stShowFront.setFromX(0);
             stShowFront.setToX(1);
 
             stHideBack.setOnFinished(new EventHandler<ActionEvent>() {
                 @Override
                 public void handle(ActionEvent t) {
-                    card.setScaleX(0);
-                    card.setVisible(true);
                     stShowFront.play();
+                    card.setVisible(true);
                 }
             });
-            SequentialTransition seqT = new SequentialTransition(pause,stHideBack);
-            seqT.play();
 
+            /*RotateTransition rt = new RotateTransition(Duration.millis(1200), cardBackGround);
+            rt.setAxis(Rotate.Y_AXIS);
+            rt.setFromAngle(0);
+            rt.setToAngle(90);
+            RotateTransition cardUp = new RotateTransition(Duration.millis(1200), card);
+            cardUp.setAxis(Rotate.Y_AXIS);
+            cardUp.setFromAngle(90);
+            cardUp.setToAngle(0);
+            
+
+
+            rt.setOnFinished((ActionEvent event) -> {
+                cardUp.play();
+                card.setVisible(true);
+            });*/
+
+            SequentialTransition seqT = new SequentialTransition(pause, stHideBack);
+            seqT.play();
+        }
+    }
+
+
+
+    public static void makeCardsUnclickable(Mangija mangija) {
+        HashMap<Kaart, String> heroMap = mangija.getHeroMap();
+        HashMap<Kaart, String> spellMap = mangija.getSpellMap();
+        for (Kaart kaart : heroMap.keySet()) {
+            if (!((kaart.toString()).equals("Empty"))) {
+                String indeks = heroMap.get(kaart);
+                Node cardNode = Gamescenes.getBattleScenePane().lookup("#" + indeks);
+                cardNode.setOnMouseClicked(null);
+            }
+        }
+        for (Kaart kaart : spellMap.keySet()) {
+            if (!((kaart.toString()).equals("Empty"))) {
+                String indeks = spellMap.get(kaart);
+                Node cardNode = Gamescenes.getBattleScenePane().lookup("#" + indeks);
+                cardNode.setOnMouseClicked(null);
+            }
+        }
 
     }
-}}
+
+    public static void makeCardsClickable(Mangija mangija) {
+        HashMap<Kaart, String> heroMap = mangija.getHeroMap();
+        HashMap<Kaart, String> spellMap = mangija.getSpellMap();
+        for (Kaart kaart : heroMap.keySet()) {
+            if (!((kaart.toString()).equals("Empty"))) {
+                String indeks = heroMap.get(kaart);
+                Node cardNode = Gamescenes.getBattleScenePane().lookup("#" + indeks);
+                cardNode.setOnMouseClicked(MouseEvent -> Manguvaljak.attack(kaart));
+            }
+        }
+        for (Kaart kaart : spellMap.keySet()) {
+            if (!((kaart.toString()).equals("Empty"))) {
+                String indeks = spellMap.get(kaart);
+                Node cardNode = Gamescenes.getBattleScenePane().lookup("#" + indeks);
+                System.out.println(cardNode);
+                cardNode.setOnMouseClicked(MouseEvent -> Manguvaljak.useSpell(kaart));
+            }
+        }
+
+    }
+
+    public static void makeCardsAttackable(Mangija mangija) {
+        HashMap<Kaart, String> heroMap = mangija.getHeroMap();
+        for (Kaart kaart : heroMap.keySet()) {
+            if (!((kaart.toString()).equals("Empty"))) {
+                String indeks = heroMap.get(kaart);
+                Node cardNode = Gamescenes.getBattleScenePane().lookup("#" + indeks);
+                cardNode.setOnMouseClicked(MouseEvent -> {
+                    Manguvaljak.attackedCard = cardNode;
+                    PickResult res = MouseEvent.getPickResult();
+                });
+
+            }
+        }
+    }
+}

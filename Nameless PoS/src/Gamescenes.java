@@ -34,6 +34,8 @@ public class Gamescenes  {
     private static Scene battleMenuScene;
     private static GridPane battleScenePane;
     private static StringProperty labelText = new SimpleStringProperty();
+    public static  Image cardSpotImage;
+    public static  Image cardBackgroundImage;
     private static Label name = new Label();
     private static Label hp = new Label();
     private static Label mana = new Label();
@@ -297,7 +299,9 @@ public class Gamescenes  {
 
 
         Image cardSpot = new Image("\\img\\CardSpot.jpg");
+        Gamescenes.cardSpotImage = cardSpot;
         Image cardBackgroundImage = new Image("\\img\\CardBackground.jpg");
+        Gamescenes.cardBackgroundImage = cardBackgroundImage;
 
         int hand1 = 4;
         int spellAndHero1 = 3;
@@ -313,22 +317,24 @@ public class Gamescenes  {
             iv.setSmooth(true);
             iv.setCache(true);
 
-            ImageView iv2 = new ImageView();
+            /*ImageView iv2 = new ImageView();
             iv2.setId("#" + Integer.toString(i));
             iv2.setImage(cardBackgroundImage);
             iv2.setPreserveRatio(true);
             iv2.setSmooth(true);
             iv2.setCache(true);
-            iv2.setVisible(false);
+            iv2.setVisible(false);*/
 
             if (i < 5) {
                 grid.add(iv, hand1, 6);
-                grid.add(iv2, hand1, 6);
+                iv.setImage(cardBackgroundImage);
+                iv.setVisible(false);
+               // grid.add(iv2, hand1, 6);
                 hand1++;
             }
             if (i >= 5 && i < 10) {
                 grid.add(iv, spellAndHero1, 5);
-                grid.add(iv2, spellAndHero1, 5);
+                //grid.add(iv2, spellAndHero1, 5);
                 spellAndHero1++;
             }
             if (i == 10) {
@@ -340,12 +346,14 @@ public class Gamescenes  {
             }
             if (i >= 15 && i < 20) {
                 grid.add(iv, hand2, 0);
-                grid.add(iv2, hand2, 0);
+                iv.setImage(cardBackgroundImage);
+                iv.setVisible(false);
+                //grid.add(iv2, hand2, 0);
                 hand2++;
             }
             if (i >= 20 && i < 25) {
                 grid.add(iv, spellAndHero2, 1);
-                grid.add(iv2, spellAndHero2, 1);
+                //grid.add(iv2, spellAndHero2, 1);
                 spellAndHero2++;
             }
 
@@ -399,13 +407,10 @@ public class Gamescenes  {
         infoContainer.setMinWidth(700);
         infoContainer.setMinHeight(35);
         Label info = new Label("");
-        setLabelText("");
         info.textProperty().bind(labelText);
         info.setId("infoText");
         infoContainer.getChildren().add(info);
         grid.add(infoContainer,0,3,9,1);
-
-
 
 
         battleScene.getStylesheets().add(Gamescenes.class.getResource("/GUI.css").toExternalForm());
