@@ -202,7 +202,7 @@ public class Animations  {
         Bounds cardBounds = cardNode.localToScene(cardNode.getBoundsInLocal());
         Bounds fieldBounds = fieldNode.localToScene(fieldNode.getBoundsInLocal());
 
-        TranslateTransition translateCard = new TranslateTransition(Duration.millis(2000), cardNode);
+        TranslateTransition translateCard = new TranslateTransition(Duration.millis(1400), cardNode);
 
         translateCard.setFromX(cardBounds.getMinX() - 110);
         translateCard.setFromY(cardBounds.getMinY() - 24);
@@ -236,7 +236,7 @@ public class Animations  {
 
         Bounds cardBounds = cardNode.localToScene(cardNode.getBoundsInLocal());
 
-        TranslateTransition translateCard = new TranslateTransition(Duration.millis(2000), cardNode);
+        TranslateTransition translateCard = new TranslateTransition(Duration.millis(1400), cardNode);
 
         translateCard.setFromX(cardBounds.getMinX() - 110);
         translateCard.setFromY(cardBounds.getMinY() - 24);
@@ -331,7 +331,7 @@ public class Animations  {
 
         PauseTransition pause;
         if (Kaik.needCards) {
-            pause = new PauseTransition(Duration.millis(3500));
+            pause = new PauseTransition(Duration.millis(3000));
         }
         else {
             pause = new PauseTransition(Duration.millis(100));
@@ -390,7 +390,7 @@ public class Animations  {
         PauseTransition pause;
 
         if (Kaik.needCards) {  // If cards need to be dealt to the player's hand, the pause time is increased to let the draw animation finish
-            pause = new PauseTransition(Duration.millis(3500));
+            pause = new PauseTransition(Duration.millis(3000));
         } else {
             pause = new PauseTransition(Duration.millis(100));
         }
