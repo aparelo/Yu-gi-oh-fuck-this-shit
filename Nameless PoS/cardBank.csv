@@ -22,37 +22,12 @@ Tyrion Lannister,Hero,3,6,9,6,-,Lannister
 Tywin Lannister,Hero,5,5,9,6,-,Lannister
 Arakh,Spell,Attack,4,Buff,3,2
 Dragon Blood,Spell,Defence,5,Buff,4,2
-Dragon Fire, Spell,Dragon Fire, 5,Purge,,,
+Dragon Fire,Spell,Dragon Fire,5,Purge,,,
 Dragon Glass,Spell,Attack,4,Buff,3,3
-Dragon Horn, Spell,Attack,4,Buff,2,3
+Dragon Horn,Spell,Attack,4,Buff,2,3
 Essence Of The Nightshade,Spell,Defence,5,Vulnerability,3,4
 Longclaw,Spell,Attack,5,Buff,3,2
 Milk Of The Poppy,Spell,Defence,Vulnerability,2,4
 Oathkeeper,Spell,Attack,6,Buff,4,2
 Tears Of Lys,Spell,Attack,5,Vulnerability,3,3
 Needle,Spell,Attack,4,Buff,1,4
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-

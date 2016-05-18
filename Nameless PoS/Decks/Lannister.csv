@@ -3,8 +3,8 @@ Jaime Lannister,Hero,5,4,9,5,-,Lannister
 Joffrey Lannister,Hero,3,2,9,3,-,Lannister
 Tyrion Lannister,Hero,3,6,9,6,-,Lannister
 Tywin Lannister,Hero,5,5,9,6,-,Lannister
-Dispel,Spell,Dispel,6,Purge
-Poison,Spell,Defence,5,Vulnerability,1,3
-Corrosive Touch,Spell,Defence,6,Vulnerability,3,3
-Minotaur's skin,Spell,Defence,5,Buff,4,3
-Chimera's Breath,Spell,Attack,7,Buff,2,4
+Dragon Fire,Spell,Dragon Fire,5,Purge
+Oathkeeper,Spell,Attack,6,Buff,4,2
+Dragon Horn,Spell,Attack,4,Buff,2,3
+Dragon Blood,Spell,Defence,5,Buff,4,2
+Tears Of Lys,Spell,Attack,5,Vulnerability,3,3

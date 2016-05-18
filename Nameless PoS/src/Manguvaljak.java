@@ -29,33 +29,34 @@ public class Manguvaljak {
         if (mangija.getMana() < card.getManaPoints()) {
             Gamescenes.setLabelText("You don't have enough mana to play this card!");
             return false;
-        }
-        else {
+        } else {
             mangija.setMana(mangija.getMana() - card.getManaPoints());
-            if(currentPlayer.getLocation() == 1) {
+            if (currentPlayer.getLocation() == 1) {
                 Gamescenes.getoMana().setText("Manapoints: " + currentPlayer.getMana());
-            }
-            else {
+            } else {
                 Gamescenes.getMana().setText("Manapoints: " + currentPlayer.getMana());
             }
         }
         if (mangija.getSpellsOnField() == 5 || mangija.getHeroesOnField() == 5) {
-            return false;
-        }
-        else {
-            mangija.getMangijaKasi().remove(card);
-            mangija.getMangijaLaud().add(card);
-            Animations.cardToField(card, mangija);
-
-            if (card.getTyyp().equals("Hero")) {
-                int tempHeroesOnField = mangija.getHeroesOnField() + 1;
-                mangija.setHeroesOnField(tempHeroesOnField);
+            if ((currentPlayer.getSpellsOnField() == 5 && card.getTyyp().equals("Spell")) || (currentPlayer.getHeroesOnField() == 5 && card.getTyyp().equals("Hero"))) {
+                Gamescenes.setLabelText("Not enough space on the field.");
+                return false;
             } else {
-                int tempSpellsOnField = mangija.getSpellsOnField() + 1;
-                mangija.setSpellsOnField(tempSpellsOnField);
+                mangija.getMangijaKasi().remove(card);
+                mangija.getMangijaLaud().add(card);
+                Animations.cardToField(card, mangija);
+
+                if (card.getTyyp().equals("Hero")) {
+                    int tempHeroesOnField = mangija.getHeroesOnField() + 1;
+                    mangija.setHeroesOnField(tempHeroesOnField);
+                } else {
+                    int tempSpellsOnField = mangija.getSpellsOnField() + 1;
+                    mangija.setSpellsOnField(tempSpellsOnField);
+                }
+                return true;
             }
-            return true;
         }
+        return false;
     }
 
     public static void kaartSurnuAeda(Kaart nimi, Mangija mangija) {

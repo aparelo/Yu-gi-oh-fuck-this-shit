@@ -3,8 +3,8 @@ Catelyn Stark,Hero,4,4,9,4,-,Stark
 Jon Snow,Hero,6,4,9,6,-,Stark
 Ned Stark,Hero,5,2,9,5,-,Stark
 Robb Stark,Hero,6,4,9,6,-,Stark
-Dispel,Spell,Dispel,6,Purge
-Poison,Spell,Defence,5,Vulnerability,1,3
-Corrosive Touch,Spell,Defence,6,Vulnerability,3,3
-Minotaur's skin,Spell,Defence,5,Buff,4,3
-Chimera's Breath,Spell,Attack,7,Buff,2,4
+Arakh,Spell,Attack,4,Buff,3,2
+Needle,Spell,Attack,4,Buff,1,4
+Longclaw,Spell,Attack,5,Buff,3,2
+Essence Of The Nightshade,Spell,Defence,5,Vulnerability,3,4
+Dragon Fire,Spell,Dragon Fire,5,Purge
