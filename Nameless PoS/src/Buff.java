@@ -156,11 +156,7 @@ public class Buff extends Kaart {
         return "Name: " + nimi + " Sub Type: " + alamTyyp + " Mana to play: " + manaPoints + " Effect: " + effekt + " Strength: " + tugevus + " Duration: " + length;
     }
 
-	public static boolean buffPlacement(Mangija mangija, Kaart hero, Kaart spell) {
-        if (spell.isOlek()) {
-            Gamescenes.setLabelText("You have already used this card!");
-            return false;
-        }
+	public static void buffPlacement(Mangija mangija, Kaart hero, Kaart spell) {
 		ArrayList<Kaart> mangijaLaud = mangija.getMangijaLaud();
 		for (Kaart kaart : mangijaLaud) {
 			if (kaart.equals(hero)) {
@@ -193,6 +189,5 @@ public class Buff extends Kaart {
                 });
             }
         }
-        return true;
 	}
 }

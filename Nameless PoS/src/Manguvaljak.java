@@ -265,7 +265,10 @@ public class Manguvaljak {
             return true;
         }
         else if (type.equals("Buff")) {
-
+            if (card.isOlek()) {
+                Gamescenes.setLabelText("You have already used this card!");
+                return false;
+            }
             if (!playerHasHeroes) {
                 Gamescenes.setLabelText("You have no heroes to buff!");
                 return false;
@@ -286,6 +289,10 @@ public class Manguvaljak {
             }
         }
         else if (type.equals("Vulnerability")) {
+            if (card.isOlek()) {
+                Gamescenes.setLabelText("You have already used this card!");
+                return false;
+            }
             if (!opponentHasHeroes) {
                 Gamescenes.setLabelText("The enemy doesn't have any heroes to make more vulnerable!");
                 return false;
