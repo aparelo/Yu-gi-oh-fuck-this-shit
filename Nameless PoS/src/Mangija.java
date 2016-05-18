@@ -28,8 +28,8 @@ public class Mangija {
 
     public Mangija(String nimi, ArrayList <Kaart> deck, int location) {
 		this.nimi = nimi;
-		this.elud = 20;
-		this.mana = 20;
+		this.elud = 5;
+		this.mana = 99;
 		this.spellsOnField = 0;
 		this.heroesOnField = 0;
 		this.mangijaDeck = deck;

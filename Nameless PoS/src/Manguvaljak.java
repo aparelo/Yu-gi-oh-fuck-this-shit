@@ -73,10 +73,15 @@ public class Manguvaljak {
     }
 
     public static void kaartKatte(Mangija mangija) throws InterruptedException {
-        mangija.getMangijaKasi().add(mangija.getMangijaDeck().get(0));
-        System.out.println("Kaart kätte");
-        Animations.cardToHand(mangija);
-        mangija.getMangijaDeck().remove(0);
+        if(mangija.getMangijaDeck().size() > 0) {
+            mangija.getMangijaKasi().add(mangija.getMangijaDeck().get(0));
+            Animations.cardToHand(mangija);
+            mangija.getMangijaDeck().remove(0);
+        }
+        else {
+            Gamescenes.setLabelText("Game over " + currentPlayer.getNimi() + " has run out of cards.");
+        }
+
     }
 
     public static boolean attack(Kaart attackingCard) {
@@ -139,10 +144,23 @@ public class Manguvaljak {
                                         Gamescenes.setLabelText("Attack succeeded! The hero " + vastaseHero.getNimi() + " has been defeated." + " Opponents lives: " + (currentOpponent.getElud() - (attackingCard.getAttack() - vastaseHero.getDefence())));
                                         currentOpponent.setElud(currentOpponent.getElud() - (attackingCard.getAttack() - vastaseHero.getDefence()));
                                         if(currentPlayer.getLocation() == 1) { //1 = oMana
-                                            Gamescenes.getHp().setText("Hitpoints: " + currentOpponent.getElud());
+                                            if(currentOpponent.getElud() < 0) {
+                                                Gamescenes.getHp().setText("Hitpoints: 0");
+                                            }
+                                            else {
+                                                Gamescenes.getHp().setText("Hitpoints: " + currentOpponent.getElud());
+                                            }
                                         }
                                         else {
-                                            Gamescenes.getoHp().setText("Hitpoints: " + currentOpponent.getElud());
+                                            if(currentOpponent.getElud() <0) {
+                                                Gamescenes.getoHp().setText("Hitpoints: 0");
+                                            }
+                                            else {
+                                                Gamescenes.getoHp().setText("Hitpoints: " + currentOpponent.getElud());
+                                            }
+                                        }
+                                        if(currentOpponent.getElud() == 0) {
+                                            Gamescenes.setLabelText("Game over " + currentPlayer.getNimi() +" won");
                                         }
                                         Manguvaljak.kaartSurnuAeda(vastaseHero, currentOpponent);
                                         heroNode.setOnMouseExited(null);
