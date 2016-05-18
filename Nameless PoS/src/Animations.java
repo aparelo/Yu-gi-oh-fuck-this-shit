@@ -34,13 +34,14 @@ public class Animations  {
         }
         else {
             iv.setImage(Gamescenes.cardBackgroundImage);
+            iv.setMouseTransparent(true);
         }
             iv.setPreserveRatio(true);
             iv.setSmooth(true);
             iv.setCache(true);
             iv.setVisible(false);
 
-            TranslateTransition translateCard = new TranslateTransition(Duration.millis(2000), iv);
+            TranslateTransition translateCard = new TranslateTransition(Duration.millis(1400), iv);
 
             String indeks = ""; // If any card in a player's hand is empty, the index for it is chosen, the first card of the deck added to the hand and the EmptyCard removed.
             Kaart removableKaart = new EmptyCard();
@@ -116,6 +117,7 @@ public class Animations  {
                 public void handle(ActionEvent e)   {
                     iv.setImage(card.getFrontPicture());
                     iv.setVisible(false);
+                    iv.setMouseTransparent(false);
                     Node cardBackgroundNode = Gamescenes.getBattleScenePane().lookup("#Back" + finalIndeks);
                     cardBackgroundNode.setVisible(true);
                 }
@@ -194,6 +196,8 @@ public class Animations  {
         Node cardBackgroundNode = Gamescenes.getBattleScenePane().lookup("#Back" + cardIndeks);
 
         Node fieldNode = Gamescenes.getBattleScenePane().lookup("#" +fieldIndeks);
+        System.out.println(cardBackgroundNode);
+        System.out.println(fieldNode);
 
         Bounds cardBounds = cardNode.localToScene(cardNode.getBoundsInLocal());
         Bounds fieldBounds = fieldNode.localToScene(fieldNode.getBoundsInLocal());

@@ -17,6 +17,7 @@ public class Buff extends Kaart {
 	private boolean olek; // True - faceup, False, facedown
 	private boolean activity;
     private Image frontPicture;
+    private Image backPicture;
 
 	public Buff(String nimi, String alamTyyp, int manaPoints, String effekt, int tugevus, int length) {
 		this.nimi = nimi;
@@ -29,12 +30,13 @@ public class Buff extends Kaart {
 		this.moveCount = 0;
 		this.olek = false;
 		this.activity = false;
-		try {
-			this.frontPicture = new Image("\\img\\" + nimi + ".jpg");
-		}
-		catch (IllegalArgumentException e) {
-			this.frontPicture =  new Image("\\img\\BuffImg.jpg");
-		}
+        try {
+            this.frontPicture = new Image("\\img\\" + nimi.replace(" ","") + ".jpg");
+        }
+        catch (IllegalArgumentException e) {
+            this.frontPicture =  new Image("\\img\\BuffImg.jpg");
+            this.backPicture = new Image ("\\img\\CardBackground.jpg");
+        }
 
 	}
 
@@ -151,7 +153,7 @@ public class Buff extends Kaart {
 	}
 
     public String toInfo() {
-        return "Name: " + nimi + " Mana points to play: " + manaPoints + " Effect: " + effekt + " Strength: " + tugevus + " Duration: " + length;
+        return "Name: " + nimi + " Sub Type: " + alamTyyp + " Mana to play: " + manaPoints + " Effect: " + effekt + " Strength: " + tugevus + " Duration: " + length;
     }
 
 	public static void buffPlacement(Mangija mangija, Kaart hero, Kaart spell) {

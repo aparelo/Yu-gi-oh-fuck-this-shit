@@ -26,6 +26,7 @@ public class Manguvaljak {
     }
 
     public static boolean kaartLauale(Kaart card, Mangija mangija) {
+        System.out.println("Kaart lauale");
         if (mangija.getMana() < card.getManaPoints()) {
             Gamescenes.setLabelText("You don't have enough mana to play this card!");
             return false;
@@ -41,7 +42,9 @@ public class Manguvaljak {
             if ((currentPlayer.getSpellsOnField() == 5 && card.getTyyp().equals("Spell")) || (currentPlayer.getHeroesOnField() == 5 && card.getTyyp().equals("Hero"))) {
                 Gamescenes.setLabelText("Not enough space on the field.");
                 return false;
-            } else {
+            }
+        }
+        else {
                 mangija.getMangijaKasi().remove(card);
                 mangija.getMangijaLaud().add(card);
                 Animations.cardToField(card, mangija);
@@ -55,7 +58,6 @@ public class Manguvaljak {
                 }
                 return true;
             }
-        }
         return false;
     }
 
@@ -72,6 +74,7 @@ public class Manguvaljak {
 
     public static void kaartKatte(Mangija mangija) throws InterruptedException {
         mangija.getMangijaKasi().add(mangija.getMangijaDeck().get(0));
+        System.out.println("Kaart kätte");
         Animations.cardToHand(mangija);
         mangija.getMangijaDeck().remove(0);
     }

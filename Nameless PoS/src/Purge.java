@@ -21,7 +21,7 @@ public class Purge extends Kaart {
 		this.olek = false;
 		this.activity = false;
 		try {
-			this.frontPicture = new Image("\\img\\" + nimi + ".jpg");
+			this.frontPicture = new Image("\\img\\" + nimi.replace(" ","") + ".jpg");
 		}
 		catch (IllegalArgumentException e) {
 			this.frontPicture =  new Image("\\img\\PurgeImg.jpg");
@@ -110,7 +110,7 @@ public class Purge extends Kaart {
 		return nimi+","+"Spell"+","+ effekt+","+manaPoints+","+alamTyyp;
 	}
 	public String toInfo() {
-		return "Name: " + nimi + " Mana points to play: " + manaPoints + " Effect: " + effekt;
+		return "Name: " + nimi + " Mana to play: " + manaPoints + " Effect: " + alamTyyp;
 	}
 	public static void purge(Mangija mangija, Kaart hero, Kaart spell) {
 		ArrayList<Kaart> mangijaLaud = mangija.getMangijaLaud();

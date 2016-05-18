@@ -267,7 +267,15 @@ public class Gamescenes  {
                         alert.setContentText("A player must have a name!");
                         alert.showAndWait();
 
-                    } else {
+                    }
+                    if (deck1.getText().equals("Choose your deck") || deck2.getText().equals("Choose your deck")) {
+                        Alert alert = new Alert(Alert.AlertType.INFORMATION);
+                        alert.setTitle("No Deck");
+                        alert.setHeaderText(null);
+                        alert.setContentText("Each player must have chosen a deck!");
+                        alert.showAndWait();
+                    }
+                    else {
                         GUI.setPlayer1Name(player1Name);
                         GUI.setPlayer2Name(player2Name);
                         setBattleScene(x, y, primaryStage);
@@ -411,6 +419,8 @@ public class Gamescenes  {
         HBox infoContainer = new HBox();
         infoContainer.setMinWidth(700);
         infoContainer.setMinHeight(35);
+        infoContainer.setMaxWidth(700);
+        infoContainer.setMaxHeight(35);
         Label info = new Label("");
         info.textProperty().bind(labelText);
         info.setId("infoText");
