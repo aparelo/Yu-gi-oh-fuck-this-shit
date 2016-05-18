@@ -256,7 +256,7 @@ public class Hero extends Kaart {
 		this.buffers = new ArrayList<>();
 		this.vulnerabilities = new ArrayList<>();
 		try {
-			this.frontPicture = new Image("\\img\\" + nimi + ".jpg");
+			this.frontPicture = new Image("\\img\\" + nimi.replace(" ","") + ".jpg");
 		}
 		catch (IllegalArgumentException e) {
 			this.frontPicture =  new Image("\\img\\HeroImg.jpg");

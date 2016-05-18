@@ -30,10 +30,10 @@ public class Manguvaljak {
         } else {
             mangija.setMana(mangija.getMana() - card.getManaPoints());
             if(currentPlayer.getLocation() == 1) {
-                Gamescenes.getoMana().setText("Mana: " + currentPlayer.getMana());
+                Gamescenes.getoMana().setText("Manapoints: " + currentPlayer.getMana());
             }
             else {
-                Gamescenes.getMana().setText("Mana: " + currentPlayer.getMana());
+                Gamescenes.getMana().setText("Manapoints: " + currentPlayer.getMana());
             }
         }
         if (mangija.getMangijaLaud().size() == 10) {

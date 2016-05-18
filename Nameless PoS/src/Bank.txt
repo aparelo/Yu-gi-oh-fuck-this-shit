@@ -14,3 +14,24 @@ Chimera,Hero,6,2,4,-,Assassin
 Hydra,Hero,7,3,6,-,Tank
 Uranus,Spell,Attack",5,Vulnerability,4,3
 Cerberus,Hero,5,3,5,-,Assassin
+Brandon Stark,Hero,3,6,5,-,Warg
+Catelyn Stark,Hero,4,4,4,-,Stark
+Jon Snow,Hero,6,4,6,-,Stark
+Ned Stark,Hero,5,2,5,-,Stark
+Robb Stark,Hero,6,4,6,-,Stark
+Cersei Lannister,Hero,3,6,5,-,Lannister
+Jaime Lannister,Hero,5,4,5,-,Lannister
+Joffrey Lannister,Hero,3,2,3,-,Lannister
+Tyrion Lannister,3,6,6,-,Lannister
+Tywin Lannister,5,5,6,-,Lannister
+
+
+
+
+
+
+
+
+
+
+

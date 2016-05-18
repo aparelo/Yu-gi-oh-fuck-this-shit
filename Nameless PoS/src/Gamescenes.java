@@ -384,24 +384,29 @@ public class Gamescenes  {
         VBox opponentStats = new VBox();
         opponentStats.setPadding(new Insets(10));
         opponentStats.setSpacing(8);
-        getoName().setText("Name: " + Manguvaljak.currentOpponent.getNimi());
+        getoName().setText(Manguvaljak.currentOpponent.getNimi());
         opponentStats.getChildren().add(oName);
         getoHp().setText("Hitpoints: " + Manguvaljak.currentOpponent.getElud());
         opponentStats.getChildren().add(oHp);
         getoMana().setText("Manapoints: " + Manguvaljak.currentOpponent.getMana());
         opponentStats.getChildren().add(oMana);
+        opponentStats.setMinWidth(196);
+        opponentStats.setMaxWidth(196);
         grid.add(opponentStats, 0, 6);
 
         VBox playerStats = new VBox();
         playerStats.setPadding(new Insets(10));
         playerStats.setSpacing(8);
-        getName().setText("Name: " + Manguvaljak.currentPlayer.getNimi());
+        getName().setText(Manguvaljak.currentPlayer.getNimi());
         playerStats.getChildren().add(name);
         getHp().setText("Hitpoints: " + Manguvaljak.currentPlayer.getElud());
         playerStats.getChildren().add(hp);
         getMana().setText("Manapoints: " + Manguvaljak.currentPlayer.getMana());
         playerStats.getChildren().add(mana);
+        playerStats.setMinWidth(196);
+        playerStats.setMaxWidth(196);
         grid.add(playerStats, 0, 0);
+
 
         HBox infoContainer = new HBox();
         infoContainer.setMinWidth(700);
