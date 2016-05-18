@@ -163,24 +163,6 @@ public class Manguvaljak {
             Gamescenes.setLabelText("You can't add any more spells to the field!");
             return false;
         }
-        ArrayList<String> tempSpellType = new ArrayList<>();
-        for (Kaart kaart : currentPlayer.getMangijaLaud()) {
-            if (kaart.getTyyp().equals("Spell") && !kaart.isOlek()) {
-                if (kaart.getAlamTyyp().equals("Purge")) {
-                    if (!tempSpellType.contains("Purge")) {
-                        tempSpellType.add("Purge");
-                    }
-                } else if (kaart.getAlamTyyp().equals("Buff")) {
-                    if (!tempSpellType.contains("Buff")) {
-                        tempSpellType.add("Buff");
-                    }
-                } else if (kaart.getAlamTyyp().equals("Vulnerability")) {
-                    if (!tempSpellType.contains("Vulnerability")) {
-                        tempSpellType.add("Vulnerability");
-                    }
-                }
-            }
-        }
 
         String type = card.getAlamTyyp();
         if (type.equals("Purge")) {
@@ -188,179 +170,132 @@ public class Manguvaljak {
                 Gamescenes.setLabelText("There are no heroes to purge!");
                 return false;
             }
-        }
-                Gamescenes.setLabelText("Click on the hero you wish to use the spell on");
-                Gamescenes.getBattleScenePane().setOnMouseClicked(new EventHandler<MouseEvent>() {
-                    public void handle(MouseEvent e)   {
-                        double mouseX = e.getSceneX();
-                        System.out.println(mouseX);
-                        double mouseY = e.getSceneY();
-                        System.out.println(mouseY);
-                        for (Kaart hero : currentOpponent.getHeroMap().keySet()) {
-                            if (!hero.isEmpty()) {
-                                String indeks = Animations.getPositionIndex(hero,currentOpponent);
 
-                                Node heroNode = Gamescenes.getBattleScenePane().lookup("#" + indeks);
+        Gamescenes.setLabelText("Click on the hero you wish to use the spell on");
+        Gamescenes.getBattleScenePane().setOnMouseClicked(new EventHandler<MouseEvent>() {
+            public void handle(MouseEvent e) {
+                double mouseX = e.getSceneX();
+                System.out.println(mouseX);
+                double mouseY = e.getSceneY();
+                System.out.println(mouseY);
+                for (Kaart hero : currentOpponent.getHeroMap().keySet()) {
+                    if (!hero.isEmpty()) {
+                        String indeks = Animations.getPositionIndex(hero, currentOpponent);
 
-                                Bounds heroBounds = heroNode.localToScene(heroNode.getBoundsInLocal());
+                        Node heroNode = Gamescenes.getBattleScenePane().lookup("#" + indeks);
 
-                                System.out.println("Node created");
-                                if (heroBounds.contains(mouseX,mouseY)) {
-                                    System.out.println("Purge finished!");
-                                    Kaart  purgeHero = hero;
-                                    Kaart purgeSpell = card;
-                                    Purge.purge(currentPlayer, purgeHero, purgeSpell);
-                                    Animations.cardToGraveyard(purgeSpell,currentPlayer);
-                                    kaartSurnuAeda(purgeSpell,currentPlayer);
-                                    Gamescenes.setLabelText(purgeHero.getNimi() + " purged! Heroes stats now: " + "Attack: " + purgeHero.getAttack() + "Defence: " + purgeHero.getDefence());
-                                    System.out.println("Consumed");
-                                    Gamescenes.getBattleScenePane().setOnMouseClicked(null);
-                                }
+                        Bounds heroBounds = heroNode.localToScene(heroNode.getBoundsInLocal());
 
-                            }
+                        System.out.println("Node created");
+                        if (heroBounds.contains(mouseX, mouseY)) {
+                            System.out.println("Purge finished!");
+                            Kaart purgeHero = hero;
+                            Kaart purgeSpell = card;
+                            Purge.purge(currentPlayer, purgeHero, purgeSpell);
+                            Animations.cardToGraveyard(purgeSpell, currentPlayer);
+                            kaartSurnuAeda(purgeSpell, currentPlayer);
+                            Gamescenes.setLabelText(purgeHero.getNimi() + " purged! Heroes stats now: " + "Attack: " + purgeHero.getAttack() + "Defence: " + purgeHero.getDefence());
+                            System.out.println("Consumed");
+                            Gamescenes.getBattleScenePane().setOnMouseClicked(null);
                         }
-                        for (Kaart hero : currentPlayer.getHeroMap().keySet()) {
-                            System.out.println("Jõudis tsüklisse!");
-                            if (!hero.toString().equals("Empty")) {
-                                String indeks = Animations.getPositionIndex(hero,currentPlayer);
-                                Node heroNode = Gamescenes.getBattleScenePane().lookup("#" + indeks);
 
-                                Bounds heroBounds = heroNode.localToScene(heroNode.getBoundsInLocal());
+                    }
+                }
+                for (Kaart hero : currentPlayer.getHeroMap().keySet()) {
+                    if (!hero.toString().equals("Empty")) {
+                        String indeks = Animations.getPositionIndex(hero, currentPlayer);
+                        Node heroNode = Gamescenes.getBattleScenePane().lookup("#" + indeks);
 
-                                System.out.println(indeks + "Node created");
-                                if (heroBounds.contains(mouseX,mouseY)) {
-                                    System.out.println("Jõudis siia!");
-                                    Kaart  purgeHero = hero;
-                                    Kaart purgeSpell = card;
-                                    Purge.purge(currentPlayer, purgeHero, purgeSpell);
-                                    Animations.cardToGraveyard(purgeSpell,currentPlayer);
-                                    kaartSurnuAeda(purgeSpell,currentPlayer);
-                                    Gamescenes.setLabelText(purgeHero.getNimi() + " purged! Heroes stats now: " + "Attack: " + purgeHero.getAttack() + "Defence: " + purgeHero.getDefence());
-                                    System.out.println("Consumed");
-                                    Gamescenes.getBattleScenePane().setOnMouseClicked(null);
-                                }
+                        Bounds heroBounds = heroNode.localToScene(heroNode.getBoundsInLocal());
 
-                            }
+                        if (heroBounds.contains(mouseX, mouseY)) {
+                            System.out.println("Jõudis siia!");
+                            Kaart purgeHero = hero;
+                            Kaart purgeSpell = card;
+                            Purge.purge(currentPlayer, purgeHero, purgeSpell);
+                            Animations.cardToGraveyard(purgeSpell, currentPlayer);
+                            kaartSurnuAeda(purgeSpell, currentPlayer);
+                            Gamescenes.setLabelText(purgeHero.getNimi() + " purged! Heroes stats now: " + "Attack: " + purgeHero.getAttack() + "Defence: " + purgeHero.getDefence());
+                            Gamescenes.getBattleScenePane().setOnMouseClicked(null);
                         }
+
+                    }
+                }
 
             }
         });
-
-                /*Gamescenes.getBattleScenePane().setOnMouseClicked(new EventHandler<MouseEvent>() {
-                    public void handle(MouseEvent e)   {
-                        double X = e.getSceneX();
-                        double Y = e.getSceneY();
-
-            }});*/
-
-
-			/*}
-			else if (valik2.equals("1") && !playerHasHeroes) {
-				System.out.println("You don't have any heroes to purge.\n");
-				return false;
-			}
-			else if (valik2.equals("2") && opponentHasHeroes) {
-				System.out.println("Choose the hero, you want to purge:\n");
-				int j = 1;
-				ArrayList<Kaart> tempHerod = new ArrayList<>();
-				for (Kaart kaart : currentOpponent.getMangijaLaud()) {
-					if (kaart.getTyyp().equals("Hero")) {
-						tempHerod.add(kaart);
-						System.out.println(j + ")" + kaart);
-						j++;
-					}
-				}
-
-				String heroChoice = scan.next();
-				Kaart purgeHero = tempHerod.get(Integer.parseInt(heroChoice) - 1);
-				Kaart purgeSpell = tempSpells.get(Integer.parseInt(spellChoice) - 1);
-				Purge.purge(currentOpponent, purgeHero, purgeSpell);
-				kaartSurnuAeda(purgeSpell,currentPlayer);
-				System.out.println(purgeHero.getNimi() + " purged! Heroes stats now: \n" + "Attack: " + purgeHero.getAttack() + "\n" + "Defence: " + purgeHero.getDefence());
-				return true;
-			}
-			else if (valik2.equals("2") && !opponentHasHeroes) {
-				System.out.println("The opponent has no heroes to Purge.\n");
-				return false;
-			}
+    }
 
 			else if (type.equals("Buff")) {
-				if (!playerHasHeroes) {
-					System.out.println("You don't have any heroes on the battlefield to buff!\n");
-					return false;
-				}
-				System.out.println("Choose the card you want to use:\n"); // Kaardi valik, millega buffitakse
-				int l = 1;
-				ArrayList<Kaart> tempSpells = new ArrayList<>();
-				for(Kaart kaart : currentPlayer.getMangijaLaud()) {
-					if (kaart.getAlamTyyp().equals("Buff")) {
-						if (kaart.isOlek()) {
-							continue;
-						}
-						tempSpells.add(kaart);
-						System.out.println(l + ")" + kaart);
-						l++;
-					}
-				}
-				String spellChoice = scan.next();
-				System.out.println("Choose the hero, you want to buff:\n");
-				int j = 1;
-				ArrayList<Kaart> tempHerod = new ArrayList<>();
-				for(Kaart kaart : currentPlayer.getMangijaLaud()) {
-					if (kaart.getTyyp().equals("Hero")) {
-						tempHerod.add(kaart);
-						System.out.println(j + ")" + kaart.getNimi());
-						j++;
-					}
-				}
-				String heroChoice = scan.next();
-				Kaart buffHero = tempHerod.get(Integer.parseInt(heroChoice) - 1);
-				Kaart buffSpell = tempSpells.get(Integer.parseInt(spellChoice) - 1);
-				Buff.buffPlacement(currentPlayer,buffHero,buffSpell);
-				System.out.println("Buff placed on " + buffHero.getNimi() + "." + "Heroes stats now:\n" + "Attack: " + buffHero.getAttack() + "\n" + "Defence: " + buffHero.getDefence());
-				buffSpell.setOlek(true);
-				return true;
+
+            if (!playerHasHeroes) {
+                Gamescenes.setLabelText("You have no heroes to buff!");
+                return false;
+            }
+				Gamescenes.setLabelText("Choose the hero you want to buff");
+
+            Gamescenes.getBattleScenePane().setOnMouseClicked(new EventHandler<MouseEvent>() {
+                public void handle(MouseEvent e) {
+                    double mouseX = e.getSceneX();
+                    double mouseY = e.getSceneY();
+                    for (Kaart hero : currentPlayer.getHeroMap().keySet()) {
+                        if (!hero.toString().equals("Empty")) {
+                            String indeks = Animations.getPositionIndex(hero, currentPlayer);
+                            Node heroNode = Gamescenes.getBattleScenePane().lookup("#" + indeks);
+
+                            Bounds heroBounds = heroNode.localToScene(heroNode.getBoundsInLocal());
+
+                            if (heroBounds.contains(mouseX, mouseY)) {
+                                Buff.buffPlacement(currentPlayer,hero,card);
+                                Gamescenes.setLabelText("Buff placed on " + hero.getNimi() + "." + "Heroes stats now:" + "Attack: " + hero.getAttack() +  " Defence: " + hero.getDefence());
+                                card.setOlek(true);
+                                Gamescenes.getBattleScenePane().setOnMouseClicked(null);
+                                break;
+                            }
+
+                        }
+                    }
+
+                }
+            });
+            return true;
+
 			}
 				else {
 					if (!opponentHasHeroes) {
-						System.out.println("The enemy doesn't have any heroes to make more vulnerable!\n");
+						Gamescenes.setLabelText("The enemy doesn't have any heroes to make more vulnerable!");
 						return false;
 					}
-					System.out.println("Choose the card, you want to use:\n"); // Kaardi valik, millega vulnerability peale pannakse
-					int l = 1;
-					ArrayList<Kaart> tempSpells = new ArrayList<>();
-					for(Kaart kaart : currentPlayer.getMangijaLaud()) {
-						if (kaart.getAlamTyyp().equals("Vulnerability")) {
-							if (kaart.isOlek()) {
-								continue;
-							}
-							tempSpells.add(kaart);
-							System.out.println(l + ")" + kaart);
-							l++;
-						}
-					}
-					String spellChoice = scan.next();
-					System.out.println("Choose the hero, you want to make more vulnerable:\n");
-					int j = 1;
-					ArrayList<Kaart> tempHerod = new ArrayList<>();
-					for(Kaart kaart : currentOpponent.getMangijaLaud()) {
-						if (kaart.getTyyp().equals("Hero")) {
-							tempHerod.add(kaart);
-							System.out.println(j + ")" + kaart);
-							j++;
-						}
-					}
-					String heroChoice = scan.next();
-					Kaart vulnerableHero = tempHerod.get(Integer.parseInt(heroChoice) - 1);
-					Kaart vulnerableSpell = tempSpells.get(Integer.parseInt(spellChoice) - 1);
-					Vulnerability.vulnerabilityPlacement(currentPlayer, currentOpponent, vulnerableHero, vulnerableSpell);
-					System.out.println("Vulnerability placed on " + vulnerableHero.getNimi() + "." + " Heroes stats now:\n " + "Attack: " + vulnerableHero.getAttack() + "\n" + "Defence: " + vulnerableHero.getDefence());
-					vulnerableSpell.setOlek(true);
-					return true;*/
+            Gamescenes.setLabelText("Choose the hero you want to make more vulnerable");
+            Gamescenes.getBattleScenePane().setOnMouseClicked(new EventHandler<MouseEvent>() {
+                public void handle(MouseEvent e) {
+                    double mouseX = e.getSceneX();
+                    double mouseY = e.getSceneY();
+                    for (Kaart hero : currentOpponent.getHeroMap().keySet()) {
+                        if (!hero.toString().equals("Empty")) {
+                            String indeks = Animations.getPositionIndex(hero, currentOpponent);
+                            Node heroNode = Gamescenes.getBattleScenePane().lookup("#" + indeks);
+
+                            Bounds heroBounds = heroNode.localToScene(heroNode.getBoundsInLocal());
+
+                            if (heroBounds.contains(mouseX, mouseY)) {
+                                Vulnerability.vulnerabilityPlacement(hero,card);
+                                Gamescenes.setLabelText("Vulnerability placed on " + hero.getNimi() + "." + "Heroes stats now:" + "Attack: " + hero.getAttack() +  " Defence: " + hero.getDefence());
+                                card.setOlek(true);
+                                Gamescenes.getBattleScenePane().setOnMouseClicked(null);
+                                break;
+                            }
+
+                        }
+                    }
+
+                }
+            });
         return true;
 			}
-
+        return false;
         }
+}
 
 
 

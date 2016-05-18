@@ -54,11 +54,11 @@ public class Kaik extends Manguvaljak {
                     }
                 }
                 for (int k = tempBuffBuffers.size() - 1; k >= 0; k--) {
-                    kaartSurnuAeda(sinuValjak.getBuffers().get(k), currentPlayer);
+                    Manguvaljak.kaartSurnuAeda(sinuValjak.getBuffers().get(k), currentPlayer);
                     sinuValjak.getBuffers().remove(k);
                 }
                 for (int l = tempVulnerabilityBuffers.size() - 1; l >= 0; l--) {
-                    kaartSurnuAeda(sinuValjak.getVulnerabilities().get(l), currentOpponent);
+                    Manguvaljak.kaartSurnuAeda(sinuValjak.getVulnerabilities().get(l), currentOpponent);
                     sinuValjak.getVulnerabilities().remove(l);
                 }
                 tempBuffBuffers = new ArrayList<>();
@@ -70,6 +70,21 @@ public class Kaik extends Manguvaljak {
         for (Kaart vastaseValjak : currentOpponent.getMangijaLaud()) {
             vastaseValjak.setMoveCount(vastaseValjak.getMoveCount() + 1);
         }
+
+        turnCount++;
+        Manguvaljak.currentPlayer.setAttackCount(0);
+        Animations.makeCardsUnclickable(Manguvaljak.currentPlayer);
+        Animations.makeCardsAttackable(Manguvaljak.currentPlayer);
+        Animations.makeCardsClickable(Manguvaljak.currentOpponent);
+        handShuffle();
+
+        Animations.flipDown(Manguvaljak.currentPlayer);
+        Animations.flipUp(Manguvaljak.currentOpponent);
+
+
+        Mangija tempChanger = Manguvaljak.currentPlayer;
+        Manguvaljak.currentPlayer = Manguvaljak.currentOpponent;
+        Manguvaljak.currentOpponent = tempChanger;
 
     }
 

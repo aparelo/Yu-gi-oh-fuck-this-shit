@@ -86,7 +86,7 @@ public class Main {
         int test = 0;
        mainloop: while (test < 1 /*Manguvaljak.currentOpponent.getElud() > 0 && Manguvaljak.currentOpponent.getMangijaDeck().size() > 0 && Manguvaljak.currentPlayer.getElud() > 0 && Manguvaljak.currentPlayer.getMangijaDeck().size() > 0*/) {
 
-           Kaik.uusKaik();
+           //Kaik.uusKaik();
 
 
            //Main loop

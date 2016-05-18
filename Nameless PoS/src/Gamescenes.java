@@ -420,7 +420,7 @@ public class Gamescenes  {
             public void handle(KeyEvent key)
             {try {
                 if (key.getCode().equals(KeyCode.ENTER)) {
-                    Kaik.endTurn();
+                    Kaik.uusKaik();
                 }
             }
             catch (InterruptedException e) {

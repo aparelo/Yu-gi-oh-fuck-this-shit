@@ -376,6 +376,15 @@ public class Animations  {
         ParallelTransition parallelDeck = new ParallelTransition(translateDeck1,translateDeck2);
 
         parallelDeck.play();
+        parallelDeck.setOnFinished(new EventHandler<ActionEvent>() {
+            public void handle (ActionEvent e)  {
+                try {
+                    Kaik.handShuffle();
+                }
+                catch (InterruptedException d) {
+                    throw new RuntimeException(d);
+                }
+        }});
 
         //Deck draw animation end
 
