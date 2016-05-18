@@ -248,11 +248,14 @@ public class Gamescenes  {
         grid.add(deck2,0,3,2,1);
 
         Button start = new Button("Start the game");
-        HBox hbStart = new HBox(10);
+        Button toMainMenu = new Button("Return to main menu");
+        VBox hbStart = new VBox(10);
         hbStart.setAlignment(Pos.CENTER);
         start.setMinWidth(200);
         start.setPrefWidth(500);
-        hbStart.getChildren().add(start);
+        toMainMenu.setMinWidth(200);
+        toMainMenu.setPrefWidth(500);
+        hbStart.getChildren().addAll(start,toMainMenu);
         grid.add(hbStart, 0, 4,3,1);
         start.setOnAction(new EventHandler<ActionEvent>() {
             public void handle(ActionEvent e)   {
@@ -286,6 +289,20 @@ public class Gamescenes  {
                 }
                 catch (Exception ex) {
                     throw new RuntimeException(ex);
+                }
+
+            }
+        });
+        toMainMenu.setOnAction(new EventHandler<ActionEvent>() {
+            @Override
+            public void handle(ActionEvent event) {
+                Alert alert = new Alert(Alert.AlertType.CONFIRMATION);
+                alert.setTitle("Return to main menu");
+                alert.setHeaderText("Return to main menu");
+                alert.setContentText("Are you sure you want to return to the main menu, unsaved changes will be lost?");
+                Optional<ButtonType> result = alert.showAndWait();
+                if(result.get() == ButtonType.OK) {
+                    primaryStage.setScene(Gamescenes.getMainMenuScene());
                 }
 
             }
