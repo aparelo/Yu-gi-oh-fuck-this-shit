@@ -29,7 +29,12 @@ public class Manguvaljak {
             return false;
         } else {
             mangija.setMana(mangija.getMana() - card.getManaPoints());
-            Gamescenes.getMana().setText("Mana: " + currentPlayer.getMana());
+            if(currentPlayer.getLocation() == 1) {
+                Gamescenes.getoMana().setText("Mana: " + currentPlayer.getMana());
+            }
+            else {
+                Gamescenes.getMana().setText("Mana: " + currentPlayer.getMana());
+            }
         }
         if (mangija.getMangijaLaud().size() == 10) {
             return false;

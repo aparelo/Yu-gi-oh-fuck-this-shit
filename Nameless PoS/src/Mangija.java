@@ -23,9 +23,10 @@ public class Mangija {
     private double graveYardX;
     private double graveYardY;
     private int attackCount;
+    private int location; //1  on alumine, 2 on ulemine mangija
 
 
-	public Mangija(String nimi, ArrayList <Kaart> deck, int location) {
+    public Mangija(String nimi, ArrayList <Kaart> deck, int location) {
 		this.nimi = nimi;
 		this.elud = 20;
 		this.mana = 20;
@@ -35,6 +36,7 @@ public class Mangija {
         this.mangijaKasi = new ArrayList<Kaart>();
         this.mangijaLaud = new ArrayList<Kaart>();
 		this.mangijaSurnuAed = new ArrayList<Kaart>();
+        this.location = location;
 		if (location == 1) {
 			HashMap<Kaart,String> handMap = new HashMap<Kaart,String>();
             HashMap<Kaart,String> spellMap = new HashMap<Kaart,String>();
@@ -201,6 +203,9 @@ public class Mangija {
     }
     public void setAttackCount(int attackCount) {
         this.attackCount = attackCount;
+    }
+    public int getLocation() {
+        return location;
     }
 
 	
