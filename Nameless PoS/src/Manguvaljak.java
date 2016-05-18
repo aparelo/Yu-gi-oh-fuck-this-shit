@@ -93,6 +93,12 @@ public class Manguvaljak {
         if (!(heroArvVastasel) && Kaik.turnCount > 0) {
             currentOpponent.setElud(currentOpponent.getElud() - attackingCard.getAttack());
             Gamescenes.setLabelText("Attack succeeded! Opponents lives:" + currentOpponent.getElud());
+            if(currentPlayer.getLocation() == 1) { //1 = oMana
+                Gamescenes.getHp().setText("Hitpoints: " + currentOpponent.getElud());
+            }
+            else {
+                Gamescenes.getoHp().setText("Hitpoints: " + currentOpponent.getElud());
+            }
             return true;
         }
         else {
@@ -124,6 +130,13 @@ public class Manguvaljak {
                                     }
                                     else {
                                         Gamescenes.setLabelText("Attack succeeded! The hero " + vastaseHero.getNimi() + " has been defeated." + " Opponents lives: " + (currentOpponent.getElud() - (attackingCard.getAttack() - vastaseHero.getDefence())));
+                                        currentOpponent.setElud(currentOpponent.getElud() - (attackingCard.getAttack() - vastaseHero.getDefence()));
+                                        if(currentPlayer.getLocation() == 1) { //1 = oMana
+                                            Gamescenes.getHp().setText("Hitpoints: " + currentOpponent.getElud());
+                                        }
+                                        else {
+                                            Gamescenes.getoHp().setText("Hitpoints: " + currentOpponent.getElud());
+                                        }
                                         Manguvaljak.kaartSurnuAeda(vastaseHero, currentOpponent);
                                         heroNode.setOnMouseExited(null);
                                         Gamescenes.getBattleScenePane().setOnMouseClicked(null);

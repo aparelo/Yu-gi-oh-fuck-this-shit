@@ -16,6 +16,12 @@ public class Kaik extends Manguvaljak {
 
         currentOpponent.setAttackCount(0);
         currentPlayer.setMana(currentPlayer.getMana() + 1);
+        if(currentPlayer.getLocation() == 1) { //1 = oMana
+            Gamescenes.getoMana().setText("Manapoints: " + currentPlayer.getMana());
+        }
+        else {
+            Gamescenes.getMana().setText("Manapoints: " + currentPlayer.getMana());
+        }
 
         ArrayList<Integer> tempBuffBuffers = new ArrayList<>();
         ArrayList<Integer> tempVulnerabilityBuffers = new ArrayList<>();
