@@ -58,7 +58,6 @@ public class Animations  {
             Node cardNode = Gamescenes.getBattleScenePane().lookup("#" + indeks);  // The original node in the grid, where the card is supposed to go
 
             Bounds cardBounds = cardNode.localToScene(cardNode.getBoundsInLocal()); // The position of the card on the field
-        System.out.println(cardBounds);
 
             Gamescenes.getBattleScenePane().lookup("#" + indeks).setId("Back" + indeks);  // The node, which is now behind the card node, is given the index "Back" + the number corresponding to the grid system
             iv.setId(indeks); // The card now has the original index
@@ -297,7 +296,7 @@ public class Animations  {
                 Gamescenes.getBattleScenePane().lookup("#30").setOnMouseEntered(new EventHandler<MouseEvent>() {
                     public void handle(MouseEvent me) {
                         Gamescenes.setLabelText("Cards in deck: " + Integer.toString(Manguvaljak.currentOpponent.getMangijaDeck().size()));
-                        Gamescenes.getBattleScenePane().lookup("#30").setVisible(false);
+                        //Gamescenes.getBattleScenePane().lookup("#30").setVisible(false);
                     }
                 });
             }});
@@ -463,17 +462,16 @@ public class Animations  {
         HashMap<Kaart, String> heroMap = mangija.getHeroMap();
         HashMap<Kaart, String> spellMap = mangija.getSpellMap();
         for (Kaart kaart : heroMap.keySet()) {
-            if (!((kaart.toString()).equals("Empty"))) {
+            if (!kaart.toString().equals("Empty")) {
                 String indeks = heroMap.get(kaart);
                 Node cardNode = Gamescenes.getBattleScenePane().lookup("#" + indeks);
                 cardNode.setOnMouseClicked(MouseEvent -> Manguvaljak.attack(kaart));
             }
         }
         for (Kaart kaart : spellMap.keySet()) {
-            if (!((kaart.toString()).equals("Empty"))) {
+            if (!kaart.toString().equals("Empty")) {
                 String indeks = spellMap.get(kaart);
                 Node cardNode = Gamescenes.getBattleScenePane().lookup("#" + indeks);
-                System.out.println(cardNode);
                 cardNode.setOnMouseClicked(MouseEvent -> Manguvaljak.useSpell(kaart));
             }
         }
@@ -483,7 +481,7 @@ public class Animations  {
     public static void makeCardsAttackable(Mangija mangija) {
         HashMap<Kaart, String> heroMap = mangija.getHeroMap();
         for (Kaart kaart : heroMap.keySet()) {
-            if (!((kaart.toString()).equals("Empty"))) {
+            if (!kaart.toString().equals("Empty")) {
                 String indeks = heroMap.get(kaart);
                 Node cardNode = Gamescenes.getBattleScenePane().lookup("#" + indeks);
                 cardNode.setOnMouseClicked(MouseEvent -> {

@@ -207,7 +207,6 @@ public class Hero extends Kaart {
 
 
 	public ArrayList<Kaart> getBuffers() {
-		System.out.println("Buffer");
 		return buffers;
 	}
 

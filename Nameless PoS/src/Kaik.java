@@ -9,7 +9,6 @@ import java.util.HashMap;
 
 public class Kaik extends Manguvaljak {
     public static int turnCount = 0;
-
     public static boolean needCards;
 
     public static void uusKaik() throws InterruptedException {
@@ -78,10 +77,13 @@ public class Kaik extends Manguvaljak {
         }
 
         turnCount++;
+
         Manguvaljak.currentPlayer.setAttackCount(0);
+
         Animations.makeCardsUnclickable(Manguvaljak.currentPlayer);
         Animations.makeCardsAttackable(Manguvaljak.currentPlayer);
         Animations.makeCardsClickable(Manguvaljak.currentOpponent);
+
         handShuffle();
 
         Animations.flipDown(Manguvaljak.currentPlayer);
@@ -100,6 +102,7 @@ public class Kaik extends Manguvaljak {
         Animations.makeCardsUnclickable(Manguvaljak.currentPlayer);
         Animations.makeCardsAttackable(Manguvaljak.currentPlayer);
         Animations.makeCardsClickable(Manguvaljak.currentOpponent);
+
         handShuffle();
 
         Animations.flipDown(Manguvaljak.currentPlayer);

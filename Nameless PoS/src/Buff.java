@@ -1,4 +1,7 @@
+import javafx.event.EventHandler;
+import javafx.scene.Node;
 import javafx.scene.image.Image;
+import javafx.scene.input.MouseEvent;
 
 import java.util.ArrayList;
 
@@ -172,5 +175,17 @@ public class Buff extends Kaart {
 		hero.getBuffers().add(spell);
 		spell.setOlek(true);
 		spell.setActivity(true);
+
+        for (Kaart heroes : mangija.getHeroMap().keySet()) {
+            if (!hero.toString().equals("Empty")) {
+                String indeks = Animations.getPositionIndex(hero, mangija);
+                Node heroNode = Gamescenes.getBattleScenePane().lookup("#" + indeks);
+                heroNode.setOnMouseClicked(new EventHandler<MouseEvent>() {
+                    public void handle(MouseEvent e) {
+                        Manguvaljak.attack(heroes);
+                    }
+                });
+            }
+        }
 	}
 }

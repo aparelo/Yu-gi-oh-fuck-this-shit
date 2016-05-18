@@ -44,7 +44,7 @@ public class DeckMakerGUI {
    public DeckMakerGUI(ArrayList<Kaart> deckList, String filename) throws Exception {
         DeckList = deckList;
         this.filename = filename;
-       cards = makeCardBank(cardBank);
+        cards = makeCardBank(cardBank);
         oCardList = FXCollections.observableArrayList(cards);
     }
 
