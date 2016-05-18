@@ -20,7 +20,12 @@ public class Purge extends Kaart {
 		this.effekt = effekt;
 		this.olek = false;
 		this.activity = false;
-		this.frontPicture = new Image("\\img\\PurgeImg.jpg");
+		try {
+			this.frontPicture = new Image("\\img\\" + nimi + ".jpg");
+		}
+		catch (IllegalArgumentException e) {
+			this.frontPicture =  new Image("\\img\\PurgeImg.jpg");
+		}
 	}
 
 	

@@ -1,5 +1,6 @@
 import javafx.scene.image.Image;
 
+import java.io.FileNotFoundException;
 import java.util.ArrayList;
 
 public class Hero extends Kaart {
@@ -238,8 +239,7 @@ public class Hero extends Kaart {
 
 
 
-	public Hero(String nimi, int attack, int defence, int rank, int manaPoints, String eriatribuut, String alamTyyp) {
-		//Tere Siim
+	public Hero(String nimi, int attack, int defence, int rank, int manaPoints, String eriatribuut, String alamTyyp)  {
 		this.nimi = nimi;
 		this.tyyp = "Hero";
 		this.attack = attack;
@@ -255,7 +255,13 @@ public class Hero extends Kaart {
 		this.moveCount = 0;
 		this.buffers = new ArrayList<>();
 		this.vulnerabilities = new ArrayList<>();
-        this.frontPicture =  new Image("\\img\\HeroImg.jpg");
+		try {
+			this.frontPicture = new Image("\\img\\" + nimi + ".jpg");
+		}
+		catch (IllegalArgumentException e) {
+			this.frontPicture =  new Image("\\img\\HeroImg.jpg");
+		}
+
 	}
 
 

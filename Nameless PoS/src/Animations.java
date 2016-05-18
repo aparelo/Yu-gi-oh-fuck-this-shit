@@ -35,7 +35,7 @@ public class Animations  {
         else {
             iv.setImage(Gamescenes.cardBackgroundImage);
         }
-           // iv.setPreserveRatio(true);
+            iv.setPreserveRatio(true);
             iv.setSmooth(true);
             iv.setCache(true);
             iv.setVisible(false);
@@ -58,6 +58,7 @@ public class Animations  {
             Node cardNode = Gamescenes.getBattleScenePane().lookup("#" + indeks);  // The original node in the grid, where the card is supposed to go
 
             Bounds cardBounds = cardNode.localToScene(cardNode.getBoundsInLocal()); // The position of the card on the field
+        System.out.println(cardBounds);
 
             Gamescenes.getBattleScenePane().lookup("#" + indeks).setId("Back" + indeks);  // The node, which is now behind the card node, is given the index "Back" + the number corresponding to the grid system
             iv.setId(indeks); // The card now has the original index
@@ -66,10 +67,15 @@ public class Animations  {
 
             translateCard.setFromX(mangija.getDeckX());
             translateCard.setFromY(mangija.getDeckY());
+
+        if (cardBounds.getWidth() == 0) {
+            translateCard.setToX(cardBounds.getMinX() - 140);
+        }
+        else {
             translateCard.setToX(cardBounds.getMinX() - 110);
-            System.out.println(cardBounds.getMinX() - 110);
+        }
+
             translateCard.setToY(cardBounds.getMinY() - 24);
-            System.out.println(cardBounds.getMinY() - 24);
 
 
 
@@ -119,79 +125,6 @@ public class Animations  {
         }
             seqTransition.play();
 
-       /* else {
-            Kaart card = mangija.getMangijaDeck().get(0);
-            Image cardImage = card.getBackPicture();
-            ImageView iv = new ImageView();
-            iv.setImage(cardImage);
-            iv.setPreserveRatio(true);
-            iv.setSmooth(true);
-            iv.setCache(true);
-            iv.setVisible(false);
-
-
-            TranslateTransition translateCard = new TranslateTransition(Duration.millis(2000), iv);
-
-            String indeks = "";
-            Kaart removableKaart = new EmptyCard();
-            for (Kaart kaart : mangija.getHandMap().keySet()) {
-                if (kaart.toString().equals("Empty")) {
-                    indeks = mangija.getHandMap().get(kaart);
-                    removableKaart = kaart;
-                }
-            }
-            mangija.getHandMap().put(card,indeks);
-            mangija.getHandMap().remove(removableKaart);
-
-            Node cardNode = Gamescenes.getBattleScenePane().lookup("#" + indeks);
-
-            Bounds cardBounds = cardNode.localToScene(cardNode.getBoundsInLocal());
-
-            Gamescenes.getBattleScenePane().lookup("#" + indeks).setId("Back" + indeks);
-
-            translateCard.setFromX(mangija.getDeckX());
-            translateCard.setFromY(mangija.getDeckY());
-            translateCard.setToX(cardBounds.getMinX() - 110);
-            translateCard.setToY(cardBounds.getMinY() - 24);
-
-            iv.setId(indeks);
-
-            iv.setOnMouseEntered(new EventHandler<MouseEvent>() {
-                public void handle(MouseEvent e)   {
-                    Gamescenes.setLabelText(card.toInfo());
-                }
-            });
-            iv.setOnMouseExited(new EventHandler<MouseEvent>() {
-                public void handle(MouseEvent e)   {
-                    Gamescenes.setLabelText("");
-                }
-            });
-
-            Gamescenes.getBattleScenePane().getChildren().add(iv);
-
-            PauseTransition pause = new PauseTransition(Duration.millis(1200));
-            pause.setOnFinished(new EventHandler<ActionEvent>() {
-                public void handle(ActionEvent e)   {
-                    iv.setVisible(true);
-                }
-            });
-            SequentialTransition seqTransition = new SequentialTransition (pause,translateCard);
-            seqTransition.play();
-
-            final String finalIndeks = indeks;
-
-            seqTransition.setOnFinished(new EventHandler<ActionEvent>() {
-                public void handle(ActionEvent e)   {
-                    iv.setImage(card.getFrontPicture());
-                    iv.setVisible(false);
-                    Node cardBackgroundNode = Gamescenes.getBattleScenePane().lookup("#Back" + finalIndeks);
-                    ImageView cardBackground = (ImageView) cardBackgroundNode;
-                    cardBackground.setImage(Gamescenes.cardBackgroundImage);
-                    cardBackground.setVisible(true);
-                }
-
-        });
-*/
     }
 
     public static String getHeroFieldIndex(Mangija mangija) {
@@ -286,6 +219,7 @@ public class Animations  {
         String cardIndeks = getPositionIndex(card, mangija);
 
         Node cardNode = Gamescenes.getBattleScenePane().lookup("#" + cardIndeks);
+        Node fieldNode = Gamescenes.getBattleScenePane().lookup("#Back" + cardIndeks);
 
         if (card.getTyyp().equals("Hero")) {
             mangija.getHeroMap().values().remove(cardIndeks);
@@ -307,6 +241,8 @@ public class Animations  {
         translateCard.setToY(mangija.getGraveYardY());
 
         cardNode.setId("Dead");
+        fieldNode.setId(cardIndeks);
+
         cardNode.setOnMouseClicked(null); // When a card, which is in the graveyard, is clicked, nothing will happen. Information is still visible by MouseOnEntered
 
         translateCard.play();
@@ -315,8 +251,6 @@ public class Animations  {
 
 
     public static void startShuffle() throws InterruptedException {
-
-        Kaik.handShuffle();
 
         Image deckImage1 = new Image("\\img\\CardBackground.jpg");
         ImageView iv1 = new ImageView();
@@ -554,7 +488,6 @@ public class Animations  {
                 Node cardNode = Gamescenes.getBattleScenePane().lookup("#" + indeks);
                 cardNode.setOnMouseClicked(MouseEvent -> {
                     Manguvaljak.attackedCard = cardNode;
-                    PickResult res = MouseEvent.getPickResult();
                 });
 
             }

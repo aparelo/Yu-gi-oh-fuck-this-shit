@@ -26,7 +26,12 @@ public class Buff extends Kaart {
 		this.moveCount = 0;
 		this.olek = false;
 		this.activity = false;
-        this.frontPicture = new Image("\\img\\BuffImg.jpg");
+		try {
+			this.frontPicture = new Image("\\img\\" + nimi + ".jpg");
+		}
+		catch (IllegalArgumentException e) {
+			this.frontPicture =  new Image("\\img\\BuffImg.jpg");
+		}
 
 	}
 
