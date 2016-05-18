@@ -20,6 +20,7 @@ public class Hero extends Kaart {
 	private ArrayList<Kaart> buffers;
 	private ArrayList<Kaart> vulnerabilities;
 	private Image frontPicture;
+    private Image backPicture;
 	
 
 	
@@ -256,9 +257,16 @@ public class Hero extends Kaart {
 		this.vulnerabilities = new ArrayList<>();
 		try {
 			this.frontPicture = new Image("\\img\\" + nimi.replace(" ","") + ".jpg");
+            if (nimi.contains("Stark")) {
+                this.backPicture =  new Image("\\img\\" + "StarkBanner" + ".jpg");
+            }
+            if (nimi.contains("Lannister")) {
+                this.backPicture =  new Image("\\img\\" + "LannisterBanner" + ".jpg");
+            }
 		}
 		catch (IllegalArgumentException e) {
 			this.frontPicture =  new Image("\\img\\HeroImg.jpg");
+            this.backPicture = new Image ("\\img\\CardBackground.jpg");
 		}
 
 	}
