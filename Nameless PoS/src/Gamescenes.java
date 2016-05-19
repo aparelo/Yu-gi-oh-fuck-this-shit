@@ -16,6 +16,7 @@ import javafx.scene.input.KeyCode;
 import javafx.scene.input.KeyEvent;
 import javafx.scene.input.MouseEvent;
 import javafx.scene.layout.*;
+import javafx.scene.media.AudioClip;
 import javafx.scene.text.Font;
 import javafx.scene.text.FontPosture;
 import javafx.scene.text.Text;
@@ -123,6 +124,9 @@ public class Gamescenes  {
 
     public static void setDeckMakerMenuScene(int x, int y, Stage primaryStage) {
         primaryStage.setTitle("Deck Maker Menu");
+        AudioClip deckMakerMusic = new AudioClip(new File("Nameless PoS\\music\\song.mp3").toURI().toString());
+        deckMakerMusic.play();
+        deckMakerMusic.setCycleCount(AudioClip.INDEFINITE);
         GridPane grid = new GridPane();
         BorderPane border = new BorderPane();
         Scene deckMenuScene = new Scene(grid, x*0.5, y*0.5);
@@ -168,6 +172,7 @@ public class Gamescenes  {
         newDeck.setOnMouseClicked(new EventHandler<MouseEvent>() {
             @Override
             public void handle(MouseEvent event) {
+                //deckMakerMusic.stop();
                 try {
                     if(deckLocation.getText().equals("New Deck")){
                         ArrayList<Kaart> cards = new ArrayList<>();
@@ -203,6 +208,9 @@ public class Gamescenes  {
 
     public static void setBattleMenuScene(int x, int y, Stage primaryStage) throws  Exception {
         GridPane grid = new GridPane();
+        AudioClip battleMenuMusic = new AudioClip(new File("Nameless PoS\\music\\song.mp3").toURI().toString());
+        battleMenuMusic.play();
+        battleMenuMusic.setCycleCount(AudioClip.INDEFINITE);
         Scene battleMenuScene = new Scene(grid, x, y);
         grid.setAlignment(Pos.CENTER);
         grid.setHgap(10);
@@ -282,6 +290,7 @@ public class Gamescenes  {
                         GUI.setPlayer1Name(player1Name);
                         GUI.setPlayer2Name(player2Name);
                         setBattleScene(x, y, primaryStage);
+                        //battleMenuMusic.stop();
                         primaryStage.setScene(Gamescenes.getBattleScene());
                         primaryStage.show();
                         Main.gameLogic();
@@ -302,6 +311,7 @@ public class Gamescenes  {
                 alert.setContentText("Are you sure you want to return to the main menu, unsaved changes will be lost?");
                 Optional<ButtonType> result = alert.showAndWait();
                 if(result.get() == ButtonType.OK) {
+                    //battleMenuMusic.stop();
                     primaryStage.setScene(Gamescenes.getMainMenuScene());
                 }
 
@@ -315,6 +325,9 @@ public class Gamescenes  {
 
     public static void setBattleScene(int x, int y, Stage primary) throws Exception {
         GridPane grid = new GridPane();
+        AudioClip battleMusic = new AudioClip(new File("Nameless PoS\\music\\song.mp3").toURI().toString());
+        battleMusic.play();
+        battleMusic.setCycleCount(AudioClip.INDEFINITE);
         Gamescenes.battleScenePane = grid;
         Scene battleScene = new Scene(grid, x, y);
         grid.setAlignment(Pos.CENTER);
@@ -465,6 +478,9 @@ public class Gamescenes  {
 
     public static void setMainMenuScene(int x, int y, Stage primaryStage) {
         GridPane grid = new GridPane();
+        AudioClip mainMenuMusic = new AudioClip(new File("Nameless PoS\\music\\song.mp3").toURI().toString());
+        mainMenuMusic.play();
+        mainMenuMusic.setCycleCount(AudioClip.INDEFINITE);
         Scene scene = new Scene(grid, x, y);
         grid.setAlignment(Pos.CENTER);
         grid.setHgap(10);
@@ -479,6 +495,7 @@ public class Gamescenes  {
         grid.add(hbPlay, 0, 0);
         play.setOnAction(new EventHandler<ActionEvent>() {
             public void handle(ActionEvent e) {
+                //mainMenuMusic.stop();
                 primaryStage.setScene(Gamescenes.getBattleMenuScene());
                 primaryStage.show();
             }
@@ -492,6 +509,7 @@ public class Gamescenes  {
         grid.add(hbDeckMaker, 0, 1);
         deckMaker.setOnAction(new EventHandler<ActionEvent>() {
             public void handle(ActionEvent e) {
+                //mainMenuMusic.stop();
                 primaryStage.setScene(Gamescenes.getDeckMakerMenuScene());
                 primaryStage.show();
             }
