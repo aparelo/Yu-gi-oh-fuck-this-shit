@@ -12,7 +12,7 @@
 
 }
 .root {
-	-fx-background-color: rgb(0,0,0);
+	-fx-background-image: url("MenuBackground.jpg");
 }
 #battlepane{
     -fx-background-image: url("Background2.jpg");
@@ -24,21 +24,19 @@
 }
 
 #root {
-    -fx-background-image: url("MenuBackground.jpg");
+    -fx-background-color: transparent;
 }
 
 #border {
-    -fx-fill: #aa2009;
-    -fx-background-color: #aa2009;
+    -fx-background-image:  url("DeckBackground.jpg");
 }
 
 #cardHover {
-    -fx-fill: #aa2009;
-    -fx-background-color: #aa2009;
+    -fx-background-color: #000000;
 }
 
 #placeHolder {
-    -fx-fill: #aa2009;
+    -fx-background-color: transparent;
 }
 
 .label{
@@ -81,13 +79,12 @@
     -fx-text-alignment: center;
 }
 
-
 .table-view .column-header {
-    -fx-background-color: #444444;
+    -fx-background-color: rgb(0,0,0);
 }
 
 .table-view .filler {
-    -fx-background-color: #444444;
+    -fx-background-color: transparent;
 }
 
 #addToDeck {
@@ -107,11 +104,11 @@
 }
 
 .table-view .table-cell:even {
-    -fx-background-color: #7a7a7a;
+    -fx-background-color: transparent;
 }
 
 .table-view .table-cell:odd {
-    -fx-background-color: #aaaaaa;
+    -fx-background-color: transparent;
 }
 
 .table-view {

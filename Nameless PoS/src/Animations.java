@@ -220,6 +220,7 @@ public class Animations  {
 
     public static void cardToGraveyard(Kaart card, Mangija mangija) {
         String cardIndeks = getPositionIndex(card, mangija);
+        System.out.println("Indeks:" + cardIndeks);
 
         Node cardNode = Gamescenes.getBattleScenePane().lookup("#" + cardIndeks);
         System.out.println(cardNode);
@@ -346,7 +347,7 @@ public class Animations  {
 
         PauseTransition pause;
         if (Kaik.needCards) {
-            pause = new PauseTransition(Duration.millis(2000));
+            pause = new PauseTransition(Duration.millis(2150));
         }
         else {
             pause = new PauseTransition(Duration.millis(0));
@@ -405,7 +406,7 @@ public class Animations  {
         PauseTransition pause;
 
         if (Kaik.needCards) {  // If cards need to be dealt to the player's hand, the pause time is increased to let the draw animation finish
-            pause = new PauseTransition(Duration.millis(2000));
+            pause = new PauseTransition(Duration.millis(2150));
         } else {
             pause = new PauseTransition(Duration.millis(0));
         }

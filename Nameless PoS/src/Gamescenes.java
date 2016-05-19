@@ -132,7 +132,7 @@ public class Gamescenes  {
         GridPane grid = new GridPane();
         grid.setId("menu");
         BorderPane border = new BorderPane();
-        Scene deckMenuScene = new Scene(grid, x*0.5, y*0.5);
+        Scene deckMenuScene = new Scene(grid, x, y);
         grid.setAlignment(Pos.CENTER);
         grid.setHgap(10);
         grid.setVgap(10);
@@ -140,6 +140,7 @@ public class Gamescenes  {
 
         //TextField deckLocation = new TextField();
         MenuButton deckLocation = new MenuButton("Choose your deck");
+        deckLocation.setId("menu2");
         File folder = new File("Nameless Pos\\Decks\\");  // Lisatakse MenuButtoni menüüvalikusse "Decks" folderis olevad deckide nimed, menüünupu vajutamisel seatakse vastava Decki nimi Manguvaljaku isendivalja väärtuseks
         File[] listOfFiles = folder.listFiles();
         //Esimene Deck
@@ -333,6 +334,7 @@ public class Gamescenes  {
         Gamescenes.battleScenePane = grid;
         grid.setId("battlepane");
         Scene battleScene = new Scene(grid, x, y);
+
         grid.setAlignment(Pos.CENTER);
         grid.setHgap(5);
         grid.setVgap(5);
@@ -432,7 +434,7 @@ public class Gamescenes  {
         getoMana().setText("Manapoints: " + Manguvaljak.currentOpponent.getMana());
         opponentStats.getChildren().add(oMana);
         opponentStats.setMinWidth(196);
-        opponentStats.setMaxWidth(196);
+        opponentStats.setMaxWidth(200);
         grid.add(opponentStats, 0, 6);
 
         VBox playerStats = new VBox();
@@ -445,7 +447,7 @@ public class Gamescenes  {
         getMana().setText("Manapoints: " + Manguvaljak.currentPlayer.getMana());
         playerStats.getChildren().add(mana);
         playerStats.setMinWidth(196);
-        playerStats.setMaxWidth(196);
+        playerStats.setMaxWidth(200);
         grid.add(playerStats, 0, 0);
 
 

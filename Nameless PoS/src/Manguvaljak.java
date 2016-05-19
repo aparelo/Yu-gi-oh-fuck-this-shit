@@ -31,32 +31,32 @@ public class Manguvaljak {
             Gamescenes.setLabelText("You don't have enough mana to play this card!");
             return false;
         }
-        else {
-            mangija.setMana(mangija.getMana() - card.getManaPoints());
-            if (currentPlayer.getLocation() == 1) {
-                Gamescenes.getoMana().setText("Manapoints: " + currentPlayer.getMana());
-            } else {
-                Gamescenes.getMana().setText("Manapoints: " + currentPlayer.getMana());
-            }
-        }
         if (mangija.getSpellsOnField() == 5 || mangija.getHeroesOnField() == 5) {
             if ((currentPlayer.getSpellsOnField() == 5 && card.getTyyp().equals("Spell")) || (currentPlayer.getHeroesOnField() == 5 && card.getTyyp().equals("Hero"))) {
                 Gamescenes.setLabelText("Not enough space on the field.");
                 return false;
             }
         }
-                mangija.getMangijaKasi().remove(card);
-                mangija.getMangijaLaud().add(card);
-                Animations.cardToField(card, mangija);
+        mangija.getMangijaKasi().remove(card);
+        mangija.getMangijaLaud().add(card);
+        Animations.cardToField(card, mangija);
 
-                if (card.getTyyp().equals("Hero")) {
-                    int tempHeroesOnField = mangija.getHeroesOnField() + 1;
-                    mangija.setHeroesOnField(tempHeroesOnField);
-                } else {
-                    int tempSpellsOnField = mangija.getSpellsOnField() + 1;
-                    mangija.setSpellsOnField(tempSpellsOnField);
-                }
-                return true;
+        if (card.getTyyp().equals("Hero")) {
+            int tempHeroesOnField = mangija.getHeroesOnField() + 1;
+            mangija.setHeroesOnField(tempHeroesOnField);
+        } else {
+            int tempSpellsOnField = mangija.getSpellsOnField() + 1;
+            mangija.setSpellsOnField(tempSpellsOnField);
+        }
+
+            mangija.setMana(mangija.getMana() - card.getManaPoints());
+            if (currentPlayer.getLocation() == 1) {
+                Gamescenes.getoMana().setText("Manapoints: " + currentPlayer.getMana());
+            } else {
+                Gamescenes.getMana().setText("Manapoints: " + currentPlayer.getMana());
+            }
+        return true;
+
     }
 
     public static void kaartSurnuAeda(Kaart nimi, Mangija mangija) {
@@ -127,8 +127,9 @@ public class Manguvaljak {
 
                                 if (heroBounds.contains(mouseX,mouseY)) {
                                     Kaart  vastaseHero = hero;
-                                    if (vastaseHero.getDefence() > attackingCard.getAttack()) {
+                                    if (vastaseHero.getDefence() >= attackingCard.getAttack()) {
                                         Gamescenes.setLabelText("Attack did not succeed! Your hero " + attackingCard.getNimi() + " has been defeated");
+                                        System.out.println(attackingCard);
                                         Manguvaljak.kaartSurnuAeda(attackingCard, currentPlayer);
                                         Gamescenes.getBattleScenePane().setOnMouseClicked(null);
                                         Manguvaljak.currentPlayer.setAttackCount(1);
@@ -224,9 +225,7 @@ public class Manguvaljak {
                                 Kaart purgeHero = hero;
                                 Kaart purgeSpell = card;
                                 Purge.purge(currentPlayer, purgeHero, purgeSpell);
-                                Animations.cardToGraveyard(purgeSpell, currentPlayer);
-                                kaartSurnuAeda(purgeSpell, currentPlayer);
-                                Gamescenes.setLabelText(purgeHero.getNimi() + " purged! Heroes stats now: " + "Attack: " + purgeHero.getAttack() + "Defence: " + purgeHero.getDefence());
+                                Gamescenes.setLabelText(purgeHero.getNimi() + " purged! Heroes stats now: " + "Attack: " + purgeHero.getAttack() + " Defence: " + purgeHero.getDefence());
                                 Gamescenes.getBattleScenePane().setOnMouseClicked(null);
                                 break;
                             }
@@ -244,9 +243,7 @@ public class Manguvaljak {
                                 Kaart purgeHero = hero;
                                 Kaart purgeSpell = card;
                                 Purge.purge(currentPlayer, purgeHero, purgeSpell);
-                                Animations.cardToGraveyard(purgeSpell, currentPlayer);
-                                kaartSurnuAeda(purgeSpell, currentPlayer);
-                                Gamescenes.setLabelText(purgeHero.getNimi() + " purged! Heroes stats now: " + "Attack: " + purgeHero.getAttack() + "Defence: " + purgeHero.getDefence());
+                                Gamescenes.setLabelText(purgeHero.getNimi() + " purged! Heroes stats now: " + "Attack: " + purgeHero.getAttack() + " Defence: " + purgeHero.getDefence());
                                 Gamescenes.getBattleScenePane().setOnMouseClicked(null);
                                 break;
                             }
@@ -259,6 +256,7 @@ public class Manguvaljak {
             return true;
         }
         else if (type.equals("Buff")) {
+            System.out.println(card.isOlek());
             if (card.isOlek()) {
                 Gamescenes.setLabelText("You have already used this card!");
                 return false;
@@ -275,8 +273,8 @@ public class Manguvaljak {
                     heroNode.setOnMouseClicked(new EventHandler<MouseEvent>() {
                         public void handle(MouseEvent e) {
                             Buff.buffPlacement(currentPlayer, hero, card);
+                            System.out.println(hero.toInfo());
                             Gamescenes.setLabelText("Buff placed on " + hero.getNimi() + "." + "Heroes stats now:" + " Attack: " + hero.getAttack() + " Defence: " + hero.getDefence());
-                            card.setOlek(true);
                         }
                     });
                 }
@@ -292,36 +290,22 @@ public class Manguvaljak {
                 return false;
             }
             Gamescenes.setLabelText("Choose the hero you want to make more vulnerable");
-            Gamescenes.getBattleScenePane().setOnMouseClicked(new EventHandler<MouseEvent>() {
-                public void handle(MouseEvent e) {
-                    double mouseX = e.getSceneX();
-                    double mouseY = e.getSceneY();
-                    for (Kaart hero : currentOpponent.getHeroMap().keySet()) {
-                        if (!hero.toString().equals("Empty")) {
-                            String indeks = Animations.getPositionIndex(hero, currentOpponent);
-                            Node heroNode = Gamescenes.getBattleScenePane().lookup("#" + indeks);
-                            Bounds heroBounds = heroNode.localToScene(heroNode.getBoundsInLocal());
-                            if (heroBounds.contains(mouseX, mouseY)) {
-                                Vulnerability.vulnerabilityPlacement(hero, card);
-                                Gamescenes.setLabelText("Vulnerability placed on " + hero.getNimi() + "." + "Heroes stats now:" + "Attack: " + hero.getAttack() + " Defence: " + hero.getDefence());
-                                card.setOlek(true);
-                                Gamescenes.getBattleScenePane().setOnMouseClicked(null);
-                                break;
-                            }
-
+            for (Kaart hero : currentOpponent.getHeroMap().keySet()) {
+                if (!hero.toString().equals("Empty")) {
+                    String indeks = Animations.getPositionIndex(hero, currentOpponent);
+                    Node heroNode = Gamescenes.getBattleScenePane().lookup("#" + indeks);
+                    heroNode.setOnMouseClicked(new EventHandler<MouseEvent>() {
+                        public void handle(MouseEvent e) {
+                            Vulnerability.vulnerabilityPlacement(hero, card);
+                            Gamescenes.setLabelText("Vulnerability placed on " + hero.getNimi() + "." + "Heroes stats now:" + " Attack: " + hero.getAttack() + " Defence: " + hero.getDefence());
+                            card.setOlek(true);
                         }
-                    }
-
+                    });
                 }
-            });
+            }
+        }
             return true;
         }
-        else {
-            return false;
-        }
-return false;
-    }
-
         }
 
 

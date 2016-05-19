@@ -180,7 +180,7 @@ public class Buff extends Kaart {
 
         for (Kaart heroes : mangija.getHeroMap().keySet()) {
             if (!hero.toString().equals("Empty")) {
-                String indeks = Animations.getPositionIndex(hero, mangija);
+                String indeks = Animations.getPositionIndex(heroes, mangija);
                 Node heroNode = Gamescenes.getBattleScenePane().lookup("#" + indeks);
                 heroNode.setOnMouseClicked(new EventHandler<MouseEvent>() {
                     public void handle(MouseEvent e) {

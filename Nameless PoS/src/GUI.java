@@ -58,6 +58,10 @@ public class GUI extends Application {
 		this.primary = primaryStage;
 		Gamescenes.main(); // Luuakse Gamescenes klassi jaoks kõik mänguks vajalikud stseenid
 		primaryStage.setTitle("Game of Cards");
+		primaryStage.setMinWidth(1000);
+		primaryStage.setMaxWidth(1500);
+		primaryStage.setMinHeight(700);
+		primaryStage.setMaxHeight(1200);
 		primaryStage.setScene(Gamescenes.getMainMenuScene());
 		primaryStage.show();
 	}

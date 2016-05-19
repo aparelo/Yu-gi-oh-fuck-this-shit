@@ -373,6 +373,7 @@ public class DeckMakerGUI {
                 if(result.get() == ButtonType.OK) {
                     Gamescenes.deckMusic.stop();
                     stseen = Gamescenes.getMainMenuScene();
+                    Gamescenes.menuMusic.play();
                     GUI.getPrimary().setScene(stseen);
                 }
 
