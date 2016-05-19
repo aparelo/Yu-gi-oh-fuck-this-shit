@@ -57,7 +57,7 @@ public class GUI extends Application {
 		this.y = 700;
 		this.primary = primaryStage;
 		Gamescenes.main(); // Luuakse Gamescenes klassi jaoks kõik mänguks vajalikud stseenid
-		primaryStage.setTitle("Not Quite Yu-Gi-Oh");
+		primaryStage.setTitle("Game of Cards");
 		primaryStage.setScene(Gamescenes.getMainMenuScene());
 		primaryStage.show();
 	}

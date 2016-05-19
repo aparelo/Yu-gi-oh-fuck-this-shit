@@ -41,7 +41,7 @@ public class Animations  {
             iv.setCache(true);
             iv.setVisible(false);
 
-            TranslateTransition translateCard = new TranslateTransition(Duration.millis(1400), iv);
+            TranslateTransition translateCard = new TranslateTransition(Duration.millis(1100), iv);
 
             String indeks = ""; // If any card in a player's hand is empty, the index for it is chosen, the first card of the deck added to the hand and the EmptyCard removed.
             Kaart removableKaart = new EmptyCard();
@@ -102,7 +102,7 @@ public class Animations  {
 
             final String finalIndeks = indeks;
 
-            PauseTransition pause = new PauseTransition(Duration.millis(1200));
+            PauseTransition pause = new PauseTransition(Duration.millis(1050));
 
             pause.setOnFinished(new EventHandler<ActionEvent>() {  // The pause is needed for the original Deck shuffle to complete first
                 public void handle(ActionEvent e)   {
@@ -222,6 +222,7 @@ public class Animations  {
         String cardIndeks = getPositionIndex(card, mangija);
 
         Node cardNode = Gamescenes.getBattleScenePane().lookup("#" + cardIndeks);
+        System.out.println(cardNode);
         Node fieldNode = Gamescenes.getBattleScenePane().lookup("#Back" + cardIndeks);
 
         if (card.getTyyp().equals("Hero")) {
@@ -292,17 +293,30 @@ public class Animations  {
             public void handle(ActionEvent e)   {
                 iv1.setMouseTransparent(true);
                 iv2.setMouseTransparent(true);
+                /*if (Manguvaljak.currentPlayer.getLocation() == 1) {
                 Gamescenes.getBattleScenePane().lookup("#33").setOnMouseEntered(new EventHandler<MouseEvent>() {
                     public void handle(MouseEvent me) {
-                            Gamescenes.setLabelText("Cards in deck: " + Integer.toString(Manguvaljak.currentPlayer.getMangijaDeck().size()));
-                        }
-                });
+                        Gamescenes.setLabelText("Cards in deck: " + Integer.toString(Manguvaljak.currentPlayer.getMangijaDeck().size()));
+                        Gamescenes.getBattleScenePane().lookup("#30").setOnMouseEntered(new EventHandler<MouseEvent>() {
+                            public void handle(MouseEvent me) {
+                                Gamescenes.setLabelText("Cards in deck: " + Integer.toString(Manguvaljak.currentOpponent.getMangijaDeck().size()));
+                                Gamescenes.getBattleScenePane().lookup("#30").setMouseTransparent(true);
+                            }
+                        });
+                    }
+                });}
+                if (Manguvaljak.currentPlayer.getLocation() == 2) {
                 Gamescenes.getBattleScenePane().lookup("#30").setOnMouseEntered(new EventHandler<MouseEvent>() {
                     public void handle(MouseEvent me) {
-                        Gamescenes.setLabelText("Cards in deck: " + Integer.toString(Manguvaljak.currentOpponent.getMangijaDeck().size()));
-                        //Gamescenes.getBattleScenePane().lookup("#30").setVisible(false);
+                        Gamescenes.setLabelText("Cards in deck: " + Integer.toString(Manguvaljak.currentPlayer.getMangijaDeck().size()));
+                        Gamescenes.getBattleScenePane().lookup("#33").setOnMouseEntered(new EventHandler<MouseEvent>() {
+                            public void handle(MouseEvent me) {
+                                Gamescenes.setLabelText("Cards in deck: " + Integer.toString(Manguvaljak.currentOpponent.getMangijaDeck().size()));
+                                Gamescenes.getBattleScenePane().lookup("#33").setMouseTransparent(true);
+                            }
+                        });
                     }
-                });
+                });*/
             }});
 
         translateDeck2.setToX(cardBounds2.getMinX() - 110);
@@ -327,14 +341,15 @@ public class Animations  {
 
     }
 
+
     public static void flipDown(Mangija mangija) {
 
         PauseTransition pause;
         if (Kaik.needCards) {
-            pause = new PauseTransition(Duration.millis(3000));
+            pause = new PauseTransition(Duration.millis(2000));
         }
         else {
-            pause = new PauseTransition(Duration.millis(100));
+            pause = new PauseTransition(Duration.millis(0));
         }
 
 
@@ -344,13 +359,13 @@ public class Animations  {
 
             Node cardBackGround = Gamescenes.getBattleScenePane().lookup("#Back" + indeks);
 
-            ScaleTransition stHideFront = new ScaleTransition(Duration.millis(1500), card);
+            ScaleTransition stHideFront = new ScaleTransition(Duration.millis(1000), card);
             stHideFront.setFromX(1);
             stHideFront.setToX(0);
 
             cardBackGround.setScaleX(0);
 
-            ScaleTransition stShowBack = new ScaleTransition(Duration.millis(1500), cardBackGround);
+            ScaleTransition stShowBack = new ScaleTransition(Duration.millis(1000), cardBackGround);
             stShowBack.setFromX(0);
             stShowBack.setToX(1);
 
@@ -390,9 +405,9 @@ public class Animations  {
         PauseTransition pause;
 
         if (Kaik.needCards) {  // If cards need to be dealt to the player's hand, the pause time is increased to let the draw animation finish
-            pause = new PauseTransition(Duration.millis(3000));
+            pause = new PauseTransition(Duration.millis(2000));
         } else {
-            pause = new PauseTransition(Duration.millis(100));
+            pause = new PauseTransition(Duration.millis(0));
         }
 
         for (String indeks : mangija.getHandMap().values()) {
@@ -401,13 +416,13 @@ public class Animations  {
 
             Node cardBackGround = Gamescenes.getBattleScenePane().lookup("#Back" + indeks);
 
-            ScaleTransition stHideBack = new ScaleTransition(Duration.millis(1500), cardBackGround);
+            ScaleTransition stHideBack = new ScaleTransition(Duration.millis(1000), cardBackGround);
             stHideBack.setFromX(1);
             stHideBack.setToX(0);
 
             cardBackGround.setScaleX(0);
 
-            ScaleTransition stShowFront = new ScaleTransition(Duration.millis(1500), card);
+            ScaleTransition stShowFront = new ScaleTransition(Duration.millis(1000), card);
             stShowFront.setFromX(0);
             stShowFront.setToX(1);
 

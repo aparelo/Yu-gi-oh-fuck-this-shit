@@ -2,6 +2,7 @@ import javafx.animation.PauseTransition;
 import javafx.event.EventHandler;
 import javafx.geometry.Bounds;
 import javafx.scene.Node;
+import javafx.scene.Scene;
 import javafx.scene.control.Alert;
 import javafx.scene.control.Label;
 import javafx.scene.input.MouseEvent;
@@ -26,11 +27,11 @@ public class Manguvaljak {
     }
 
     public static boolean kaartLauale(Kaart card, Mangija mangija) {
-        System.out.println("Kaart lauale");
         if (mangija.getMana() < card.getManaPoints()) {
             Gamescenes.setLabelText("You don't have enough mana to play this card!");
             return false;
-        } else {
+        }
+        else {
             mangija.setMana(mangija.getMana() - card.getManaPoints());
             if (currentPlayer.getLocation() == 1) {
                 Gamescenes.getoMana().setText("Manapoints: " + currentPlayer.getMana());
@@ -44,7 +45,6 @@ public class Manguvaljak {
                 return false;
             }
         }
-        else {
                 mangija.getMangijaKasi().remove(card);
                 mangija.getMangijaLaud().add(card);
                 Animations.cardToField(card, mangija);
@@ -57,8 +57,6 @@ public class Manguvaljak {
                     mangija.setSpellsOnField(tempSpellsOnField);
                 }
                 return true;
-            }
-        return false;
     }
 
     public static void kaartSurnuAeda(Kaart nimi, Mangija mangija) {
@@ -78,10 +76,6 @@ public class Manguvaljak {
             Animations.cardToHand(mangija);
             mangija.getMangijaDeck().remove(0);
         }
-        else {
-            Gamescenes.setLabelText("Game over " + currentPlayer.getNimi() + " has run out of cards.");
-        }
-
     }
 
     public static boolean attack(Kaart attackingCard) {

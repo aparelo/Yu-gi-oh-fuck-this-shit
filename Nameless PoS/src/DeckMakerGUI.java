@@ -54,9 +54,9 @@ public class DeckMakerGUI {
     public Scene deckMakerGUIRun() throws Exception {
         table1.setColumnResizePolicy(table1.UNCONSTRAINED_RESIZE_POLICY);
         table2.setColumnResizePolicy(table2.UNCONSTRAINED_RESIZE_POLICY);
-        AudioClip deckMakerMusic = new AudioClip(new File("Nameless PoS\\music\\song.mp3").toURI().toString());
-        deckMakerMusic.play();
-        deckMakerMusic.setCycleCount(AudioClip.INDEFINITE);
+       // AudioClip deckMakerMusic = new AudioClip(new File("Nameless PoS\\music\\deckTheme.mp3").toURI().toString());
+        //deckMakerMusic.play();
+        //deckMakerMusic.setCycleCount(AudioClip.INDEFINITE);
         Group root = new Group();
         root.setId("root");
         BorderPane border = new BorderPane();
@@ -371,7 +371,7 @@ public class DeckMakerGUI {
                 alert.setContentText("Are you sure you want to return to the main menu, unsaved changes will be lost?");
                 Optional<ButtonType> result = alert.showAndWait();
                 if(result.get() == ButtonType.OK) {
-                    deckMakerMusic.stop();
+                    Gamescenes.deckMusic.stop();
                     stseen = Gamescenes.getMainMenuScene();
                     GUI.getPrimary().setScene(stseen);
                 }

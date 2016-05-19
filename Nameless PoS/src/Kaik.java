@@ -1,4 +1,5 @@
 import javafx.scene.Node;
+import javafx.scene.control.Alert;
 import javafx.scene.input.MouseEvent;
 import jdk.nashorn.internal.runtime.arrays.AnyElements;
 import org.omg.CORBA.Any;
@@ -121,12 +122,22 @@ public class Kaik extends Manguvaljak {
         int kaartideArv = Manguvaljak.currentPlayer.getMangijaKasi().size();
         if (kaartideArv < 5) {
             int uusiKaarte = 5 - kaartideArv;
+
+            if (uusiKaarte > currentPlayer.getMangijaDeck().size()) {
+                System.out.println(currentPlayer.getNimi());
+                System.out.println(currentOpponent.getNimi());
+                Alert alert = new Alert(Alert.AlertType.INFORMATION);
+                alert.setTitle("Game over!");
+                alert.setHeaderText(null);
+                alert.setContentText("You have ran out of cards, you lose the Game!");
+                alert.showAndWait();
+                GUI.getPrimary().setScene(Gamescenes.getMainMenuScene());
+            }
             ArrayList<Kaart> tempKasi = Manguvaljak.currentPlayer.getMangijaKasi();
             ArrayList<Kaart> tempDeck = Manguvaljak.currentPlayer.getMangijaDeck();
             for (int i = 0; i < uusiKaarte; i++) {
                 Manguvaljak.kaartKatte(Manguvaljak.currentPlayer);
                 if (Manguvaljak.currentPlayer.getMangijaDeck().size() == 0) {
-                    //gameOverError = "DeckToZero";
                 }
             }
             Manguvaljak.currentPlayer.setMangijaDeck(tempDeck);
@@ -139,10 +150,10 @@ public class Kaik extends Manguvaljak {
             ArrayList<Kaart> tempKasi2 = Manguvaljak.currentOpponent.getMangijaKasi();
             ArrayList<Kaart> tempDeck2 = Manguvaljak.currentOpponent.getMangijaDeck();
             for (int i = 0; i < uusiKaarte2; i++) {
-                Manguvaljak.kaartKatte(Manguvaljak.currentOpponent);
-                if (Manguvaljak.currentOpponent.getMangijaDeck().size() == 0) {
-                    //gameOverError = "DeckToZero";
-                }
+                    Manguvaljak.kaartKatte(Manguvaljak.currentOpponent);
+                    if (Manguvaljak.currentOpponent.getMangijaDeck().size() == 0) {
+                        //gameOverError = "DeckToZero";
+                    }
             }
             Manguvaljak.currentOpponent.setMangijaDeck(tempDeck2);
             Manguvaljak.currentOpponent.setMangijaKasi(tempKasi2);

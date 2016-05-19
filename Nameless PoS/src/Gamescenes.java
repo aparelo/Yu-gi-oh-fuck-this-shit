@@ -121,13 +121,16 @@ public class Gamescenes  {
         return battleScenePane;
     }
 
+    public static AudioClip battleMusic = new AudioClip(new File("Nameless PoS\\music\\battleTheme.mp3").toURI().toString());
+    public static AudioClip deckMusic = new AudioClip(new File("Nameless PoS\\music\\deckTheme.mp3").toURI().toString());
+    public static AudioClip menuMusic = new AudioClip(new File("Nameless PoS\\music\\menuTheme.mp3").toURI().toString());
+
+
 
     public static void setDeckMakerMenuScene(int x, int y, Stage primaryStage) {
         primaryStage.setTitle("Deck Maker Menu");
-        AudioClip deckMakerMusic = new AudioClip(new File("Nameless PoS\\music\\song.mp3").toURI().toString());
-        deckMakerMusic.play();
-        deckMakerMusic.setCycleCount(AudioClip.INDEFINITE);
         GridPane grid = new GridPane();
+        grid.setId("menu");
         BorderPane border = new BorderPane();
         Scene deckMenuScene = new Scene(grid, x*0.5, y*0.5);
         grid.setAlignment(Pos.CENTER);
@@ -208,9 +211,7 @@ public class Gamescenes  {
 
     public static void setBattleMenuScene(int x, int y, Stage primaryStage) throws  Exception {
         GridPane grid = new GridPane();
-        AudioClip battleMenuMusic = new AudioClip(new File("Nameless PoS\\music\\song.mp3").toURI().toString());
-        battleMenuMusic.play();
-        battleMenuMusic.setCycleCount(AudioClip.INDEFINITE);
+        grid.setId("menu");
         Scene battleMenuScene = new Scene(grid, x, y);
         grid.setAlignment(Pos.CENTER);
         grid.setHgap(10);
@@ -224,8 +225,10 @@ public class Gamescenes  {
 
         MenuButton deck1 = new MenuButton("Choose your deck");
         deck1.setPrefWidth(300);
+        deck1.setId("menu2");
         MenuButton deck2 = new MenuButton("Choose your deck");
         deck2.setPrefWidth(300);
+        deck2.setId("menu2");
 
         File folder = new File("Nameless Pos\\Decks\\");  // Lisatakse MenuButtoni menüüvalikusse "Decks" folderis olevad deckide nimed, menüünupu vajutamisel seatakse vastava Decki nimi Manguvaljaku isendivalja väärtuseks
         File[] listOfFiles = folder.listFiles();
@@ -289,8 +292,8 @@ public class Gamescenes  {
                     else {
                         GUI.setPlayer1Name(player1Name);
                         GUI.setPlayer2Name(player2Name);
+                        menuMusic.stop();
                         setBattleScene(x, y, primaryStage);
-                        //battleMenuMusic.stop();
                         primaryStage.setScene(Gamescenes.getBattleScene());
                         primaryStage.show();
                         Main.gameLogic();
@@ -325,10 +328,10 @@ public class Gamescenes  {
 
     public static void setBattleScene(int x, int y, Stage primary) throws Exception {
         GridPane grid = new GridPane();
-        AudioClip battleMusic = new AudioClip(new File("Nameless PoS\\music\\song.mp3").toURI().toString());
-        battleMusic.play();
+        battleMusic.play(0.5);
         battleMusic.setCycleCount(AudioClip.INDEFINITE);
         Gamescenes.battleScenePane = grid;
+        grid.setId("battlepane");
         Scene battleScene = new Scene(grid, x, y);
         grid.setAlignment(Pos.CENTER);
         grid.setHgap(5);
@@ -478,24 +481,23 @@ public class Gamescenes  {
 
     public static void setMainMenuScene(int x, int y, Stage primaryStage) {
         GridPane grid = new GridPane();
-        AudioClip mainMenuMusic = new AudioClip(new File("Nameless PoS\\music\\song.mp3").toURI().toString());
-        mainMenuMusic.play();
-        mainMenuMusic.setCycleCount(AudioClip.INDEFINITE);
+        grid.setId("menu");
+        menuMusic.play(0.5);
+        menuMusic.setCycleCount(AudioClip.INDEFINITE);
         Scene scene = new Scene(grid, x, y);
         grid.setAlignment(Pos.CENTER);
         grid.setHgap(10);
         grid.setVgap(10);
         grid.setPadding(new Insets(25, 25, 25, 25));
 
-        Button play = new Button("Play Yu-Gi-Oh (not quite)");
+        Button play = new Button("Start Game of Cards");
         HBox hbPlay = new HBox(10);
         hbPlay.setAlignment(Pos.CENTER);
-        play.setPrefWidth(200);
+        play.setPrefWidth(300);
         hbPlay.getChildren().add(play);
         grid.add(hbPlay, 0, 0);
         play.setOnAction(new EventHandler<ActionEvent>() {
             public void handle(ActionEvent e) {
-                //mainMenuMusic.stop();
                 primaryStage.setScene(Gamescenes.getBattleMenuScene());
                 primaryStage.show();
             }
@@ -504,12 +506,14 @@ public class Gamescenes  {
         Button deckMaker = new Button("Make a deck");
         HBox hbDeckMaker = new HBox(10);
         hbDeckMaker.setAlignment(Pos.CENTER);
-        deckMaker.setPrefWidth(200);
+        deckMaker.setPrefWidth(300);
         hbDeckMaker.getChildren().add(deckMaker);
         grid.add(hbDeckMaker, 0, 1);
         deckMaker.setOnAction(new EventHandler<ActionEvent>() {
             public void handle(ActionEvent e) {
-                //mainMenuMusic.stop();
+                menuMusic.stop();
+                deckMusic.play(0.5);
+                deckMusic.setCycleCount(AudioClip.INDEFINITE);
                 primaryStage.setScene(Gamescenes.getDeckMakerMenuScene());
                 primaryStage.show();
             }
@@ -518,7 +522,7 @@ public class Gamescenes  {
         Button exit = new Button("Exit the game");
         HBox hbExit = new HBox(10);
         hbExit.setAlignment(Pos.CENTER);
-        exit.setPrefWidth(200);
+        exit.setPrefWidth(300);
         hbExit.getChildren().add(exit);
         grid.add(hbExit, 0, 2);
         mainMenuScene = scene;
